@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824314646136",
+    "project_id": "daala-69a44",
+    "storage_bucket": "daala-69a44.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824314646136:android:882d2a17d0faed70f4e78d",
+        "android_client_info": {
+          "package_name": "za.co.daala.daala"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRm5PaC-GN8ZC3cm4ad7ZUT7_ibhnWFJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
