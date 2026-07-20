@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-20T00:00:00.000Z",
+  "title": "Design System: Daala",
+  "extensions": {
+    "colorMeta": {
+      "brand-green": {
+        "role": "primary",
+        "displayName": "Deep Trust Green",
+        "canonical": "oklch(24.5% 0.078 156)",
+        "tonalRamp": [
+          "#001A0A",
+          "#002610",
+          "#003716",
+          "#004C1F",
+          "#00662A",
+          "#1C8A47",
+          "#5DB27D",
+          "#A7D6B9",
+          "#DDEFE4"
+        ]
+      },
+      "hustle-orange": {
+        "role": "secondary",
+        "displayName": "Hustle Orange",
+        "canonical": "oklch(72.4% 0.152 47)",
+        "tonalRamp": [
+          "#3D1B08",
+          "#5C2A0D",
+          "#8A3F14",
+          "#B8551C",
+          "#E06A25",
+          "#FF823A",
+          "#FFA36F",
+          "#FFC7A6",
+          "#FFE7D9"
+        ]
+      },
+      "screen-cream": {
+        "role": "neutral",
+        "displayName": "Screen Cream",
+        "canonical": "oklch(97.5% 0.017 96)",
+        "tonalRamp": [
+          "#211F17",
+          "#3D3A2C",
+          "#5C5844",
+          "#7D785F",
+          "#A29C80",
+          "#C4BFA6",
+          "#DFDBC8",
+          "#EFEDE6",
+          "#FAF7EC"
+        ]
+      },
+      "outer-canvas": {
+        "role": "neutral",
+        "displayName": "Outer Canvas",
+        "canonical": "oklch(94.1% 0.011 100)",
+        "tonalRamp": [
+          "#1F1E19",
+          "#3A382F",
+          "#575345",
+          "#78735F",
+          "#9E987F",
+          "#C1BCA4",
+          "#DAD6C6",
+          "#EFEDE6",
+          "#F7F6F1"
+        ]
+      },
+      "placeholder-khaki": {
+        "role": "neutral",
+        "displayName": "Placeholder Khaki",
+        "canonical": "oklch(93.2% 0.028 96)",
+        "tonalRamp": [
+          "#211E12",
+          "#3C3722",
+          "#5A5334",
+          "#7A7148",
+          "#9E9260",
+          "#C0B384",
+          "#DAD0AE",
+          "#EFE9D4",
+          "#F8F5E9"
+        ]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "#1A1A1A",
+          "#333333",
+          "#4D4D4D",
+          "#666666",
+          "#8C8C8C",
+          "#B3B3B3",
+          "#D9D9D9",
+          "#F0F0F0",
+          "#FFFFFF"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(17.8% 0 0)",
+        "tonalRamp": [
+          "#000000",
+          "#111111",
+          "#2E2E2E",
+          "#4A4A4A",
+          "#737373",
+          "#9E9E9E",
+          "#C7C7C7",
+          "#E3E3E3",
+          "#F5F5F5"
+        ]
+      },
+      "green-tint": {
+        "role": "tertiary",
+        "displayName": "Green Tint (9% over cream)",
+        "canonical": "color-mix(in srgb, #003716 9%, #FAF7EC)",
+        "tonalRamp": [
+          "#003716",
+          "#0A4522",
+          "#1E5B36",
+          "#3F7A55",
+          "#6D9E7F",
+          "#9CC1A9",
+          "#C4DBCB",
+          "#E1EDE4",
+          "#F1F5EE"
+        ]
+      },
+      "orange-tint": {
+        "role": "tertiary",
+        "displayName": "Orange Tint (13% over cream)",
+        "canonical": "color-mix(in srgb, #FF823A 13%, #FAF7EC)",
+        "tonalRamp": [
+          "#8A3F14",
+          "#B8551C",
+          "#E06A25",
+          "#FF823A",
+          "#FFA36F",
+          "#FFC0A0",
+          "#FFD8C4",
+          "#FCE7DA",
+          "#FAF2EA"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The single hero figure on a primary screen (Home's '24 Gigs'). One per screen, centred."
+      },
+      "money": {
+        "displayName": "Money",
+        "purpose": "The wallet balance figure, white on the green balance card."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Detail-screen titles at 30px; the post-gig wizard title at 28px/1.25."
+      },
+      "headline-page": {
+        "displayName": "Page Headline",
+        "purpose": "Large left-aligned titles on primary list screens: Browse Gigs, My Gigs, Inbox."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Paired numbers in split stat cards (22/20px) and profile stat tiles (18px). Green for money, ink otherwise."
+      },
+      "app-bar": {
+        "displayName": "App-bar Title",
+        "purpose": "Centred title on pushed screens between round icon buttons. Sheet header steps to 17px."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Section headers and CTA button labels."
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "Green price on a gig row — same size as Section, one weight heavier."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles and poster names. Sheet row labels use w600 at the same size."
+      },
+      "row-title": {
+        "displayName": "Row Title",
+        "purpose": "List-row and speed-dial item labels."
+      },
+      "value": {
+        "displayName": "Value",
+        "purpose": "Fact rows on the detail screen and transaction descriptions."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptive helper copy and profile bios at ink-65%. Review quotes step to 12px/1.5."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels above form rows, ink-55%."
+      },
+      "overline": {
+        "displayName": "Overline",
+        "purpose": "UPPERCASE list groupings on Wallet and My Gigs. The only sanctioned uppercase in the system."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Stat-card captions sitting above a figure, ink-55%."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Distances, timestamps, sub-labels, ink-55%."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Pill labels and small inline actions."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Lifecycle status pills: Confirmed, In progress."
+      },
+      "tab": {
+        "displayName": "Tab Label",
+        "purpose": "Bottom-nav labels only. The floor of the scale."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 2px 10px rgba(0,0,0,0.05)",
+        "purpose": "Default resting lift under white cards, gig rows, and inbox rows."
+      },
+      {
+        "name": "card-quiet",
+        "value": "0 2px 10px rgba(0,0,0,0.04)",
+        "purpose": "The paired Home stat cards, recessed so the hero figure above stays dominant."
+      },
+      {
+        "name": "sheet-row",
+        "value": "0 2px 8px rgba(0,0,0,0.05)",
+        "purpose": "Card rows inside the modal sheet, tightened because the sheet is already lifted."
+      },
+      {
+        "name": "soft",
+        "value": "0 2px 6px rgba(0,0,0,0.06)",
+        "purpose": "Round header buttons, header pill, search field, active toggle segment."
+      },
+      {
+        "name": "chip",
+        "value": "0 2px 6px rgba(0,0,0,0.05)",
+        "purpose": "Unselected filter chips and white attribute pills."
+      },
+      {
+        "name": "chip-brand",
+        "value": "0 2px 6px rgba(0,0,0,0.10)",
+        "purpose": "The green filter/sort button, so a saturated fill still reads as raised."
+      },
+      {
+        "name": "category",
+        "value": "0 4px 14px rgba(0,0,0,0.07)",
+        "purpose": "Category grid tiles — a touch more presence than a plain card."
+      },
+      {
+        "name": "tabbar",
+        "value": "0 8px 24px rgba(0,0,0,0.12)",
+        "purpose": "The floating pill navigation bar hovering over scrolling content."
+      },
+      {
+        "name": "speed-item",
+        "value": "0 8px 18px rgba(0,0,0,0.16)",
+        "purpose": "Speed-dial action pills while the FAB is open, above the scrim."
+      },
+      {
+        "name": "fab",
+        "value": "0 8px 18px rgba(255,130,58,0.40)",
+        "purpose": "Orange glow beneath the central Post button."
+      },
+      {
+        "name": "cta-orange",
+        "value": "0 6px 16px rgba(255,130,58,0.35)",
+        "purpose": "Tinted lift under the primary orange CTA."
+      },
+      {
+        "name": "cta-green",
+        "value": "0 6px 16px rgba(0,55,22,0.30)",
+        "purpose": "Tinted lift under the secondary green CTA."
+      }
+    ],
+    "motion": [
+      {
+        "name": "fab-rotate",
+        "value": "transform 250ms ease",
+        "purpose": "The FAB '+' rotating 45 degrees as the speed-dial opens."
+      },
+      {
+        "name": "speed-item-in",
+        "value": "transform 220ms cubic-bezier(.2,.9,.3,1.4)",
+        "purpose": "Speed-dial pills rising from translateY(18px) scale(0.85), staggered 0/30/60ms."
+      },
+      {
+        "name": "speed-item-fade",
+        "value": "opacity 180ms ease",
+        "purpose": "Opacity leg of the speed-dial entrance, matched to the stagger."
+      },
+      {
+        "name": "scrim-fade",
+        "value": "opacity 200ms ease",
+        "purpose": "Scrim behind the open FAB and the modal sheet."
+      },
+      {
+        "name": "sheet-rise",
+        "value": "transform 220ms cubic-bezier(0.215,0.61,0.355,1)",
+        "purpose": "Bottom sheet slide-up (easeOutCubic); dismiss reverses it."
+      },
+      {
+        "name": "toggle-thumb",
+        "value": "transform 180ms ease-out",
+        "purpose": "Switch thumb crossing its track."
+      },
+      {
+        "name": "press",
+        "value": "transform 120ms ease-out",
+        "purpose": "Pressed feedback: scale to 0.97 and drop one shadow step."
+      },
+      {
+        "name": "reduced",
+        "value": "opacity 120ms linear",
+        "purpose": "Reduced-motion fallback: cross-fade with no transform and no stagger."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "0-599dp"
+      },
+      {
+        "name": "medium",
+        "value": "600-839dp"
+      },
+      {
+        "name": "expanded",
+        "value": "840dp+"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one forward action on a screen — Apply Now. Orange fill with its own tinted glow.",
+      "html": "<button class=\"ds-btn-primary\">Apply Now</button>",
+      "css": ".ds-btn-primary { display:flex; align-items:center; justify-content:center; width:100%; height:56px; padding:0 24px; border:none; border-radius:28px; background:#FF823A; color:#fff; font:700 16px 'Outfit',system-ui,sans-serif; box-shadow:0 6px 16px rgba(255,130,58,.35); cursor:pointer; transition:transform .12s ease-out, box-shadow .12s ease-out; } .ds-btn-primary:hover { box-shadow:0 8px 20px rgba(255,130,58,.42); } .ds-btn-primary:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-btn-primary:active { transform:scale(.97); box-shadow:0 2px 8px rgba(255,130,58,.3); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Committing and creating actions — Post Gig. Green fill with a green glow.",
+      "html": "<button class=\"ds-btn-secondary\">Post Gig</button>",
+      "css": ".ds-btn-secondary { display:flex; align-items:center; justify-content:center; width:100%; height:56px; padding:0 24px; border:none; border-radius:28px; background:#003716; color:#fff; font:700 16px 'Outfit',system-ui,sans-serif; box-shadow:0 6px 16px rgba(0,55,22,.3); cursor:pointer; transition:transform .12s ease-out, box-shadow .12s ease-out; } .ds-btn-secondary:hover { box-shadow:0 8px 20px rgba(0,55,22,.36); } .ds-btn-secondary:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-btn-secondary:active { transform:scale(.97); box-shadow:0 2px 8px rgba(0,55,22,.26); }"
+    },
+    {
+      "name": "Header Pill Button",
+      "kind": "button",
+      "refersTo": "button-header-pill",
+      "description": "Top-right action on a pushed screen: white pill, green label, optional leading green icon.",
+      "html": "<button class=\"ds-btn-header\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M12 21s-7-4.6-9.5-9C.7 8 2 4 6 4c2.2 0 3.6 1.2 4.5 2.6C11.4 5.2 12.8 4 15 4c4 0 5.3 4 3.5 8-2.5 4.4-9.5 9-9.5 9z\" stroke=\"#003716\" stroke-width=\"1.8\"/></svg><span>Save</span></button>",
+      "css": ".ds-btn-header { display:inline-flex; align-items:center; gap:6px; height:44px; padding:0 18px; border:none; border-radius:24px; background:#fff; color:#003716; font:700 13px 'Outfit',system-ui,sans-serif; box-shadow:0 2px 6px rgba(0,0,0,.06); cursor:pointer; transition:transform .12s ease-out, box-shadow .12s ease-out; } .ds-btn-header:hover { box-shadow:0 4px 10px rgba(0,0,0,.08); } .ds-btn-header:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-btn-header:active { transform:scale(.97); box-shadow:none; }"
+    },
+    {
+      "name": "Gig Row Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The core list unit: khaki thumbnail, title with distance and age, green price. The answer to the classifieds row.",
+      "html": "<div class=\"ds-gig-row\"><div class=\"ds-gig-thumb\"></div><div class=\"ds-gig-body\"><div class=\"ds-gig-title\">Assemble flatpack shelving</div><div class=\"ds-gig-meta\">1.2km · posted 2h ago</div></div><div class=\"ds-gig-price\">R65</div></div>",
+      "css": ".ds-gig-row { display:flex; align-items:center; gap:12px; padding:16px 18px; border-radius:22px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.05); font-family:'Outfit',system-ui,sans-serif; cursor:pointer; transition:transform .12s ease-out, box-shadow .12s ease-out; } .ds-gig-row:hover { box-shadow:0 4px 14px rgba(0,0,0,.07); } .ds-gig-row:active { transform:scale(.99); box-shadow:0 1px 6px rgba(0,0,0,.05); } .ds-gig-thumb { width:44px; height:44px; border-radius:14px; background:#EFE9D4; flex-shrink:0; } .ds-gig-body { flex:1; min-width:0; } .ds-gig-title { font:700 14px 'Outfit',system-ui,sans-serif; color:#111; } .ds-gig-meta { font:500 12px 'Outfit',system-ui,sans-serif; color:rgba(17,17,17,.55); margin-top:2px; } .ds-gig-price { font:800 16px 'Outfit',system-ui,sans-serif; color:#003716; }"
+    },
+    {
+      "name": "Wallet Balance Card",
+      "kind": "card",
+      "refersTo": "card-balance",
+      "description": "The Green Money Rule made literal: protected balance on a green fill, with the one orange action that moves money out.",
+      "html": "<div class=\"ds-balance\"><div class=\"ds-balance-cap\">Available Balance</div><div class=\"ds-balance-amt\">R1 978.85</div><button class=\"ds-balance-cta\">Withdraw to Bank</button></div>",
+      "css": ".ds-balance { padding:20px; border-radius:22px; background:#003716; font-family:'Outfit',system-ui,sans-serif; } .ds-balance-cap { font:600 13px 'Outfit',system-ui,sans-serif; color:rgba(255,255,255,.7); margin-bottom:6px; } .ds-balance-amt { font:800 30px/1 'Outfit',system-ui,sans-serif; color:#fff; margin-bottom:16px; } .ds-balance-cta { padding:10px 18px; border:none; border-radius:18px; background:#FF823A; color:#fff; font:700 13px 'Outfit',system-ui,sans-serif; cursor:pointer; transition:transform .12s ease-out; } .ds-balance-cta:focus-visible { outline:2px solid #fff; outline-offset:2px; } .ds-balance-cta:active { transform:scale(.97); }"
+    },
+    {
+      "name": "Tag Pill",
+      "kind": "chip",
+      "refersTo": "tag-pill",
+      "description": "Green-tint pill with green text for categories and skills. Cream shows through the tint rather than a separate sage swatch.",
+      "html": "<span class=\"ds-tag\">Moving · One-time</span>",
+      "css": ".ds-tag { display:inline-block; padding:6px 14px; border-radius:14px; background:rgba(0,55,22,.09); color:#003716; font:700 12px 'Outfit',system-ui,sans-serif; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "Horizontally scrolling category filter. Selected is a solid green fill; unselected is a lifted white pill.",
+      "html": "<div class=\"ds-chiprow\"><button class=\"ds-chip ds-chip--on\">All</button><button class=\"ds-chip\">Moving</button><button class=\"ds-chip\">Design</button><button class=\"ds-chip\">Delivery</button></div>",
+      "css": ".ds-chiprow { display:flex; gap:8px; overflow-x:auto; padding:2px; } .ds-chip { flex-shrink:0; padding:9px 16px; border:none; border-radius:16px; background:#fff; color:#111; font:600 12px 'Outfit',system-ui,sans-serif; box-shadow:0 2px 6px rgba(0,0,0,.05); cursor:pointer; transition:transform .12s ease-out; } .ds-chip:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-chip:active { transform:scale(.96); } .ds-chip--on { background:#003716; color:#fff; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.1); }"
+    },
+    {
+      "name": "Segmented Toggle",
+      "kind": "nav",
+      "refersTo": "segment-active",
+      "description": "The one-account duality switch — Earn Moola vs Browse Gigs — and the My Gigs lifecycle tabs.",
+      "html": "<div class=\"ds-seg\"><button class=\"ds-seg-item ds-seg-item--on\">Earn Moola</button><button class=\"ds-seg-item\">Browse Gigs</button></div>",
+      "css": ".ds-seg { display:flex; padding:4px; border-radius:22px; background:rgba(0,0,0,.05); } .ds-seg-item { flex:1; padding:10px 0; border:none; border-radius:18px; background:transparent; color:rgba(17,17,17,.55); font:600 14px 'Outfit',system-ui,sans-serif; cursor:pointer; transition:color .15s ease; } .ds-seg-item:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-seg-item--on { background:#fff; color:#003716; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.06); }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Lifted white pill with a leading glyph. Placeholder held at ink-55% per The Readable-Muted Rule.",
+      "html": "<div class=\"ds-search\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\"><circle cx=\"11\" cy=\"11\" r=\"7\" stroke=\"rgba(17,17,17,.55)\" stroke-width=\"2.2\"/><path d=\"M20 20l-4-4\" stroke=\"rgba(17,17,17,.55)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg><input type=\"text\" placeholder=\"Search gigs near you\"></div>",
+      "css": ".ds-search { display:flex; align-items:center; gap:8px; height:48px; padding:0 16px; border-radius:24px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.06); transition:box-shadow .15s ease; } .ds-search:focus-within { box-shadow:0 2px 6px rgba(0,0,0,.06), 0 0 0 2px #003716; } .ds-search input { flex:1; border:none; outline:none; background:transparent; font:500 14px 'Outfit',system-ui,sans-serif; color:#111; } .ds-search input::placeholder { color:rgba(17,17,17,.55); }"
+    },
+    {
+      "name": "Toggle Switch",
+      "kind": "input",
+      "refersTo": "toggle-on",
+      "description": "Sheet row switch. Green when on, ink-15% when off, 24px white thumb crossing in 180ms.",
+      "html": "<div class=\"ds-switchrow\"><span class=\"ds-switchlabel\">Reminder</span><button class=\"ds-switch ds-switch--on\" role=\"switch\" aria-checked=\"true\"><span class=\"ds-thumb\"></span></button></div>",
+      "css": ".ds-switchrow { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-radius:22px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.05); } .ds-switchlabel { font:600 15px 'Outfit',system-ui,sans-serif; color:#111; } .ds-switch { width:46px; height:28px; padding:2px; border:none; border-radius:14px; background:rgba(17,17,17,.15); display:flex; align-items:center; cursor:pointer; transition:background .18s ease-out; } .ds-switch:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-switch--on { background:#003716; } .ds-thumb { width:24px; height:24px; border-radius:50%; background:#fff; transition:transform .18s ease-out; } .ds-switch--on .ds-thumb { transform:translateX(18px); }"
+    },
+    {
+      "name": "Floating Tab Bar",
+      "kind": "nav",
+      "refersTo": "tab-bar",
+      "description": "The signature chrome: a 68px white pill inset from the edges, floating over content, with a raised orange Post FAB at centre.",
+      "html": "<nav class=\"ds-tabbar\"><a class=\"ds-tab ds-tab--on\"><span class=\"ds-tabchip\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M3 11l9-8 9 8\" stroke=\"#003716\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M5 10v9h14v-9\" stroke=\"#003716\" stroke-width=\"2.2\"/></svg></span>Home</a><a class=\"ds-tab\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\"><rect x=\"3.5\" y=\"7\" width=\"17\" height=\"12\" rx=\"2.5\" stroke=\"currentColor\" stroke-width=\"2.2\"/><path d=\"M8 7V5.5A1.5 1.5 0 019.5 4h5A1.5 1.5 0 0116 5.5V7\" stroke=\"currentColor\" stroke-width=\"2.2\"/></svg>My Gigs</a><a class=\"ds-tab\"><span class=\"ds-fab\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M12 5v14M5 12h14\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></svg></span></a><a class=\"ds-tab\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2.5\" stroke=\"currentColor\" stroke-width=\"2.2\"/><path d=\"M3.5 6.5l8.5 6.5 8.5-6.5\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/></svg>Inbox</a><a class=\"ds-tab\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\"><circle cx=\"12\" cy=\"8\" r=\"3.5\" stroke=\"currentColor\" stroke-width=\"2.2\"/><path d=\"M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg>Profile</a></nav>",
+      "css": ".ds-tabbar { display:flex; align-items:center; justify-content:space-around; height:68px; padding:0 8px; border-radius:34px; background:#fff; box-shadow:0 8px 24px rgba(0,0,0,.12); } .ds-tab { display:flex; flex-direction:column; align-items:center; gap:3px; color:rgba(17,17,17,.4); font:600 10px 'Outfit',system-ui,sans-serif; text-decoration:none; cursor:pointer; transition:color .15s ease; } .ds-tab--on { color:#003716; } .ds-tabchip { display:flex; align-items:center; justify-content:center; width:34px; height:26px; border-radius:13px; background:rgba(0,55,22,.09); } .ds-fab { display:flex; align-items:center; justify-content:center; width:52px; height:52px; margin-top:-26px; border-radius:50%; background:#FF823A; box-shadow:0 8px 18px rgba(255,130,58,.4); transition:transform .25s ease; } .ds-tab:active .ds-fab { transform:rotate(45deg); }"
+    },
+    {
+      "name": "Speed-Dial Item",
+      "kind": "custom",
+      "refersTo": "speed-dial-item",
+      "description": "One of three action pills raised by the Post FAB, with a green-tint circular icon backing.",
+      "html": "<button class=\"ds-speeditem\"><span class=\"ds-speedicon\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.8-2.8 2.6-2.6z\" stroke=\"#003716\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/></svg></span>Post a service</button>",
+      "css": ".ds-speeditem { display:inline-flex; align-items:center; gap:10px; height:48px; padding:0 18px 0 14px; border:none; border-radius:24px; background:#fff; color:#111; font:700 13px 'Outfit',system-ui,sans-serif; white-space:nowrap; box-shadow:0 8px 18px rgba(0,0,0,.16); cursor:pointer; transition:transform .22s cubic-bezier(.2,.9,.3,1.4); } .ds-speeditem:focus-visible { outline:2px solid #003716; outline-offset:2px; } .ds-speeditem:active { transform:scale(.97); } .ds-speedicon { display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; background:rgba(0,55,22,.09); flex-shrink:0; } @media (prefers-reduced-motion: reduce) { .ds-speeditem { transition:opacity .12s linear; } }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "chip",
+      "refersTo": "status-pill",
+      "description": "Lifecycle state on a gig card. Green tint for settled states, neutral 6% black for in-flight ones.",
+      "html": "<span class=\"ds-status ds-status--ok\">Confirmed</span><span class=\"ds-status\">In progress</span>",
+      "css": ".ds-status { display:inline-block; margin-right:8px; padding:4px 10px; border-radius:10px; background:rgba(0,0,0,.06); color:rgba(17,17,17,.55); font:700 11px 'Outfit',system-ui,sans-serif; } .ds-status--ok { background:rgba(0,55,22,.09); color:#003716; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Sunlit Trade Stall",
+    "overview": "Daala is an open-air marketplace rendered in software. The canvas is sun-bleached cream, the objects on it are clean white cards, and two brand colours split the emotional labour between them: a deep, grounded green that reassures, and a vibrant orange that invites. It should feel like a well-run stall on a bright street — someone you can see, run by someone who has your back — not a bank, not a corporation, and emphatically not a classifieds board. Every surface is soft-cornered and generously spaced, because the moment this product has to earn is the moment a stranger hands over money.\n\nDensity is deliberately low and legibility deliberately high. People use this outdoors, one-handed, in hard South African daylight, on entry-level Android hardware, and they arrive with varied reading confidence. So type runs large and heavy, tap targets run generous, colour does the wayfinding, and copy stays plain. The register is product, not brand: the interface has no ambition of its own and should disappear into the task of finding, offering, and completing a gig. Where a marketing surface would reach for an effect, this system reaches for a bigger number and more air.\n\nWhat it explicitly rejects is the classifieds failure mode PRODUCT.md names by hand: the Gumtree/OLX-style dense, spammy listing wall — endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe. Daala answers that structurally. Rows are cards with breathing room, every gig carries a named human with initials and a rating, and money is colour-coded by whether it is settled, protected, or moving. Trust is not a badge bolted onto the corner of a screen; it is the layout.",
+    "keyCharacteristics": [
+      "Warm cream (#FAF7EC) canvas with white cards floating on it — never a cold white, never a grey app-chrome surface.",
+      "Two brand colours in tension: green = safe and settled, orange = energy and the next action.",
+      "Rounded-everything (10-34px); the pill is the signature shape — nav bar, CTAs, tags, toggles, search.",
+      "Soft ambient shadows carry all depth. This system is intentionally not flat and not 1px-bordered.",
+      "One typeface (Outfit, a geometric sans) at heavy weights (600-900); hierarchy from weight and size, never a second family.",
+      "One hero-scale figure per primary screen, and money always coloured by meaning."
+    ],
+    "rules": [
+      {
+        "name": "The One-Action Orange Rule",
+        "body": "Orange leads exactly one primary forward action per screen. Its scarcity as a button is the 'do this next' signal. Two competing orange CTAs on one screen are prohibited. Orange may additionally appear as a small accent (ratings, weekly earnings, unread dot) but never as a second large action and never as decoration of structure.",
+        "section": "colors"
+      },
+      {
+        "name": "The Green Money Rule",
+        "body": "Settled and protected money is green: prices, positive transaction amounts, the wallet balance card, escrow surfaces, fixed payouts. Money leaving or moving forward is orange (Withdraw, Apply). Money lost to the platform — fees, withdrawals in a transaction list — is neutral ink-55%, never red. The single deliberate exception is Home's 'earned this week' figure, rendered orange as a motivational energy highlight rather than a settled balance.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm-Never-White Rule",
+        "body": "No screen background is pure white and no surface is a cold grey. Backgrounds are cream (#FAF7EC); objects are white cards on top of it. A grey app-chrome surface reads as a generic tool and is prohibited.",
+        "section": "colors"
+      },
+      {
+        "name": "The Readable-Muted Rule",
+        "body": "Muted text bottoms out at ink-55% (4.7:1 on cream — passes). Anything fainter is not text. This is a deliberate correction to the reference mockup, which sets meta at ink-45% (3.3:1) and search placeholders at ink-35% (2.6:1); both fail against cream and both fail hardest in exactly the bright-daylight, varied-literacy conditions this product ships into. Hierarchy below ink-55% is carried by size and weight, which this system has in abundance — never by fading text further.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heavy-Weight Rule",
+        "body": "Hierarchy is carried by weight (700/800) and size, never by colour alone and never by a second typeface. If something needs emphasis it gets heavier or bigger; it does not get a display font, an outline, or a gradient.",
+        "section": "typography"
+      },
+      {
+        "name": "The Big-Number Rule",
+        "body": "Each primary screen earns exactly one hero-scale figure — gigs nearby on Home, the balance on Wallet. Competing large numbers dilute it into a dashboard.",
+        "section": "typography"
+      },
+      {
+        "name": "The Complete-Scale Rule",
+        "body": "Every size and weight a screen needs is a named role in the token file. A screen that reaches for a one-off fontSize override has found a missing role — add the role, don't patch the screen. Local overrides are how a documented scale quietly stops being the scale.",
+        "section": "typography"
+      },
+      {
+        "name": "The Cushioned-Card Rule",
+        "body": "Cards are lifted, never outlined. A white card's edge is defined by its shadow against the cream. An outer border on a card is prohibited. The only legitimate strokes in this system are a hairline divider inside a container and the 2px green outline on a selected two-option pill.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Tinted-Glow Rule",
+        "body": "Primary CTAs and the FAB cast a shadow in their own brand hue, not neutral black. The glow is part of the button's identity, not an effect layered on top of it.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Shadow-Ceiling Rule",
+        "body": "Neutral shadow opacity never exceeds 16%, and blur never drops below 6px. If a shadow reads as a hard edge rather than as air under an object, it is wrong — go wider and fainter, never darker and tighter.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put every colour, radius, shadow, spacing step, and text style through the tokens in lib/theme/app_theme.dart (AppColors / AppRadius / AppShadows / AppText). A raw hex or a bare number in a screen is a bug.",
+      "Do add a named role to the token file when a screen needs a size the scale doesn't have. Never a local fontSize override — see The Complete-Scale Rule.",
+      "Do keep every screen background cream (#FAF7EC) and float white cards on top of it.",
+      "Do lead exactly one primary forward action per screen in orange, and keep orange's other appearances (ratings, weekly earnings, unread dot) small and sparing.",
+      "Do colour money by meaning: green for settled, held, and positive; ink-55% for fees and outgoing; orange only for the Home weekly-earnings highlight and for actions that move money.",
+      "Do write all money in South African Rand through the shared formatter — R1 250, R450, R37.50 — stored as integer minor units.",
+      "Do use South African places in every example, label, and fixture: suburb and city, Braamfontein 2001, within 5km of Melville.",
+      "Do lift cards with the card / soft shadows and let the shadow define the edge; use strokes only as internal hairline dividers or the selected two-option outline.",
+      "Do carry hierarchy with Outfit weights (700/800) and size, and keep exactly one hero-scale number per primary screen.",
+      "Do give primary CTAs and the FAB their tinted brand-hue glow.",
+      "Do surface people, status, and protected-money cues on every list: initials avatar, name, rating, lifecycle status.",
+      "Do ship every interactive component with pressed, disabled, and loading states, and every list with loading, empty, and error states.",
+      "Do keep copy plain, warm, and legible at a glance — Earn Moola, Browse Gigs, Apply Now, tasker, helper."
+    ],
+    "donts": [
+      "Don't build the classifieds wall. PRODUCT.md names the failure mode exactly: the Gumtree/OLX-style dense, spammy listing wall — endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe. If a list has no named humans, no status, and no breathing room, it is that wall.",
+      "Don't use a pure-white or cold-grey screen background, or put an outer border on a card. (Violates The Warm-Never-White and The Cushioned-Card Rules.)",
+      "Don't show any currency but Rand. The symbol is R, prefixed. No other currency symbol appears anywhere in this product.",
+      "Don't carry the reference mockup's placeholder content into real screens. Its foreign-currency amounts and Australian locations exist only because it was a mockup; none of it transfers.",
+      "Don't run two orange actions on one screen, use orange to fill a large area, or use it to decorate structure.",
+      "Don't set text below ink-55%, and don't hard-code a grey for muted text — muted is always alpha over ink so it composites truly against the cream. (The Readable-Muted Rule.)",
+      "Don't introduce a second typeface, a serif or display face, or set structural text below weight 600.",
+      "Don't use border-left-style side stripes, gradient text, or glassmorphism. None exist in this system and none may be added.",
+      "Don't deepen a shadow past 16% neutral opacity or invent a heavier elevation step. If it reads as a hard edge, it is wrong.",
+      "Don't exceed 250ms on any transition, animate anything continuously, or animate for decoration. Motion conveys state — tab change, sheet, FAB expand — and nothing else. Every animation has a reduced-motion fallback.",
+      "Don't reach for a modal first. Sheets are for self-contained sub-tasks with a commit point; anything editable in place is edited in place.",
+      "Don't reinvent platform affordances. The iOS edge-swipe back and the Android system Back always work, content always sits inside safe-area and window insets, and touch targets never fall below 44pt / 48dp.",
+      "Don't use red, or any colour outside these tokens, to signal an error. Errors are stated in plain words."
+    ]
+  }
+}

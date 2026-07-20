@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EFEDE6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
+  a{color:#003716}
+  a:hover{color:#FF823A}
+  .dv-turn{padding:48px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08)}
+  .dv-thd{display:flex;align-items:baseline;gap:12px;margin:0 0 8px}
+  .dv-tid{font:700 11px ui-monospace,Menlo,monospace;padding:4px 8px;background:#003716;color:#fff;border-radius:5px;text-decoration:none}
+  .dv-tname{font:700 16px/1.3 'Plus Jakarta Sans',sans-serif;color:#1a1a1a}
+  .dv-tsub{font:500 13px/1.5 'Plus Jakarta Sans',sans-serif;color:rgba(0,0,0,.5);margin:0 0 28px}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+  .dv-oid{font:700 11px ui-monospace,Menlo,monospace;padding:4px 8px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:6px;text-decoration:none}
+  .dv-olabel{display:flex;flex-direction:column;gap:2px;font:500 12px/1.4 'Plus Jakarta Sans',sans-serif;color:rgba(0,0,0,.6)}
+  .dv-oname{font:700 14px/1.3 'Plus Jakarta Sans',sans-serif;color:#1a1a1a}
+  .dv-opt:target .dv-oid{background:#FF823A;color:#fff}
+  .dv-next{margin:28px 0 0;font:500 13px/1.6 'Plus Jakarta Sans',sans-serif;color:rgba(0,0,0,.5);max-width:640px}
+  .phone{width:380px;height:822px;border-radius:46px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.16), 0 0 0 10px #111;overflow:hidden;position:relative;flex-shrink:0}
+  .phone-inner{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden}
+  .status{display:flex;align-items:center;justify-content:space-between;padding:16px 26px 4px;font:600 15px 'Plus Jakarta Sans',sans-serif;flex-shrink:0}
+  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:100px;height:26px;background:#111;border-radius:20px;z-index:30}
+  .scroll{flex:1;overflow-y:auto;padding-bottom:110px}
+  .pillbtn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card{border-radius:22px;background:#fff}
+  .tabbar{position:absolute;left:16px;right:16px;bottom:16px;height:68px;border-radius:34px;background:#fff;display:flex;align-items:center;justify-content:space-around;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:20}
+  .tabitem{display:flex;flex-direction:column;align-items:center;gap:3px;font:600 10px 'Plus Jakarta Sans',sans-serif}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t4">
+  <div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">Final Design (Khaki theme)</span></div>
+  <p class="dv-tsub">Home (with FAB menu fix), gig detail/post-a-gig/booking/wallet/profile, and Browse/My Gigs/Inbox — all carried over from <a class="dv-oid" href="#1e">1e</a>, <a class="dv-oid" href="#2a">2a</a> and <a class="dv-oid" href="#3a">3a</a>, retextured in the Khaki palette.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="4a">
+      <div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a><span class="dv-oname">Home</span></div>
+      <div class="phone" style="background:#FAF7EC">
+        <div data-ph="0" class="notch"></div>
+        <div class="phone-inner">
+          <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+
+          <div class="scroll" style="padding:18px 18px 0">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+              <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><div style="width:22px;height:22px;border-radius:50%;background:#003716;color:#fff;font:700 10px 'Plus Jakarta Sans';display:flex;align-items:center;justify-content:center">JD</div></div>
+              <img src="daala-logo.png" alt="daala logo" style="height:26px;width:auto;object-fit:contain">
+              <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#111" stroke-width="2.2"></circle><path d="M20 20l-4-4" stroke="#111" stroke-width="2.2" stroke-linecap="round"></path></svg></div>
+            </div>
+
+            <div style="display:flex;padding:4px;background:rgba(0,0,0,.05);border-radius:22px;margin-bottom:22px">
+              <div style="{{ earnTabStyle }}" onClick="{{ setHomeEarn }}">Earn Moola</div><div style="{{ browseTabStyle }}" onClick="{{ setHomeBrowse }}">Browse Gigs</div>
+            </div>
+
+            <sc-if value="{{ homeIsEarn }}" hint-placeholder-val="{{ true }}">
+            <div style="text-align:center;margin-bottom:22px">
+              <div style="font:600 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:6px">Available Nearby</div>
+              <div style="font:800 52px/1 'Plus Jakarta Sans';color:#111">24 Gigs</div>
+              <div style="font:500 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.4);margin-top:6px">within 5km of Fitzroy</div>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-bottom:14px">
+              <div class="card" style="flex:1;padding:18px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.04)">
+                <div style="font:600 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:8px">My Offers</div>
+                <div style="font:700 17px 'Plus Jakarta Sans';color:#111">3 pending replies</div>
+              </div>
+              <div class="card" style="flex:1;padding:18px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.04)">
+                <div style="font:600 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:8px">This Week</div>
+                <div style="font:700 17px 'Plus Jakarta Sans';color:#FF823A">$410 earned</div>
+              </div>
+            </div>
+
+            <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+              <div style="width:38px;height:38px;border-radius:50%;background:#FF823A22;display:flex;align-items:center;justify-content:center;font-size:18px">🗓️</div>
+              <div style="flex:1">
+                <div style="font:700 14px 'Plus Jakarta Sans';color:#111">Garden cleanup — tomorrow 9am</div>
+                <div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Booked with Marlo T.</div>
+              </div>
+            </div>
+
+            <div style="font:700 16px 'Plus Jakarta Sans';color:#111;margin-bottom:12px">Gigs For You</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="1" style="width:44px;height:44px;border-radius:14px;background:#EFE9D4"></div>
+                <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Assemble flatpack shelving</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">1.2km · posted 2h ago</div></div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$65</div>
+              </div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="2" style="width:44px;height:44px;border-radius:14px;background:#EFE9D4"></div>
+                <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Logo design for cafe</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Remote · posted 5h ago</div></div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$300</div>
+              </div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="3" style="width:44px;height:44px;border-radius:14px;background:#EFE9D4"></div>
+                <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Grocery delivery run</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">0.8km · posted 20m ago</div></div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$28</div>
+              </div>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ homeIsBrowse }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div style="font:700 16px 'Plus Jakarta Sans';color:#111">Home &amp; Garden</div>
+              <div style="font:700 12px 'Plus Jakarta Sans';color:#003716">See all</div>
+            </div>
+            <div style="display:flex;gap:10px;overflow-x:auto;margin-bottom:24px;padding-bottom:2px">
+              <div class="card" style="flex-shrink:0;width:140px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="34" style="height:88px;background:#EFE9D4"></div>
+                <div style="padding:10px"><div style="font:700 12px 'Plus Jakarta Sans';color:#111">Weekly hedge trim</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45);margin:2px 0 6px">2.4km</div><div style="font:800 14px 'Plus Jakarta Sans';color:#003716">$45</div></div>
+              </div>
+              <div class="card" style="flex-shrink:0;width:140px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="35" style="height:88px;background:#EFE9D4"></div>
+                <div style="padding:10px"><div style="font:700 12px 'Plus Jakarta Sans';color:#111">Garden bed weeding</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45);margin:2px 0 6px">1.6km</div><div style="font:800 14px 'Plus Jakarta Sans';color:#003716">$38</div></div>
+              </div>
+              <div class="card" style="flex-shrink:0;width:140px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="36" style="height:88px;background:#EFE9D4"></div>
+                <div style="padding:10px"><div style="font:700 12px 'Plus Jakarta Sans';color:#111">Lawn mowing</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45);margin:2px 0 6px">0.9km</div><div style="font:800 14px 'Plus Jakarta Sans';color:#003716">$55</div></div>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div style="font:700 16px 'Plus Jakarta Sans';color:#111">Delivery &amp; Errands</div>
+              <div style="font:700 12px 'Plus Jakarta Sans';color:#003716">See all</div>
+            </div>
+            <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:2px">
+              <div class="card" style="flex-shrink:0;width:140px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="37" style="height:88px;background:#EFE9D4"></div>
+                <div style="padding:10px"><div style="font:700 12px 'Plus Jakarta Sans';color:#111">Grocery delivery run</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45);margin:2px 0 6px">0.8km</div><div style="font:800 14px 'Plus Jakarta Sans';color:#003716">$28</div></div>
+              </div>
+              <div class="card" style="flex-shrink:0;width:140px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="38" style="height:88px;background:#EFE9D4"></div>
+                <div style="padding:10px"><div style="font:700 12px 'Plus Jakarta Sans';color:#111">Pharmacy pickup</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45);margin:2px 0 6px">1.1km</div><div style="font:800 14px 'Plus Jakarta Sans';color:#003716">$18</div></div>
+              </div>
+              <div class="card" style="flex-shrink:0;width:140px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="39" style="height:88px;background:#EFE9D4"></div>
+                <div style="padding:10px"><div style="font:700 12px 'Plus Jakarta Sans';color:#111">Post office run</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45);margin:2px 0 6px">2.0km</div><div style="font:800 14px 'Plus Jakarta Sans';color:#003716">$22</div></div>
+              </div>
+            </div>
+
+            <div style="font:700 16px 'Plus Jakarta Sans';color:#111;margin-bottom:12px">Categories</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="card" style="padding:0;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+                <div data-ph="28" style="height:76px;background:#00371622"></div>
+                <div style="padding:10px 12px"><div style="font:700 13px 'Plus Jakarta Sans';color:#111">Home &amp; Garden</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">38 gigs</div></div>
+              </div>
+              <div class="card" style="padding:0;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+                <div data-ph="29" style="height:76px;background:#FF823A22"></div>
+                <div style="padding:10px 12px"><div style="font:700 13px 'Plus Jakarta Sans';color:#111">Moving &amp; Hauling</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">21 gigs</div></div>
+              </div>
+              <div class="card" style="padding:0;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+                <div data-ph="30" style="height:76px;background:#00371622"></div>
+                <div style="padding:10px 12px"><div style="font:700 13px 'Plus Jakarta Sans';color:#111">Design &amp; Creative</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">17 gigs</div></div>
+              </div>
+              <div class="card" style="padding:0;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+                <div data-ph="31" style="height:76px;background:#FF823A22"></div>
+                <div style="padding:10px 12px"><div style="font:700 13px 'Plus Jakarta Sans';color:#111">Delivery &amp; Errands</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">54 gigs</div></div>
+              </div>
+              <div class="card" style="padding:0;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+                <div data-ph="32" style="height:76px;background:#00371622"></div>
+                <div style="padding:10px 12px"><div style="font:700 13px 'Plus Jakarta Sans';color:#111">Cleaning</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">12 gigs</div></div>
+              </div>
+              <div class="card" style="padding:0;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+                <div data-ph="33" style="height:76px;background:#FF823A22"></div>
+                <div style="padding:10px 12px"><div style="font:700 13px 'Plus Jakarta Sans';color:#111">Handyman</div><div style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">9 gigs</div></div>
+              </div>
+            </div>
+            </sc-if>
+          </div>
+
+          <div class="tabbar">
+            <div class="tabitem" style="color:#003716"><div style="width:34px;height:26px;border-radius:13px;background:#00371618;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8" stroke="#003716" stroke-width="2.2" stroke-linecap="round"></path><path d="M5 10v9h14v-9" stroke="#003716" stroke-width="2.2"></path></svg></div>Home</div>
+            <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M8 7V5.5A1.5 1.5 0 019.5 4h5A1.5 1.5 0 0116 5.5V7" stroke="currentColor" stroke-width="2.2"></path></svg>My Gigs</div>
+            <div class="tabitem" style="color:#fff" onClick="{{ toggleFabE }}"><div style="width:52px;height:52px;border-radius:50%;background:#FF823A;display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 8px 18px rgba(255,130,58,.4);cursor:pointer"><div style="{{ fabIconWrapStyleE }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg></div></div></div>
+            <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M3.5 6.5l8.5 6.5 8.5-6.5" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"></path></svg>Inbox</div>
+            <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>Profile</div>
+          </div>
+
+          <div style="{{ serviceItemStyleE }}">
+            <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.8-2.8 2.6-2.6z" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+            <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a service</span>
+          </div>
+
+          <div style="{{ requestItemStyleE }}">
+            <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 9a3 3 0 116 0c0 2-3 2-3 5" stroke="#003716" stroke-width="1.8" stroke-linecap="round"></path><circle cx="12" cy="18" r="1.2" fill="#003716"></circle><circle cx="12" cy="12" r="9" stroke="#003716" stroke-width="1.8"></circle></svg></div>
+            <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a request</span>
+          </div>
+
+          <div style="{{ mediaItemStyleE }}">
+            <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="14" rx="2.5" stroke="#003716" stroke-width="1.8"></rect><circle cx="9" cy="10.5" r="1.6" fill="#003716"></circle><path d="M5 17l4.5-4.5 3 3 3-4L20 17" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+            <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post to media</span>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="dv-opt" id="4b">
+            <div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a><span class="dv-oname">Gig detail, post-a-gig, booking, wallet &amp; profile&nbsp;</span></div>
+      <div style="display:flex;gap:36px;flex-wrap:wrap">
+
+        <!-- GIG DETAIL -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="4" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+                <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M10 2L2 10l8 8" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <div style="height:44px;padding:0 18px;border-radius:22px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.6-9.5-9C.7 8 2 4 6 4c2.2 0 3.6 1.2 4.5 2.6C11.4 5.2 12.8 4 15 4c4 0 5.3 4 3.5 8-2.5 4.4-9.5 9-9.5 9z" stroke="#003716" stroke-width="1.8"></path></svg><span style="font:700 13px 'Plus Jakarta Sans';color:#003716">Save</span></div>
+              </div>
+              <div style="font:800 30px/1.2 'Plus Jakarta Sans';color:#111;margin-bottom:10px">Help moving a 2-bed apartment</div>
+              <div style="display:inline-block;padding:6px 14px;border-radius:14px;background:#00371618;font:700 12px 'Plus Jakarta Sans';color:#003716;margin-bottom:22px">Moving · One-time</div>
+
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="width:44px;height:44px;border-radius:50%;background:#003716;color:#fff;font:700 14px 'Plus Jakarta Sans';display:flex;align-items:center;justify-content:center;flex-shrink:0">MT</div>
+                <div style="flex:1">
+                  <div style="font:700 15px 'Plus Jakarta Sans';color:#111">Marlo T.</div>
+                  <div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">★ 4.8 · Posted 2 hours ago</div>
+                </div>
+              </div>
+
+              <div class="card" style="padding:18px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="font-size:16px">📍</span><span style="font:600 14px 'Plus Jakarta Sans';color:#111">Fitzroy VIC 3065</span></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="font-size:16px">🗓️</span><span style="font:600 14px 'Plus Jakarta Sans';color:#111">Fri 12 Jul, 9:00am</span></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="font-size:16px">👥</span><span style="font:600 14px 'Plus Jakarta Sans';color:#111">1–2 helpers needed</span></div>
+              </div>
+
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
+                <div style="padding:8px 14px;border-radius:14px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Heavy lifting</div>
+                <div style="padding:8px 14px;border-radius:14px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Own transport</div>
+                <div style="padding:8px 14px;border-radius:14px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Flexible timing</div>
+              </div>
+
+              <div class="card" style="display:flex;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:18px">
+                <div style="flex:1;padding:18px;text-align:center;border-right:1px solid rgba(0,0,0,.08)">
+                  <div style="font:600 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:6px">Estimated Payout</div>
+                  <div style="font:800 22px 'Plus Jakarta Sans';color:#003716">$65</div>
+                </div>
+                <div style="flex:1;padding:18px;text-align:center">
+                  <div style="font:600 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:6px">Duration</div>
+                  <div style="font:800 22px 'Plus Jakarta Sans';color:#111">~2 hrs</div>
+                </div>
+              </div>
+
+              <div style="height:56px;border-radius:28px;background:#FF823A;display:flex;align-items:center;justify-content:center;font:700 16px 'Plus Jakarta Sans';color:#fff;box-shadow:0 6px 16px rgba(255,130,58,.35)">Apply Now</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST A GIG -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="5" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+                <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M10 2L2 10l8 8" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <div style="height:44px;padding:0 18px;border-radius:22px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06);display:flex;align-items:center"><span style="font:700 13px 'Plus Jakarta Sans';color:#003716">Get Help</span></div>
+              </div>
+              <div style="font:800 28px/1.25 'Plus Jakarta Sans';color:#111;margin-bottom:8px">Set up your gig to find the right help</div>
+              <div style="font:500 14px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:22px">Add details so taskers know what to expect.</div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.55);margin-bottom:8px">Category</div>
+              <div class="card" style="padding:14px;display:flex;align-items:center;gap:14px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div data-ph="6" style="width:56px;height:56px;border-radius:14px;background:#EFE9D4;flex-shrink:0"></div>
+                <div>
+                  <div style="font:700 15px 'Plus Jakarta Sans';color:#111">Home &amp; Garden</div>
+                  <div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Moving · One-time</div>
+                </div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.55);margin-bottom:8px">Budget</div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:36px;height:36px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;font-size:16px">💰</div>
+                  <div style="font:600 14px 'Plus Jakarta Sans';color:#111">Budget Range</div>
+                </div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#111">$65–$90</div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.55);margin-bottom:10px">Pricing Type</div>
+              <div style="display:flex;gap:10px;margin-bottom:22px">
+                <div style="flex:1;text-align:center;padding:14px 0;border-radius:22px;border:2px solid #003716;font:700 14px 'Plus Jakarta Sans';color:#003716">Fixed Price</div>
+                <div style="flex:1;text-align:center;padding:14px 0;border-radius:22px;background:rgba(0,0,0,.06);font:600 14px 'Plus Jakarta Sans';color:rgba(0,0,0,.4)">Hourly Rate</div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.55);margin-bottom:10px">Schedule</div>
+              <div style="display:flex;gap:10px;margin-bottom:22px">
+                <div style="flex:1;text-align:center;padding:14px 0;border-radius:22px;border:2px solid #003716;font:700 14px 'Plus Jakarta Sans';color:#003716">One-time</div>
+                <div style="flex:1;text-align:center;padding:14px 0;border-radius:22px;background:rgba(0,0,0,.06);font:600 14px 'Plus Jakarta Sans';color:rgba(0,0,0,.4)">Recurring</div>
+              </div>
+
+              <div class="card" style="display:flex;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:18px">
+                <div style="flex:1;padding:18px;text-align:center;border-right:1px solid rgba(0,0,0,.08)">
+                  <div style="font:600 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:6px">Estimated Reach</div>
+                  <div style="font:800 20px 'Plus Jakarta Sans';color:#111">40 taskers</div>
+                </div>
+                <div style="flex:1;padding:18px;text-align:center">
+                  <div style="font:600 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);margin-bottom:6px">Suggested Price</div>
+                  <div style="font:800 20px 'Plus Jakarta Sans';color:#003716">$72</div>
+                </div>
+              </div>
+
+              <div style="height:56px;border-radius:28px;background:#003716;display:flex;align-items:center;justify-content:center;font:700 16px 'Plus Jakarta Sans';color:#fff;box-shadow:0 6px 16px rgba(0,55,22,.3)">Post Gig</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOOKING EDIT MODAL -->
+        <div class="phone" style="background:#00000055">
+          <div data-ph="7" class="notch"></div>
+          <div class="phone-inner" style="justify-content:flex-end">
+            <div style="background:#FAF7EC;border-radius:28px 28px 0 0;padding:20px 18px 40px;max-height:88%;overflow-y:auto">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+                <span style="font:700 15px 'Plus Jakarta Sans';color:#003716">Cancel</span>
+                <span style="font:700 17px 'Plus Jakarta Sans';color:#111">Edit Booking</span>
+                <span style="font:700 15px 'Plus Jakarta Sans';color:rgba(0,0,0,.3)">Done</span>
+              </div>
+
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+                <span style="font:600 15px 'Plus Jakarta Sans';color:#111">Booking Date</span>
+                <span style="font:600 15px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">12 Jul 2026</span>
+              </div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+                <span style="font:600 15px 'Plus Jakarta Sans';color:#111">Recurring</span>
+                <div style="width:46px;height:28px;border-radius:14px;background:#003716;display:flex;align-items:center;padding:2px"><div data-ph="8" style="width:24px;height:24px;border-radius:50%;background:#fff;margin-left:auto"></div></div>
+              </div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+                <span style="font:600 15px 'Plus Jakarta Sans';color:#111">Frequency</span>
+                <span style="font:600 15px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">Weekly</span>
+              </div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+                <span style="font:600 15px 'Plus Jakarta Sans';color:#111">Reminder</span>
+                <div style="width:46px;height:28px;border-radius:14px;background:#003716;display:flex;align-items:center;padding:2px"><div data-ph="9" style="width:24px;height:24px;border-radius:50%;background:#fff;margin-left:auto"></div></div>
+              </div>
+              <div class="card" style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+                <span style="font:600 15px 'Plus Jakarta Sans';color:#111">Auto-confirm Helper</span>
+                <div style="width:46px;height:28px;border-radius:14px;background:rgba(0,0,0,.15);display:flex;align-items:center;padding:2px"><div data-ph="10" style="width:24px;height:24px;border-radius:50%;background:#fff"></div></div>
+              </div>
+              <p style="font:500 12px/1.6 'Plus Jakarta Sans';color:rgba(0,0,0,.45);text-align:center;margin:0">Helpers are notified as soon as you confirm a booking, typically within a few minutes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WALLET -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="11" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+                <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M10 2L2 10l8 8" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <span style="font:700 18px 'Plus Jakarta Sans';color:#111">My Wallet</span>
+                <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#111" stroke-width="2.4" stroke-linecap="round"></path></svg></div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);text-transform:uppercase;margin-bottom:8px">Balance</div>
+              <div class="card" style="padding:20px;background:#003716;margin-bottom:22px">
+                <div style="font:600 13px 'Plus Jakarta Sans';color:rgba(255,255,255,.7);margin-bottom:6px">Available Balance</div>
+                <div style="font:800 30px 'Plus Jakarta Sans';color:#fff;margin-bottom:16px">$1,978.85</div>
+                <div style="display:inline-block;padding:10px 18px;border-radius:18px;background:#FF823A;font:700 13px 'Plus Jakarta Sans';color:#fff">Withdraw to Bank</div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);text-transform:uppercase;margin-bottom:8px">Recent Gigs</div>
+              <div class="card" style="padding:0;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);overflow:hidden">
+                <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.06)">
+                  <span style="font:600 14px 'Plus Jakarta Sans';color:#111">Grocery delivery run</span>
+                  <span style="font:800 14px 'Plus Jakarta Sans';color:#003716">+$28.00</span>
+                </div>
+                <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.06)">
+                  <span style="font:600 14px 'Plus Jakarta Sans';color:#111">Logo design deposit</span>
+                  <span style="font:800 14px 'Plus Jakarta Sans';color:#003716">+$150.00</span>
+                </div>
+                <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.06)">
+                  <span style="font:600 14px 'Plus Jakarta Sans';color:#111">Platform fee</span>
+                  <span style="font:800 14px 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">-$4.20</span>
+                </div>
+                <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                  <span style="font:600 14px 'Plus Jakarta Sans';color:#111">Withdrawal to bank</span>
+                  <span style="font:800 14px 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">-$200.00</span>
+                </div>
+              </div>
+
+              <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <span style="font-size:18px">💳</span>
+                <div style="flex:1">
+                  <div style="font:700 14px 'Plus Jakarta Sans';color:#111">Add payment method</div>
+                  <div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Bank account or card</div>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#003716" stroke-width="2.4" stroke-linecap="round"></path></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="12" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+                <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M10 2L2 10l8 8" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <span style="font:700 18px 'Plus Jakarta Sans';color:#111">Profile</span>
+                <div class="pillbtn" style="background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="#111" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:22px">
+                <div style="width:84px;height:84px;border-radius:50%;background:#003716;color:#fff;font:800 28px 'Plus Jakarta Sans';display:flex;align-items:center;justify-content:center;margin-bottom:12px">JD</div>
+                <div style="font:800 20px 'Plus Jakarta Sans';color:#111">Jordan Dae</div>
+                <div style="font:600 13px 'Plus Jakarta Sans';color:#FF823A;margin-top:4px">★ 4.9 · 128 reviews</div>
+              </div>
+
+              <div style="display:flex;gap:10px;margin-bottom:20px">
+                <div class="card" style="flex:1;padding:14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div style="font:800 18px 'Plus Jakarta Sans';color:#111">62</div>
+                  <div style="font:600 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">Gigs Done</div>
+                </div>
+                <div class="card" style="flex:1;padding:14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div style="font:800 18px 'Plus Jakarta Sans';color:#111">98%</div>
+                  <div style="font:600 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">Response</div>
+                </div>
+                <div class="card" style="flex:1;padding:14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div style="font:800 18px 'Plus Jakarta Sans';color:#111">2023</div>
+                  <div style="font:600 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">Member Since</div>
+                </div>
+              </div>
+
+              <div class="card" style="padding:16px 18px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="font:500 13px/1.6 'Plus Jakarta Sans';color:rgba(0,0,0,.65)">Handy with tools, quick with logos. I take on moving, garden and small design gigs around Fitzroy — reliable and always on time.</div>
+              </div>
+
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+                <div style="padding:8px 14px;border-radius:14px;background:#00371618;font:700 12px 'Plus Jakarta Sans';color:#003716">Gardening</div>
+                <div style="padding:8px 14px;border-radius:14px;background:#00371618;font:700 12px 'Plus Jakarta Sans';color:#003716">Moving</div>
+                <div style="padding:8px 14px;border-radius:14px;background:#00371618;font:700 12px 'Plus Jakarta Sans';color:#003716">Design</div>
+                <div style="padding:8px 14px;border-radius:14px;background:#00371618;font:700 12px 'Plus Jakarta Sans';color:#003716">Delivery</div>
+              </div>
+
+              <div style="font:700 15px 'Plus Jakarta Sans';color:#111;margin-bottom:10px">Reviews</div>
+              <div class="card" style="padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                  <div data-ph="13" style="width:28px;height:28px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <span style="font:700 13px 'Plus Jakarta Sans';color:#111">Ana R.</span>
+                  <span style="font:600 12px 'Plus Jakarta Sans';color:#FF823A;margin-left:auto">★★★★★</span>
+                </div>
+                <div style="font:500 12px/1.5 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">"Showed up early and got the shelving done fast. Would book again."</div>
+              </div>
+              <div class="card" style="padding:14px 16px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                  <div data-ph="14" style="width:28px;height:28px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <span style="font:700 13px 'Plus Jakarta Sans';color:#111">Theo B.</span>
+                  <span style="font:600 12px 'Plus Jakarta Sans';color:#FF823A;margin-left:auto">★★★★★</span>
+                </div>
+                <div style="font:500 12px/1.5 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">"Great communication, delivered the logo concepts a day early."</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="dv-opt" id="4c">
+            <div class="dv-olabel"><a class="dv-oid" href="#4c">4c</a><span class="dv-oname">Browse / My Gigs / Inbox</span></div>
+      <div style="display:flex;gap:36px;flex-wrap:wrap">
+
+        <!-- BROWSE -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="15" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="font:800 26px 'Plus Jakarta Sans';color:#111;margin-bottom:16px">Browse Gigs</div>
+
+              <div style="display:flex;gap:8px;margin-bottom:14px">
+                <div style="flex:1;height:48px;border-radius:24px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06);display:flex;align-items:center;gap:8px;padding:0 16px">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="rgba(0,0,0,.4)" stroke-width="2.2"></circle><path d="M20 20l-4-4" stroke="rgba(0,0,0,.4)" stroke-width="2.2" stroke-linecap="round"></path></svg>
+                  <span style="font:500 14px 'Plus Jakarta Sans';color:rgba(0,0,0,.35)">Search gigs near you</span>
+                </div>
+                <div class="pillbtn" style="background:#003716;box-shadow:0 2px 6px rgba(0,0,0,.1)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="#fff" stroke-width="2.2" stroke-linecap="round"></path></svg></div>
+              </div>
+
+              <div style="display:flex;gap:8px;margin-bottom:20px;overflow-x:auto">
+                <div style="flex-shrink:0;padding:9px 16px;border-radius:16px;background:#003716;font:700 12px 'Plus Jakarta Sans';color:#fff">All</div>
+                <div style="flex-shrink:0;padding:9px 16px;border-radius:16px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Moving</div>
+                <div style="flex-shrink:0;padding:9px 16px;border-radius:16px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Design</div>
+                <div style="flex-shrink:0;padding:9px 16px;border-radius:16px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Delivery</div>
+                <div style="flex-shrink:0;padding:9px 16px;border-radius:16px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05);font:600 12px 'Plus Jakarta Sans';color:#111">Garden</div>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <span style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">142 gigs nearby</span>
+                <span style="font:700 13px 'Plus Jakarta Sans';color:#003716">Sort: Closest</span>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="16" style="width:48px;height:48px;border-radius:14px;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Assemble flatpack shelving</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">1.2km · Moving</div></div>
+                  <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$65</div>
+                </div>
+                <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="17" style="width:48px;height:48px;border-radius:14px;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Logo design for cafe</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Remote · Design</div></div>
+                  <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$300</div>
+                </div>
+                <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="18" style="width:48px;height:48px;border-radius:14px;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Grocery delivery run</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">0.8km · Delivery</div></div>
+                  <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$28</div>
+                </div>
+                <div class="card" style="padding:16px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="19" style="width:48px;height:48px;border-radius:14px;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1"><div style="font:700 14px 'Plus Jakarta Sans';color:#111">Weekly hedge trim</div><div style="font:500 12px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">2.4km · Garden</div></div>
+                  <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$45</div>
+                </div>
+              </div>
+            </div>
+            <div class="tabbar">
+              <div class="tabitem" style="color:#003716"><div style="width:34px;height:26px;border-radius:13px;background:#00371618;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8" stroke="#003716" stroke-width="2.2" stroke-linecap="round"></path><path d="M5 10v9h14v-9" stroke="#003716" stroke-width="2.2"></path></svg></div>Home</div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M8 7V5.5A1.5 1.5 0 019.5 4h5A1.5 1.5 0 0116 5.5V7" stroke="currentColor" stroke-width="2.2"></path></svg>My Gigs</div>
+              <div class="tabitem" style="color:#fff" onClick="{{ toggleFabBrowse }}"><div style="width:52px;height:52px;border-radius:50%;background:#FF823A;display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 8px 18px rgba(255,130,58,.4);cursor:pointer"><div style="{{ fabIconWrapStyleBrowse }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg></div></div></div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M3.5 6.5l8.5 6.5 8.5-6.5" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"></path></svg>Inbox</div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>Profile</div>
+            </div>
+
+            <div style="{{ serviceItemStyleBrowse }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.8-2.8 2.6-2.6z" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a service</span>
+            </div>
+            <div style="{{ requestItemStyleBrowse }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 9a3 3 0 116 0c0 2-3 2-3 5" stroke="#003716" stroke-width="1.8" stroke-linecap="round"></path><circle cx="12" cy="18" r="1.2" fill="#003716"></circle><circle cx="12" cy="12" r="9" stroke="#003716" stroke-width="1.8"></circle></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a request</span>
+            </div>
+            <div style="{{ mediaItemStyleBrowse }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="14" rx="2.5" stroke="#003716" stroke-width="1.8"></rect><circle cx="9" cy="10.5" r="1.6" fill="#003716"></circle><path d="M5 17l4.5-4.5 3 3 3-4L20 17" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post to media</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY GIGS -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="20" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="font:800 26px 'Plus Jakarta Sans';color:#111;margin-bottom:18px">My Gigs</div>
+
+              <div style="display:flex;padding:4px;background:rgba(0,0,0,.05);border-radius:22px;margin-bottom:22px">
+                <div style="flex:1;text-align:center;padding:10px 0;border-radius:18px;background:#fff;font:700 13px 'Plus Jakarta Sans';color:#003716;box-shadow:0 2px 6px rgba(0,0,0,.06)">Upcoming</div>
+                <div style="flex:1;text-align:center;padding:10px 0;font:600 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Applied</div>
+                <div style="flex:1;text-align:center;padding:10px 0;font:600 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.45)">Completed</div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);text-transform:uppercase;margin-bottom:10px">Tomorrow</div>
+              <div class="card" style="padding:16px 18px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="display:flex;align-items:center;justify-content:between;justify-content:space-between;margin-bottom:10px">
+                  <span style="font:700 15px 'Plus Jakarta Sans';color:#111">Garden cleanup</span>
+                  <span style="padding:4px 10px;border-radius:10px;background:#00371618;font:700 11px 'Plus Jakarta Sans';color:#003716">Confirmed</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:28px;height:28px;border-radius:50%;background:#003716;color:#fff;font:700 11px 'Plus Jakarta Sans';display:flex;align-items:center;justify-content:center">MT</div>
+                  <span style="font:600 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">Marlo T. · 9:00am</span>
+                </div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$65 fixed</div>
+              </div>
+
+              <div style="font:700 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);text-transform:uppercase;margin-bottom:10px">This Week</div>
+              <div class="card" style="padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <span style="font:700 15px 'Plus Jakarta Sans';color:#111">Logo design for cafe</span>
+                  <span style="padding:4px 10px;border-radius:10px;background:rgba(0,0,0,.06);font:700 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.5)">In progress</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div data-ph="21" style="width:28px;height:28px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <span style="font:600 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">Fri 12 Jul · Remote</span>
+                </div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$300 fixed</div>
+              </div>
+              <div class="card" style="padding:16px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <span style="font:700 15px 'Plus Jakarta Sans';color:#111">Grocery delivery run</span>
+                  <span style="padding:4px 10px;border-radius:10px;background:#00371618;font:700 11px 'Plus Jakarta Sans';color:#003716">Confirmed</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div data-ph="22" style="width:28px;height:28px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <span style="font:600 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.6)">Sat 13 Jul · 0.8km</span>
+                </div>
+                <div style="font:800 16px 'Plus Jakarta Sans';color:#003716">$28 fixed</div>
+              </div>
+            </div>
+            <div class="tabbar">
+              <div class="tabitem" style="color:#003716"><div style="width:34px;height:26px;border-radius:13px;background:#00371618;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8" stroke="#003716" stroke-width="2.2" stroke-linecap="round"></path><path d="M5 10v9h14v-9" stroke="#003716" stroke-width="2.2"></path></svg></div>Home</div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M8 7V5.5A1.5 1.5 0 019.5 4h5A1.5 1.5 0 0116 5.5V7" stroke="currentColor" stroke-width="2.2"></path></svg>My Gigs</div>
+              <div class="tabitem" style="color:#fff" onClick="{{ toggleFabMyGigs }}"><div style="width:52px;height:52px;border-radius:50%;background:#FF823A;display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 8px 18px rgba(255,130,58,.4);cursor:pointer"><div style="{{ fabIconWrapStyleMyGigs }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg></div></div></div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M3.5 6.5l8.5 6.5 8.5-6.5" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"></path></svg>Inbox</div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>Profile</div>
+            </div>
+
+            <div style="{{ serviceItemStyleMyGigs }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.8-2.8 2.6-2.6z" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a service</span>
+            </div>
+            <div style="{{ requestItemStyleMyGigs }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 9a3 3 0 116 0c0 2-3 2-3 5" stroke="#003716" stroke-width="1.8" stroke-linecap="round"></path><circle cx="12" cy="18" r="1.2" fill="#003716"></circle><circle cx="12" cy="12" r="9" stroke="#003716" stroke-width="1.8"></circle></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a request</span>
+            </div>
+            <div style="{{ mediaItemStyleMyGigs }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="14" rx="2.5" stroke="#003716" stroke-width="1.8"></rect><circle cx="9" cy="10.5" r="1.6" fill="#003716"></circle><path d="M5 17l4.5-4.5 3 3 3-4L20 17" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post to media</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- INBOX -->
+        <div class="phone" style="background:#FAF7EC">
+          <div data-ph="23" class="notch"></div>
+          <div class="phone-inner">
+            <div class="status" style="color:#111"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#111"></rect><rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#111"></rect><rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#111"></rect><rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#111"></rect></svg><svg width="26" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#111" stroke-opacity="0.35" fill="none"></rect><rect x="2" y="2" width="20" height="9" rx="2" fill="#111"></rect></svg></span></div>
+            <div class="scroll" style="padding:18px 18px 40px">
+              <div style="font:800 26px 'Plus Jakarta Sans';color:#111;margin-bottom:18px">Inbox</div>
+
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div style="width:44px;height:44px;border-radius:50%;background:#003716;color:#fff;font:700 14px 'Plus Jakarta Sans';display:flex;align-items:center;justify-content:center;flex-shrink:0">MT</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:700 14px 'Plus Jakarta Sans';color:#111">Marlo T.</span><span style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.4)">2m</span></div>
+                    <div style="font:500 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Sounds good, see you at 9am tomorrow!</div>
+                  </div>
+                  <div data-ph="24" style="width:9px;height:9px;border-radius:50%;background:#FF823A;flex-shrink:0"></div>
+                </div>
+                <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="25" style="width:44px;height:44px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:700 14px 'Plus Jakarta Sans';color:#111">Ana R.</span><span style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.4)">1h</span></div>
+                    <div style="font:500 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Thanks again for the quick turnaround on the shelving!</div>
+                  </div>
+                </div>
+                <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="26" style="width:44px;height:44px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:700 14px 'Plus Jakarta Sans';color:#111">Theo B.</span><span style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.4)">Yesterday</span></div>
+                    <div style="font:500 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Can you send over the final logo files?</div>
+                  </div>
+                </div>
+                <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+                  <div data-ph="27" style="width:44px;height:44px;border-radius:50%;background:#EFE9D4;flex-shrink:0"></div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:700 14px 'Plus Jakarta Sans';color:#111">Groundwork Support</span><span style="font:500 11px 'Plus Jakarta Sans';color:rgba(0,0,0,.4)">2d</span></div>
+                    <div style="font:500 13px 'Plus Jakarta Sans';color:rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your withdrawal of $200.00 has been processed.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tabbar">
+              <div class="tabitem" style="color:#003716"><div style="width:34px;height:26px;border-radius:13px;background:#00371618;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8" stroke="#003716" stroke-width="2.2" stroke-linecap="round"></path><path d="M5 10v9h14v-9" stroke="#003716" stroke-width="2.2"></path></svg></div>Home</div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M8 7V5.5A1.5 1.5 0 019.5 4h5A1.5 1.5 0 0116 5.5V7" stroke="currentColor" stroke-width="2.2"></path></svg>My Gigs</div>
+              <div class="tabitem" style="color:#fff" onClick="{{ toggleFabInbox }}"><div style="width:52px;height:52px;border-radius:50%;background:#FF823A;display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 8px 18px rgba(255,130,58,.4);cursor:pointer"><div style="{{ fabIconWrapStyleInbox }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg></div></div></div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2.2"></rect><path d="M3.5 6.5l8.5 6.5 8.5-6.5" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"></path></svg>Inbox</div>
+              <div class="tabitem" style="color:rgba(0,0,0,.4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>Profile</div>
+            </div>
+
+            <div style="{{ serviceItemStyleInbox }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.8-2.8 2.6-2.6z" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a service</span>
+            </div>
+            <div style="{{ requestItemStyleInbox }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 9a3 3 0 116 0c0 2-3 2-3 5" stroke="#003716" stroke-width="1.8" stroke-linecap="round"></path><circle cx="12" cy="18" r="1.2" fill="#003716"></circle><circle cx="12" cy="12" r="9" stroke="#003716" stroke-width="1.8"></circle></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post a request</span>
+            </div>
+            <div style="{{ mediaItemStyleInbox }}">
+              <div style="width:30px;height:30px;border-radius:50%;background:#00371618;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="14" rx="2.5" stroke="#003716" stroke-width="1.8"></rect><circle cx="9" cy="10.5" r="1.6" fill="#003716"></circle><path d="M5 17l4.5-4.5 3 3 3-4L20 17" stroke="#003716" stroke-width="1.8" stroke-linejoin="round"></path></svg></div>
+              <span style="font:700 13px 'Plus Jakarta Sans';color:#111;white-space:nowrap">Post to media</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <p class="dv-next"><br></p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { fabOpen: false, fabOpenE: false, fabOpenBrowse: false, fabOpenMyGigs: false, fabOpenInbox: false, homeTab: 'earn' };
+
+  renderVals() {
+    const open = this.state.fabOpen;
+    const openE = this.state.fabOpenE;
+    const homeIsEarn = this.state.homeTab === 'earn';
+    const homeIsBrowse = this.state.homeTab === 'browse';
+    const activeTabStyle = { flex:1, textAlign:'center', padding:'10px 0', borderRadius:18, background:'#fff', font:"700 14px 'Plus Jakarta Sans'", color:'#003716', boxShadow:'0 2px 6px rgba(0,0,0,.06)', cursor:'pointer' };
+    const inactiveTabStyle = { flex:1, textAlign:'center', padding:'10px 0', font:"600 14px 'Plus Jakarta Sans'", color:'rgba(0,0,0,.45)', cursor:'pointer' };
+    const itemStyle = (bottom, delayMs) => ({
+      position: 'absolute', right: 16, bottom, height: 48,
+      padding: '0 18px 0 14px', borderRadius: 24, background: '#fff',
+      boxShadow: '0 8px 18px rgba(0,0,0,.16)', display: 'flex',
+      alignItems: 'center', gap: 10, zIndex: 26,
+      transform: open ? 'translateY(0) scale(1)' : 'translateY(18px) scale(0.85)',
+      opacity: open ? 1 : 0,
+      pointerEvents: open ? 'auto' : 'none',
+      transition: `transform 0.22s cubic-bezier(.2,.9,.3,1.4) ${delayMs}ms, opacity 0.18s ease ${delayMs}ms`,
+    });
+    const itemStyle2 = (isOpen, bottom, delayMs) => ({
+      position: 'absolute', right: 16, bottom, height: 48,
+      padding: '0 18px 0 14px', borderRadius: 24, background: '#fff',
+      boxShadow: '0 8px 18px rgba(0,0,0,.16)', display: 'flex',
+      alignItems: 'center', gap: 10, zIndex: 26,
+      transform: isOpen ? 'translateY(0) scale(1)' : 'translateY(18px) scale(0.85)',
+      opacity: isOpen ? 1 : 0,
+      pointerEvents: isOpen ? 'auto' : 'none',
+      transition: `transform 0.22s cubic-bezier(.2,.9,.3,1.4) ${delayMs}ms, opacity 0.18s ease ${delayMs}ms`,
+    });
+    return {
+      fabOpen: open,
+      toggleFab: () => this.setState(s => ({ fabOpen: !s.fabOpen })),
+      closeFab: () => this.setState({ fabOpen: false }),
+      backdropStyle: {
+        position: 'absolute', inset: 0, background: 'rgba(17,26,20,.4)', zIndex: 22,
+        opacity: open ? 1 : 0,
+        pointerEvents: open ? 'auto' : 'none',
+        transition: 'opacity 0.2s ease',
+      },
+      fabIconWrapStyle: {
+        transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
+        transition: 'transform 0.25s ease',
+        display: 'flex',
+      },
+      serviceItemStyle: itemStyle(164, 0),
+      requestItemStyle: itemStyle(224, 30),
+      mediaItemStyle: itemStyle(284, 60),
+
+      homeIsEarn: homeIsEarn,
+      homeIsBrowse: homeIsBrowse,
+      earnTabStyle: homeIsEarn ? activeTabStyle : inactiveTabStyle,
+      browseTabStyle: homeIsBrowse ? activeTabStyle : inactiveTabStyle,
+      setHomeEarn: () => this.setState({ homeTab: 'earn' }),
+      setHomeBrowse: () => this.setState({ homeTab: 'browse' }),
+      fabOpenE: openE,
+      toggleFabE: () => this.setState(s => ({ fabOpenE: !s.fabOpenE })),
+      closeFabE: () => this.setState({ fabOpenE: false }),
+      fabIconWrapStyleE: {
+        transform: openE ? 'rotate(45deg)' : 'rotate(0deg)',
+        transition: 'transform 0.25s ease',
+        display: 'flex',
+      },
+      serviceItemStyleE: itemStyle2(openE, 100, 0),
+      requestItemStyleE: itemStyle2(openE, 160, 30),
+      mediaItemStyleE: itemStyle2(openE, 220, 60),
+
+      fabOpenBrowse: this.state.fabOpenBrowse,
+      toggleFabBrowse: () => this.setState(s => ({ fabOpenBrowse: !s.fabOpenBrowse })),
+      fabIconWrapStyleBrowse: { transform: this.state.fabOpenBrowse ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease', display: 'flex' },
+      serviceItemStyleBrowse: itemStyle2(this.state.fabOpenBrowse, 100, 0),
+      requestItemStyleBrowse: itemStyle2(this.state.fabOpenBrowse, 160, 30),
+      mediaItemStyleBrowse: itemStyle2(this.state.fabOpenBrowse, 220, 60),
+
+      fabOpenMyGigs: this.state.fabOpenMyGigs,
+      toggleFabMyGigs: () => this.setState(s => ({ fabOpenMyGigs: !s.fabOpenMyGigs })),
+      fabIconWrapStyleMyGigs: { transform: this.state.fabOpenMyGigs ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease', display: 'flex' },
+      serviceItemStyleMyGigs: itemStyle2(this.state.fabOpenMyGigs, 100, 0),
+      requestItemStyleMyGigs: itemStyle2(this.state.fabOpenMyGigs, 160, 30),
+      mediaItemStyleMyGigs: itemStyle2(this.state.fabOpenMyGigs, 220, 60),
+
+      fabOpenInbox: this.state.fabOpenInbox,
+      toggleFabInbox: () => this.setState(s => ({ fabOpenInbox: !s.fabOpenInbox })),
+      fabIconWrapStyleInbox: { transform: this.state.fabOpenInbox ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease', display: 'flex' },
+      serviceItemStyleInbox: itemStyle2(this.state.fabOpenInbox, 100, 0),
+      requestItemStyleInbox: itemStyle2(this.state.fabOpenInbox, 160, 30),
+      mediaItemStyleInbox: itemStyle2(this.state.fabOpenInbox, 220, 60),
+    };
+  }
+}
+</script>
+</body>
+</html>

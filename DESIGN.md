@@ -1,579 +1,483 @@
-# Daala — DESIGN.md
-
-> **Document type:** Machine-interpretable frontend blueprint.
-> **Scope:** Phase 1 skeleton (all screens rendered with **mock data, zero API calls**).
-> **Purpose:** A definitive, unambiguous specification an implementation LLM can ingest to
-> generate the Flutter frontend skeleton perfectly, with no guesswork and no invented UX.
->
-> **Design synthesis rule (read first):**
-> - **Business logic & information architecture** derive from **AirTasker** (post → offer/bid → book → escrow → complete → review).
-> - **Visual aesthetic** derives from the **ANZ Plus** app: clean, high-contrast, secure, modern, intentional whitespace, flat cards with thin borders, big bold figures, restrained navigation.
-> - **"ANZ aesthetic" means ANZ's *structure and discipline*, rendered in *Daala's own brand palette*** (Deep Green / Vibrant Orange / Khaki). Do **not** use ANZ's blue. Do **not** copy AirTasker's colours. The look = ANZ layout system × Daala colours.
->
-> **Fixed domain vocabulary (never substitute generic words):**
-> `Consumer` · `Merchant` · `Gig Post` · `Gig Request` · `Offer` · `Booking` · `Escrow` · `Dispute`.
-> A **Consumer** buys services; a **Merchant** sells them. A **Gig Post** is a Merchant-led listing. A **Gig Request** is a Consumer-led listing. A **Merchant** submits an **Offer** on a **Gig Request**; a **Consumer** creates a **Booking** by accepting an **Offer** or booking a **Gig Post**. Funds are held in **Escrow**; conflicts are raised as a **Dispute**.
-
+---
+name: Daala
+description: A warm, trust-forward gig marketplace for South Africa's informal economy — one account that both earns and hires.
+colors:
+  brand-green: "#003716"
+  hustle-orange: "#FF823A"
+  screen-cream: "#FAF7EC"
+  outer-canvas: "#EFEDE6"
+  card-white: "#FFFFFF"
+  placeholder-khaki: "#EFE9D4"
+  ink: "#111111"
+  ink-65: "#111111A6"
+  ink-55: "#1111118C"
+  ink-40: "#11111166"
+  ink-15: "#11111126"
+  green-tint: "#00371618"
+  green-tint-strong: "#00371622"
+  orange-tint: "#FF823A22"
+  divider: "#0000000F"
+  divider-strong: "#00000014"
+  track: "#0000000D"
+  scrim: "#111A1466"
+typography:
+  display:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "52px"
+    fontWeight: 800
+    lineHeight: 1.0
+  money:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "30px"
+    fontWeight: 800
+    lineHeight: 1.0
+  headline:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "30px"
+    fontWeight: 800
+    lineHeight: 1.2
+  headline-page:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "26px"
+    fontWeight: 800
+    lineHeight: 1.2
+  figure:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "22px"
+    fontWeight: 800
+    lineHeight: 1.0
+  app-bar:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "18px"
+    fontWeight: 700
+    lineHeight: 1.3
+  section:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "16px"
+    fontWeight: 700
+    lineHeight: 1.3
+  price:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "16px"
+    fontWeight: 800
+    lineHeight: 1.3
+  title:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "15px"
+    fontWeight: 700
+    lineHeight: 1.3
+  row-title:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "14px"
+    fontWeight: 700
+    lineHeight: 1.3
+  value:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "14px"
+    fontWeight: 600
+    lineHeight: 1.3
+  body:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 500
+    lineHeight: 1.6
+  label:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 700
+    lineHeight: 1.3
+  overline:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 700
+    letterSpacing: "0.4px"
+  caption:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "12px"
+    fontWeight: 600
+    lineHeight: 1.3
+  meta:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "12px"
+    fontWeight: 500
+    lineHeight: 1.4
+  tag:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "12px"
+    fontWeight: 700
+    lineHeight: 1.2
+  status:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "11px"
+    fontWeight: 700
+    lineHeight: 1.2
+  tab:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "10px"
+    fontWeight: 600
+    lineHeight: 1.2
+rounded:
+  status: "10px"
+  tag: "14px"
+  chip: "16px"
+  segment: "18px"
+  card: "22px"
+  track: "22px"
+  pill: "24px"
+  button: "28px"
+  sheet: "28px"
+  tabbar: "34px"
+spacing:
+  xs: "6px"
+  sm: "8px"
+  md: "10px"
+  lg: "12px"
+  xl: "14px"
+  "2xl": "16px"
+  "3xl": "18px"
+  "4xl": "22px"
+components:
+  button-primary:
+    backgroundColor: "{colors.hustle-orange}"
+    textColor: "{colors.card-white}"
+    typography: "{typography.section}"
+    rounded: "{rounded.button}"
+    height: "56px"
+    padding: "0 24px"
+  button-secondary:
+    backgroundColor: "{colors.brand-green}"
+    textColor: "{colors.card-white}"
+    typography: "{typography.section}"
+    rounded: "{rounded.button}"
+    height: "56px"
+    padding: "0 24px"
+  button-header-pill:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.brand-green}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    height: "44px"
+    padding: "0 18px"
+  button-round-icon:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.tabbar}"
+    size: "44px"
+  card:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.card}"
+    padding: "16px 18px"
+  card-balance:
+    backgroundColor: "{colors.brand-green}"
+    textColor: "{colors.card-white}"
+    rounded: "{rounded.card}"
+    padding: "20px"
+  tag-pill:
+    backgroundColor: "{colors.green-tint}"
+    textColor: "{colors.brand-green}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.tag}"
+    padding: "6px 14px"
+  attribute-pill:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.tag}"
+    padding: "8px 14px"
+  status-pill:
+    backgroundColor: "{colors.green-tint}"
+    textColor: "{colors.brand-green}"
+    typography: "{typography.status}"
+    rounded: "{rounded.status}"
+    padding: "4px 10px"
+  status-pill-neutral:
+    backgroundColor: "{colors.divider}"
+    textColor: "{colors.ink-55}"
+    typography: "{typography.status}"
+    rounded: "{rounded.status}"
+    padding: "4px 10px"
+  filter-chip:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.chip}"
+    padding: "9px 16px"
+  filter-chip-selected:
+    backgroundColor: "{colors.brand-green}"
+    textColor: "{colors.card-white}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.chip}"
+    padding: "9px 16px"
+  segment-active:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.brand-green}"
+    typography: "{typography.label}"
+    rounded: "{rounded.segment}"
+    padding: "10px 0"
+  segment-inactive:
+    textColor: "{colors.ink-55}"
+    typography: "{typography.label}"
+    rounded: "{rounded.segment}"
+    padding: "10px 0"
+  option-selected:
+    textColor: "{colors.brand-green}"
+    typography: "{typography.row-title}"
+    rounded: "{rounded.track}"
+    padding: "14px 0"
+  option-unselected:
+    backgroundColor: "{colors.divider}"
+    textColor: "{colors.ink-55}"
+    typography: "{typography.value}"
+    rounded: "{rounded.track}"
+    padding: "14px 0"
+  search-field:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink-55}"
+    typography: "{typography.value}"
+    rounded: "{rounded.pill}"
+    height: "48px"
+    padding: "0 16px"
+  avatar-initials:
+    backgroundColor: "{colors.brand-green}"
+    textColor: "{colors.card-white}"
+    rounded: "{rounded.tabbar}"
+    size: "44px"
+  photo-placeholder:
+    backgroundColor: "{colors.placeholder-khaki}"
+    rounded: "{rounded.tag}"
+  tab-bar:
+    backgroundColor: "{colors.card-white}"
+    rounded: "{rounded.tabbar}"
+    height: "68px"
+  tab-active:
+    backgroundColor: "{colors.green-tint}"
+    textColor: "{colors.brand-green}"
+    typography: "{typography.tab}"
+    rounded: "{rounded.status}"
+  tab-inactive:
+    textColor: "{colors.ink-40}"
+    typography: "{typography.tab}"
+  fab-post:
+    backgroundColor: "{colors.hustle-orange}"
+    textColor: "{colors.card-white}"
+    rounded: "{rounded.tabbar}"
+    size: "52px"
+  speed-dial-item:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    height: "48px"
+    padding: "0 18px 0 14px"
+  sheet:
+    backgroundColor: "{colors.screen-cream}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.sheet}"
+    padding: "20px 18px 40px"
+  toggle-on:
+    backgroundColor: "{colors.brand-green}"
+    rounded: "{rounded.tag}"
+    width: "46px"
+    height: "28px"
+  toggle-off:
+    backgroundColor: "{colors.ink-15}"
+    rounded: "{rounded.tag}"
+    width: "46px"
+    height: "28px"
 ---
 
-## 1. System Overview & Tech Stack
-
-### 1.1 Frontend stack (fixed)
-
-| Concern | Choice | Notes |
-|---|---|---|
-| UI framework | **Flutter (Dart, stable channel)** | Single codebase, Android + iOS; renders well on entry-level Android. Do **not** substitute React/Next — the whole project is Flutter. |
-| State management | **Riverpod** (`flutter_riverpod`, code-gen optional) | All screen state via providers. Phase 1 providers return **mock repositories**. |
-| Navigation | **GoRouter** | Declarative routes, deep-link ready (needed later for TradeSafe redirect). See §2.3 route table. |
-| Project structure | **Feature-first** | `lib/features/<feature>/{presentation,application,domain,data}` + `lib/core/{theme,widgets,router,utils}`. |
-| Local mock data | In-memory + bundled JSON assets | No Firebase/network calls in Phase 1. Repositories are interfaces with `Mock*` implementations behind a 300–800 ms artificial delay to exercise loading states. |
-| Images | `cached_network_image` for remote; `Image.asset` for mock portfolios | Always provide `placeholder` (shimmer) + `errorWidget`. |
-| Icons | Single outline set — **Material Symbols Rounded (Outlined)** or a Lucide/Feather-equivalent | 24 px grid, ~2 px stroke, rounded caps. One set only. |
-
-**Performance constraints (entry-level Android, data-light — treat as hard requirements):**
-- Prefer `const` constructors everywhere possible; build lists with `ListView.builder` / `SliverList` (never map a full list into a `Column`).
-- Prefer **1 px borders over drop shadows** for card separation (cheaper to raster; also the ANZ look). Reserve shadows for sheets/modals only.
-- No heavy or continuous animations. Transitions ≤ 250 ms. Skeleton shimmer must be a lightweight opacity/gradient sweep, not a per-pixel effect.
-- Images: fixed aspect boxes, lazy-loaded, compressed mock assets. Never lay out around unbounded intrinsic image sizes.
-- Currency is **ZAR**, formatted `R` + space-grouped thousands, e.g. `R1 250`, `R450`, `R37.50`. Provide one `formatZar()` util; never hand-format inline.
-
-### 1.2 Global design tokens
-
-Emit these as a single source of truth (`core/theme/tokens.dart`) and derive `ThemeData` from them. All values below are literal.
-
-#### Colour tokens
-
-**Brand**
-
-| Token | Hex | Usage |
-|---|---|---|
-| `brand.green.900` | `#003716` | Primary brand. Primary button fill, active nav, brand headers, key emphasis. |
-| `brand.green.700` | `#0A5A2A` | Pressed/hover of primary; secondary green accents. |
-| `brand.green.50`  | `#E7EFE9` | Green tint surfaces (selected chips, verified badge bg, subtle brand panels). |
-| `accent.orange.500` | `#FF823A` | **Attention accent only:** notification dots, unread badges, "NEW"/offer-count tags, active filter indicator, center Post FAB. Used sparingly — it must *pop*. |
-| `accent.orange.600` | `#E86F28` | Pressed state of orange elements. |
-| `accent.orange.50` | `#FFF1E8` | Orange tint (highlight rows, "action needed" banners). |
-| `surface.cream` | `#F5F5DC` | Khaki/cream warm surface for occasional hero/brand moments and grouped section backgrounds. Use deliberately, not as the default page bg. |
-
-> **CTA colour rule:** Primary action buttons are **Deep Green fill, white text** (ANZ-style confident dark button). **Orange is never the default button fill** — it is reserved for attention signals and the single center Post FAB. This keeps orange's "pop against white" quality that the brand explicitly values.
-
-**Neutrals / ink / structure**
-
-| Token | Hex | Usage |
-|---|---|---|
-| `bg.primary` | `#FFFFFF` | Default page background. |
-| `bg.secondary` | `#FAF9F5` | Grouped/section background (warm off-white), input fills. |
-| `ink.900` | `#14231A` | Primary text / headings (near-black, green undertone). |
-| `ink.700` | `#3D4A42` | Body secondary text. |
-| `ink.500` | `#6B7770` | Muted labels, captions, metadata, placeholders-as-label. |
-| `ink.300` | `#A9B2AC` | Disabled text, input placeholder, empty icons. |
-| `border.subtle` | `#EDEEEA` | Hairline dividers between list rows. |
-| `border.default` | `#D9DDD5` | Card borders, input borders (rest state). |
-| `overlay.scrim` | `rgba(20,35,26,0.45)` | Modal/bottom-sheet scrim. |
-
-**Semantic / status** (drives all status badges — see §2.4 lifecycle)
-
-| Token | Hex | Meaning |
-|---|---|---|
-| `status.open` | `#2B6CB0` (bg `#E9F1FA`) | Gig Request OPEN / Gig Post ACTIVE — accepting activity. |
-| `status.pending` | `#B7791F` (bg `#FDF3E2`) | Offer pending / awaiting action. |
-| `status.escrow` | `#0E7C7B` (bg `#E3F2F1`) | Funds held in **Escrow** (distinct trust-teal). |
-| `status.progress` | `#3A6EA5` (bg `#EAF0F7`) | In progress. |
-| `status.success` | `#1E7A46` (bg `#E7F2EC`) | Completed / funds released. |
-| `status.dispute` | `#C0392B` (bg `#FBEAE8`) | **Dispute** raised. |
-| `status.neutral` | `#6B7770` (bg `#F0F1ED`) | Cancelled / expired / draft. |
-
-#### Typography scale
-
-System-first for byte-savings; if bundling, use **Inter**. Weights: 400 / 500 / 600 / 700.
-
-| Token | Size / Line | Weight | Usage |
-|---|---|---|---|
-| `display` | 32 / 40 | 700 | Rare hero numbers, onboarding. |
-| `h1` | 28 / 36 | 700 | Screen titles (large). |
-| `h2` | 24 / 32 | 600 | Section headers. |
-| `h3` | 20 / 28 | 600 | Card/subsection titles. |
-| `title` | 17 / 24 | 600 | List item titles, dialog titles. |
-| `bodyLg` | 16 / 24 | 400 | Primary reading text. |
-| `body` | 15 / 22 | 400 | Default body / descriptions. |
-| `label` | 14 / 20 | 500 | Buttons, input labels, tabs. |
-| `caption` | 13 / 18 | 400 | Metadata, timestamps, helper text. |
-| `overline` | 11 / 16 | 600 | Uppercase micro-labels, badge text (letter-spacing 0.4). |
-| `moneyLg` | 28 / 34 | 700 | Budget/price hero on detail screens. |
-| `moneyMd` | 20 / 26 | 700 | Price on cards, offer amounts. |
-
-#### Spacing, radius, elevation, targets
-
-| Group | Tokens |
-|---|---|
-| Spacing (4 pt base) | `s2=2 · s4=4 · s8=8 · s12=12 · s16=16 · s20=20 · s24=24 · s32=32 · s40=40 · s48=48`. Screen horizontal padding = **`s16`**; section gap = **`s24`**. |
-| Radius | `rSm=8 · rMd=12 (inputs, chips) · rLg=16 (cards) · rXl=20 (sheets, hero) · rPill=999 (primary buttons, filter chips, avatars)`. |
-| Elevation | `e0` = flat + `border.default`; `e1` = `0 1 2 rgba(20,35,26,.06)` (raised card, rare); `e2` = `0 2 8 rgba(20,35,26,.08)` (sticky CTA bar); `e3` = `0 8 24 rgba(20,35,26,.12)` (bottom sheet / dialog). Default cards use **e0 (border), not shadow**. |
-| Touch targets | Min interactive **48 × 48**. Primary button height **52**. Input height **52**. Icon button hit-box **48**. |
-| Motion | Durations `fast=150ms · base=200ms · slow=250ms`; easing `standard = cubic(0.2, 0, 0, 1)`. Page transitions use platform default. |
-
-#### Core component styling (the "ANZ look")
-
-- **Primary button:** fill `brand.green.900`, text white `label`, height 52, radius `rPill`, full-width in flows; pressed → `brand.green.700`; disabled → fill `border.default`, text `ink.300`.
-- **Secondary button:** transparent fill, 1.5 px `brand.green.900` border, green text, radius `rPill`.
-- **Tertiary/text button:** green `label` text, no border, 48 hit-box.
-- **Destructive:** used only for Dispute/Cancel — text or fill `status.dispute`.
-- **Filter chip:** pill, rest = `bg.secondary` fill + `border.default` + `ink.700` text; selected = `brand.green.900` fill + white text; a chip carrying a count uses an `accent.orange.500` numeric badge.
-- **Input:** fill `bg.secondary`, 1 px `border.default`, radius `rMd`, height 52, static top `label` (13, `ink.500`), placeholder `ink.300`; focus → 1.5 px `brand.green.900`; error → 1.5 px `status.dispute` + caption helper in `status.dispute`.
-- **Card:** `bg.primary`, radius `rLg`, 1 px `border.default` (e0), padding `s16`. No shadow unless it's a floating/sticky element.
-- **Status badge:** pill, `overline` text, fg + bg per §1.2 semantic pair, padding `s4 s8`.
-- **List row:** min height 64, leading tinted-circle icon (40, `brand.green.50` bg) or 44 avatar, `title` + `caption` subtitle stack, optional trailing value/chevron, hairline `border.subtle` divider.
-- **Avatar:** `rPill`, sizes 24/32/44/64; fallback = initials on `brand.green.50`.
-- **App bar:** `bg.primary`, no shadow, `h1`/`title` leading title, optional back chevron, trailing icon actions (notification bell carries orange dot when unread).
-
----
-
-## 2. Information Architecture & Navigation Map
-
-### 2.1 Navigation tree
-
-```
-Daala (unified account — a user can act as both Consumer and Merchant)
-│
-├─ AUTH FLOW  (unauthenticated shell — no bottom nav)
-│   ├─ /splash                 Splash
-│   ├─ /onboarding             Onboarding carousel (value props)
-│   ├─ /intent                 Intent select → sets default mode (Get things done / Earn)
-│   ├─ /login                  Log In
-│   ├─ /signup                 Sign Up
-│   ├─ /otp                    OTP verification
-│   └─ /verify-identity        KYC prompt (mock; deferred to VerifyNow later)
-│
-└─ APP SHELL  (authenticated — persistent Bottom Nav, 5 items)
-    │
-    ├─ [Tab 1] /home           Home / Discovery  (feed ⇄ map toggle, search, categories)
-    │     ├─ /search           Search & Filter (full-screen)
-    │     ├─ /gig-request/:id  Gig Request Detail   (Merchant may make an Offer)
-    │     │     └─ /gig-request/:id/offer     Make an Offer
-    │     ├─ /gig-post/:id     Gig Post Detail      (Consumer may Book / Enquire)
-    │     └─ /merchant/:id     Public Merchant Profile (portfolio, reviews, verification)
-    │
-    ├─ [Tab 2] /dashboard      Dashboard / My Gigs  (unified lifecycle, segmented tabs)
-    │     ├─ /gig-request/:id/offers   Review Offers   (Consumer selects a Merchant)
-    │     └─ /booking/:id              Booking / Escrow Status (timeline, complete, dispute)
-    │           ├─ /booking/:id/evidence   Upload completion evidence
-    │           └─ /booking/:id/review     Leave Review
-    │
-    ├─ [Tab 3] (center FAB) /post     Create chooser sheet
-    │     ├─ /create/gig-request      Create Gig Request Wizard  (Consumer)
-    │     └─ /create/gig-post         Create Gig Post Wizard     (Merchant)
-    │
-    ├─ [Tab 4] /messages       Messages (conversation list)
-    │     └─ /messages/:threadId      Chat Thread (gig-context header)
-    │
-    └─ [Tab 5] /profile        Profile (own)
-          ├─ /wallet           Wallet (balance, Escrow held, transactions — mock)
-          ├─ /notifications    Notifications
-          └─ /settings         Settings (mode switch, verification status, sign out)
-```
-
-### 2.2 Persistent navigation structures
-
-- **Bottom Nav Bar** (`bg.primary`, top hairline `border.subtle`, height 64 + safe area). 5 items, labels always visible (`overline`):
-  1. **Home** — `home` icon
-  2. **Dashboard** — `dashboard`/`list` icon
-  3. **Post** — **center, elevated 56 circular FAB, fill `accent.orange.500`, white `+` icon** (the only orange fill in the shell; it is the primary create affordance)
-  4. **Messages** — `chat` icon, orange dot when unread
-  5. **Profile** — `person` icon
-  - Active item: icon + label `brand.green.900`, filled icon variant. Inactive: `ink.500`, outline icon. No animation beyond a 150 ms colour fade.
-- **Top App Bar** per screen (see each spec). Detail screens use a back chevron; tab roots use a large `h1` title left-aligned with trailing action icons.
-- **Consumer ⇄ Merchant mode:** a single account operates in either mode. Mode is a lightweight context switch (segmented control in Profile header and surfaced where it changes available actions), **not** a separate login. Default mode is set at `/intent`. Mode changes which primary CTA appears on a detail screen (Merchant sees "Make an Offer"; Consumer sees "Book"/"Enquire").
-
-### 2.3 Route table (GoRouter)
-
-| Path | Screen | Guard | Params |
-|---|---|---|---|
-| `/splash` | Splash | none | — |
-| `/onboarding` | Onboarding | none | — |
-| `/intent` | Intent Select | none | — |
-| `/login` `/signup` `/otp` | Auth | none | `otp`: `{phone}` |
-| `/verify-identity` | KYC prompt | auth | — |
-| `/home` | Home/Discovery | auth | query: `view=feed|map` |
-| `/search` | Search & Filter | auth | query: `q, category, ...` |
-| `/gig-request/:id` | Gig Request Detail | auth | `id` |
-| `/gig-request/:id/offer` | Make an Offer | auth (Merchant mode) | `id` |
-| `/gig-request/:id/offers` | Review Offers | auth (owner) | `id` |
-| `/gig-post/:id` | Gig Post Detail | auth | `id` |
-| `/merchant/:id` | Public Merchant Profile | auth | `id` |
-| `/create/gig-request` | Create Gig Request Wizard | auth | — |
-| `/create/gig-post` | Create Gig Post Wizard | auth | — |
-| `/booking/:id` | Booking / Escrow Status | auth (party) | `id` |
-| `/booking/:id/evidence` | Evidence Upload | auth (party) | `id` |
-| `/booking/:id/review` | Leave Review | auth (party) | `id` |
-| `/dashboard` | Dashboard / My Gigs | auth | query: `tab` |
-| `/messages` | Messages list | auth | — |
-| `/messages/:threadId` | Chat Thread | auth | `threadId` |
-| `/profile` | Profile (own) | auth | — |
-| `/wallet` `/notifications` `/settings` | Sub-screens | auth | — |
-
-### 2.4 Lifecycle state model (drives every status badge)
-
-Both listing types share a unified lifecycle. In Phase 1 these states come from mock data; the same enum will later back Firestore.
-
-```
-Gig Request (Consumer-led):
-  OPEN ──▶ OFFER_ACCEPTED ──▶ IN_ESCROW ──▶ IN_PROGRESS ──▶ COMPLETED
-     │            │                                │
-     ├──▶ EXPIRED └──▶ CANCELLED                   └──▶ DISPUTED ──▶ RESOLVED
-
-Gig Post (Merchant-led):
-  ACTIVE ──▶ BOOKED ──▶ IN_ESCROW ──▶ IN_PROGRESS ──▶ COMPLETED
-     │          │                          │
-     └▶ PAUSED  └──▶ CANCELLED              └──▶ DISPUTED ──▶ RESOLVED
-```
-
-| State | Badge token | Label |
-|---|---|---|
-| `OPEN` / `ACTIVE` | `status.open` | "Open" / "Active" |
-| `OFFER_ACCEPTED` / `BOOKED` | `status.pending` | "Booked" |
-| `IN_ESCROW` | `status.escrow` | "In Escrow" |
-| `IN_PROGRESS` | `status.progress` | "In progress" |
-| `COMPLETED` | `status.success` | "Completed" |
-| `DISPUTED` | `status.dispute` | "Disputed" |
-| `CANCELLED` / `EXPIRED` / `PAUSED` | `status.neutral` | "Cancelled" / "Expired" / "Paused" |
-
----
-
-## 3. Core Interface Specifications
-
-> **Global state conventions** (apply to every screen; per-screen sections only note deviations and copy):
-> - **Loading:** shimmer skeletons that match the real layout's silhouette (same card count, same block heights). Shimmer = `bg.secondary` base with a slow left→right highlight sweep (`slow`, looped). Never a spinner for content areas; spinners only for button-inline actions.
-> - **Empty:** centered column — muted outline icon (56, `ink.300`), `h3` headline, `body` `ink.500` subtext, optional primary button. Copy specified per screen.
-> - **Error:** centered column — `error` icon (`status.dispute`), `title` "Something went wrong", `caption` `ink.500` detail, secondary "Try again" button that re-triggers the provider.
-> - Every screen provides all three states even though Phase 1 mocks rarely error (a debug flag can force each state).
-
----
-
-### 3.1 Home / Discovery — `/home`
-
-**Screen objective:** Let the user discover nearby **Gig Requests** and **Gig Posts**, search, filter by category, and toggle between a scrollable feed and a map view.
-
-**Layout structure:**
-```
-Scaffold(bg.primary)
- ├─ SliverAppBar (pinned, bg.primary, no shadow)
- │    ├─ Row: greeting "Molo, {firstName} 👋" (title)   ·   [notif bell + orange dot] [avatar 32]
- │    └─ SearchField (tap → /search; not focusable inline)
- ├─ SliverPersistentHeader (pinned): SegmentedToggle [ Feed | Map ]  +  right: "Filters" chip (orange dot if active)
- ├─ SliverToBoxAdapter: horizontal CategoryChipRow (scrolls x)
- └─ view == feed:
- │    └─ SliverList.builder → GigCard   (mixed Gig Requests + Gig Posts)
- └─ view == map:
-      └─ SliverFillRemaining → MapPlaceholder (Phase 1 = static mock map image + pin cluster overlay; live Google Maps deferred)
- bottomNavigationBar: DaalaBottomNav (index 0)
-```
-
-**Component breakdown (ANZ look):**
-- App bar is flat, white, generous top padding; greeting in `title` `ink.900`, no heavy chrome.
-- **SearchField:** full-width, `bg.secondary` fill, radius `rPill`, leading search icon `ink.500`, placeholder "Search for a service or gig" `ink.300`, height 48. Tapping routes to `/search`.
-- **Feed/Map toggle:** pill segmented control; selected segment `brand.green.900` fill + white, unselected `ink.700`.
-- **CategoryChipRow:** filter chips (Plumbing, Electrical, Gardening, Tutoring, Cleaning, Moving, Other). "All" selected by default.
-- **GigCard** (the core repeating unit — flat, `border.default`, radius `rLg`, padding `s16`, gap `s12` between cards):
-  - Top row: **type tag** (`overline` pill — "REQUEST" tinted green / "SERVICE" tinted cream) · right: **status badge**.
-  - Title `title` `ink.900`, max 2 lines ellipsis.
-  - Meta row (`caption` `ink.500`, icon-prefixed): 📍 suburb · 🕑 timing/date · 📏 distance (e.g. "3.2 km away").
-  - Optional media thumbnail (56×56, radius `rMd`) right-aligned if the listing has photos.
-  - Bottom row: left = poster mini (avatar 24 + name `caption` + ⭐ rating) · right = **price** `moneyMd` `ink.900` (Gig Request shows budget; Gig Post shows "from R…").
-  - If the listing has offers: small `accent.orange.500` badge "N offers".
-
-**Data & content requirements (AirTasker substance):** per card —
-`id, listingType (gigRequest|gigPost), title, category, statusEnum, budgetZarMinor, priceFrom (posts), suburb, distanceKm, timingLabel, thumbnailUrl?, offerCount, poster{ id, displayName, avatarUrl?, ratingAvg, isVerified }, createdAt`.
-
-**Component states:**
-- Loading: 6 `GigCard` shimmer skeletons (title bar, 2 meta lines, footer row).
-- Empty (no results for filters): icon `search_off`, "No gigs nearby yet", "Try widening your filters or check back soon.", secondary button "Clear filters".
-- Error: standard error block.
-- Map empty: centered pin icon + "No gigs to show on the map."
-
----
-
-### 3.2 Gig Request Detail — `/gig-request/:id`
-
-**Screen objective:** Give a full picture of a Consumer's requested job so a **Merchant** can decide to **make an Offer** (or, if the viewer owns it, manage its **Offers**).
-
-**Layout structure:**
-```
-Scaffold
- ├─ AppBar (back chevron, title "Gig Request", trailing: share, overflow)
- ├─ Body: SingleChildScrollView
- │    ├─ Header block: Title (h2) · status badge · budget (moneyLg) with "Budget" overline
- │    ├─ Poster card: avatar 44 · name · ⭐rating (count) · "Member since" · verified badge → tap /merchant/:id (consumer profile)
- │    ├─ Meta grid (2-col): 📍 Suburb/area · 🕑 When needed · 📅 Posted · 🏷 Category
- │    ├─ MapPlaceholder (fixed 160 h, radius rLg) — approximate location pin
- │    ├─ "Details" section: description body text
- │    ├─ PhotoGallery (horizontal, 96×96 tiles, radius rMd) — "What needs doing" images
- │    └─ "Offers (N)" preview strip (owner sees full; visitor sees count only)
- └─ StickyBottomBar (e2, bg.primary): 
-        Merchant mode → Primary "Make an Offer"  (→ /gig-request/:id/offer)
-        Owner (Consumer) → Primary "Review Offers (N)"  (→ /gig-request/:id/offers)
-```
-
-**Component breakdown (ANZ look):** big bold budget figure (`moneyLg`) with a muted `overline` label above — the ANZ "hero number" treatment. Poster shown in a flat bordered card. Meta as a clean 2-column key/value grid with `caption` labels in `ink.500` and `body` values in `ink.900`. Sticky CTA bar is the only shadowed element on screen.
-
-**Data & content requirements:**
-`id, title, statusEnum, budgetZarMinor, category, description, suburb, geoApprox{lat,lng}, whenNeededLabel, createdAt, photos[], offerCount, poster{ id, displayName, avatarUrl?, ratingAvg, reviewCount, memberSince, isVerified }, viewerRelationship (owner|merchant|other)`.
-
-**Component states:**
-- Loading: header shimmer (title bar + big budget block), poster row shimmer, map block shimmer, 3 text lines, gallery tile shimmers.
-- Empty: n/a (a detail always has a subject) — if `id` not found → Error block "This gig is no longer available" + "Back to Home".
-- Error: standard.
-
----
-
-### 3.3 Gig Post Detail — `/gig-post/:id`
-
-**Screen objective:** Present a **Merchant's** advertised service so a **Consumer** can **Book** or **Enquire**, backed by portfolio and reviews for trust.
-
-**Layout structure:**
-```
-Scaffold
- ├─ Collapsing header: media carousel (16:9, page dots) OR cream hero if no media
- ├─ Body: SingleChildScrollView
- │    ├─ Title (h2) · category tag · price "from R…" (moneyLg)
- │    ├─ Merchant card: avatar 44 · name · ⭐rating(count) · "N gigs completed" · verified badge · "Responds in ~X" → /merchant/:id
- │    ├─ "About this service": description
- │    ├─ PortfolioGrid (2-col media tiles) → tap opens lightbox
- │    ├─ ServiceArea: MapPlaceholder + radius note
- │    └─ Reviews preview (top 2 + "See all N reviews")
- └─ StickyBottomBar:
-        Consumer mode → Secondary "Enquire" + Primary "Book" (→ opens Booking confirm → Escrow)
-        Owner (Merchant) → Primary "Edit Gig Post" (Phase 1: routes to disabled stub)
-```
-
-**Data & content requirements:**
-`id, title, category, priceFromZarMinor, description, media[], serviceArea{center,radiusKm}, merchant{ id, displayName, avatarUrl?, ratingAvg, reviewCount, jobsCompleted, isVerified, responseTimeLabel }, reviews[]{ author, rating, comment, date, photo? }, viewerRelationship`.
-
-**Component states:** Loading shimmer mirrors carousel + title + merchant row + 2 portfolio rows. Empty portfolio → inline "No photos yet" tile. Error standard.
-
----
-
-### 3.4 Create Gig Request Wizard — `/create/gig-request`  *(reference wizard)*
-
-**Screen objective:** Guide a **Consumer** through posting a **Gig Request** with the minimum friction — one decision per screen, AirTasker-style, so entry-level users never face a wall of fields.
-
-**Layout structure (repeated per step):**
-```
-Scaffold
- ├─ AppBar: back/close (X) · linear ProgressBar (step k of n) · "Save & exit" text button
- ├─ Body: 
- │    ├─ Step question (h2, one clear question)
- │    ├─ Helper (caption ink.500)
- │    └─ Single focused input group for this step
- └─ StickyBottomBar: Primary "Continue" (disabled until step valid); final step → "Post Gig Request"
-```
-
-**Steps (order fixed):**
-1. **Title** — "What do you need done?" single-line text (e.g. "Fix a leaking pipe").
-2. **Category** — chip/list select; "Other" allowed (free-text sub-field).
-3. **Location** — In-person vs Online toggle; if in-person → address autocomplete (Phase 1 = mock suggestions list) → confirm on `MapPlaceholder`.
-4. **When** — date picker + timing preset chips ("Flexible", "Today", "This week", "On a date").
-5. **Budget** — ZAR numeric field, `R` prefix, `moneyMd`; helper "You can negotiate offers later."
-6. **Details** — multiline description + **photo add** (grid of add tiles; mock picker).
-7. **Category-specific fields** — rendered from a category schema (e.g. Gardening → "Tools supplied?" toggle; Tutoring → subject + level). If "Other", skip.
-8. **Review** — summary card of all answers, each row editable (tap → jumps to that step), then "Post Gig Request".
-
-**Component breakdown (ANZ look):** each step is airy — a single question in `h2`, one input, a persistent Continue button. Progress bar is a thin 4 px track, filled `brand.green.900`. Selected chips fill green. Numeric budget field shows the `R` as a fixed prefix affix.
-
-**Data captured:** `title, category, categoryFields{}, locationType, address?, geo?, whenType, date?, budgetZarMinor, description, photos[]`. On submit (Phase 1) → push a mock Gig Request into the in-memory repo and route to its detail.
-
-**Component states:** No loading (local form). Per-field inline validation errors (`status.dispute` helper). "Save & exit" persists a **draft** (mock) and returns to Dashboard. Final submit shows an inline button spinner for ~600 ms then success.
-
-> **Create Gig Post Wizard — `/create/gig-post`** is identical in pattern with these deltas: Step 1 "What service do you offer?"; Step 4 becomes **pricing model** (fixed / from / hourly) instead of "When"; add a **Portfolio media** step (required min 1 in spec, optional in skeleton); final CTA "Publish Gig Post". Reuse the same wizard scaffold and progress component.
-
----
-
-### 3.5 Make an Offer — `/gig-request/:id/offer`
-
-**Screen objective:** Let a **Merchant** submit a competitive **Offer** (amount + message) on a **Gig Request**.
-
-**Layout structure:** compact form screen (or bottom sheet on tall devices).
-```
-AppBar: back · "Make an Offer" · context subtitle = gig title (caption, ellipsis)
-Body:
- ├─ Gig summary mini-card (title, budget, poster)
- ├─ "Your offer" ZAR numeric field (moneyMd, R prefix)  + helper "Consumer's budget: R…"
- ├─ Fee preview row: "You receive after 15% platform fee: R…"  (caption ink.500)  ← mock calc
- └─ "Message to Consumer" multiline (placeholder guidance)
-StickyBottomBar: Primary "Submit Offer"
-```
-
-**Data:** `gigRequestId, offerAmountZarMinor, message`. Derived display: net-after-fee (mock 15%). On submit → append mock Offer, toast "Offer sent", pop to detail with the CTA now reading "Offer submitted" (disabled).
-
-**States:** inline validation (amount required, > 0). Submit → button spinner → success. Error → inline banner.
-
----
-
-### 3.6 Review Offers — `/gig-request/:id/offers`
-
-**Screen objective:** Let the owning **Consumer** compare **Offers** and accept one, which creates a **Booking** and moves funds into **Escrow**.
-
-**Layout structure:**
-```
-AppBar: back · "Offers (N)" · trailing sort (Price | Rating)
-Body: ListView.builder → OfferCard
-```
-**OfferCard (flat, border.default, radius rLg, padding s16):**
-- Row: avatar 44 · name + verified badge · ⭐ratingAvg (reviewCount) · "N gigs · X% completion".
-- **Offer amount** `moneyMd` right-aligned.
-- Message excerpt (`body`, 2 lines).
-- Actions: Secondary "Message" (→ chat) · Primary "Accept Offer".
-- Accepting → confirm sheet ("Funds will be held in Escrow until you mark the gig complete") → routes to `/booking/:id`.
-
-**Data:** per offer — `id, merchant{ id, displayName, avatarUrl?, isVerified, ratingAvg, reviewCount, jobsCompleted, completionRate }, amountZarMinor, message, createdAt`.
-
-**States:** Loading = 4 OfferCard shimmers. Empty = 🕑 icon, "No offers yet", "Merchants nearby will start bidding soon." Error standard.
-
----
-
-### 3.7 Booking / Escrow Status — `/booking/:id`
-
-**Screen objective:** Single source of truth for an agreed job — show the **Escrow** state, the lifecycle timeline, and the correct next action for each party (upload evidence, mark complete, raise a **Dispute**).
-
-**Layout structure:**
-```
-AppBar: back · "Booking"
-Body: SingleChildScrollView
- ├─ Gig summary card (title, counterparty avatar+name, amount)
- ├─ EscrowStatusPanel (surface.cream or status.escrow tint):
- │     "R… held securely in Escrow"  + trust-teal shield icon
- ├─ LifecycleTimeline (vertical stepper):
- │     Agreed → Funds in Escrow → In Progress → Completed → Released
- │     (current step highlighted brand.green.900; done = check; future = ink.300)
- ├─ EvidenceSection: uploaded completion photos (grid) + "Add photo"
- └─ MessagesLink row → open chat thread
-StickyBottomBar (party- & state-dependent):
-   Consumer, IN_PROGRESS  → Primary "Mark as Complete" (releases Escrow)  + text "Raise a Dispute" (status.dispute)
-   Merchant, IN_ESCROW    → Primary "Start Work" / "Mark work done"
-   Any, DISPUTED          → disabled banner "Under review by Daala"
-```
-
-**Component breakdown (ANZ look):** the Escrow panel is the emotional anchor — a calm tinted panel with a shield icon and a big reassuring amount, echoing ANZ's secure/trustworthy tone. Timeline uses simple filled/outlined dots and a 2 px connector.
-
-**Data:** `id, gig{ title, listingType }, amountZarMinor, escrowState, lifecycleState, counterparty{...}, evidence[], viewerRole (consumer|merchant), timeline[]{ step, doneAt? }`.
-
-**States:** Loading shimmer for summary + panel + timeline. No empty. Error standard. Actions show inline spinners; state transitions update mock immediately.
-
----
-
-### 3.8 Dashboard / My Gigs — `/dashboard`
-
-**Screen objective:** Give the user a real-time overview of everything they're involved in, across both roles and the whole lifecycle.
-
-**Layout structure:**
-```
-Scaffold
- ├─ AppBar: "My Gigs" (h1) · trailing wallet-glance chip (shows available balance) → /wallet
- ├─ SegmentedTabs (scrollable): Active · Offers · In Escrow · Completed · Drafts
- │     (optional secondary Consumer/Merchant filter)
- └─ TabView → ListView.builder → DashboardGigRow
- bottomNavigationBar (index 1)
-```
-**DashboardGigRow (list row, hairline divider):** leading type icon in tinted circle · title (`title`) · subtitle "with {counterparty} · {timing}" (`caption`) · trailing **status badge** + amount (`moneyMd`). Tap routes by state → detail / offers / booking.
-
-**Data:** per row — `id, listingType, title, counterpartyName?, statusEnum, amountZarMinor, updatedAt, unreadFlag`.
-
-**States:** Loading = 6 row shimmers. Empty (per tab): tailored copy, e.g. Active → 📋 "No active gigs", "Post a Gig Request or offer your services to get started.", primary "Post a Gig". Error standard.
-
----
-
-### 3.9 Messages list — `/messages`  &  Chat Thread — `/messages/:threadId`
-
-**List objective:** Show all gig-scoped conversations. **Thread objective:** Discuss a specific gig and its logistics.
-
-**Messages list layout:** AppBar "Messages" (h1) + search field; `ListView.builder → ConversationRow`:
-- avatar 44 · name (`title`) · **gig-context subtitle** (`caption` `ink.500`, e.g. "Re: Fix a leaking pipe") · last-message line (1 line ellipsis) · right: timestamp (`caption`) + unread count badge (`accent.orange.500`).
-
-**Chat thread layout:**
-```
-AppBar: back · avatar 32 + name · trailing "View gig"
-GigContextHeader (pinned, bg.secondary): thumbnail · gig title · amount · status badge → tap to detail/booking
-Body: reversed ListView → message bubbles
-   - own: brand.green.900 bg, white text, right-aligned, radius rLg (tail corner tightened)
-   - other: bg.secondary, ink.900, left-aligned
-   - timestamp caption under grouped runs; date separators centered
-Composer (bottom, e2): [attach +] TextField (rPill) [send ▷ orange when non-empty]
-```
-**Data:** conversation — `threadId, counterparty{...}, gigRef{ id, type, title, amountZarMinor, statusEnum, thumbnailUrl? }, lastMessage, lastTs, unreadCount`. Message — `id, senderId, text, sentAt, attachments[]?`.
-
-**States:** List Loading = 8 row shimmers; Empty = 💬 "No messages yet", "Your conversations about gigs will appear here." Thread Loading = bubble shimmers; Error standard. Composer send shows optimistic append.
-
----
-
-### 3.10 Public Merchant Profile — `/merchant/:id`
-
-**Screen objective:** Establish trust — this is the conversion surface. Portfolio, rating, verification, and history must be legible at a glance.
-
-**Layout structure:**
-```
-Scaffold
- ├─ ProfileHeader (bg.primary): avatar 64 · name · verified badge · category tags
- │     StatsRow (3-up, dividers): ⭐ ratingAvg (reviewCount)  ·  Gigs completed  ·  Completion %
- │     Secondary meta: "Responds in ~X" · "Member since {year}" · service area
- ├─ Tabs: Portfolio · Reviews · About
- │     Portfolio → 2-col media grid (lightbox)
- │     Reviews   → ReviewCard list (author avatar, ⭐, comment, date, optional photo)
- │     About     → bio + skills/categories + verification details
- └─ StickyBottomBar: Primary "See {name}'s Gigs" / "Message"
-```
-**Data:** `id, displayName, avatarUrl?, isVerified, categories[], ratingAvg, reviewCount, jobsCompleted, completionRate, responseTimeLabel, memberSince, serviceArea, bio, portfolio[], reviews[]`.
-
-**States:** Loading shimmer for header stats + 4 portfolio tiles. Empty portfolio/reviews → inline tile copy. Error standard.
-
----
-
-### 3.11 Wallet — `/wallet`
-
-**Screen objective:** Show money at rest and in motion, reinforcing Escrow trust. Mock in Phase 1.
-
-**Layout structure:**
-```
-AppBar: back · "Wallet"
-Body:
- ├─ BalanceHero (surface.cream card, radius rXl): "Available" (moneyLg) + row "In Escrow: R…" (status.escrow)
- ├─ ActionRow: Primary "Withdraw" (disabled stub) · Secondary "Top up" (disabled stub)
- └─ "Transactions" → ListView → TxnRow: icon (in/out/escrow) · label + counterparty (title/caption) · date · amount (green in / ink out) · status badge
-```
-**Data:** `availableZarMinor, inEscrowZarMinor, transactions[]{ id, type (credit|debit|escrowHold|escrowRelease), label, counterparty?, date, amountZarMinor, status }`.
-
-**States:** Loading = hero shimmer + 5 txn shimmers. Empty txns = 🧾 "No transactions yet." Error standard.
-
----
-
-### 3.12 Auth cluster — `/intent`, `/signup`, `/login`, `/otp`, `/verify-identity`
-
-**Objective:** Get a user in with minimal friction and set their default mode; collect just enough for a unified account.
-
-- **Intent Select:** two large tappable cards — "Get things done" (Consumer default) / "Earn money" (Merchant default); note that both are always available. Below: "I'll do both" tertiary. Sets `defaultMode`.
-- **Sign Up:** fields — full name, phone (ZA `+27` prefix) or email, password (show/hide), T&Cs checkbox. Primary "Create account" → `/otp`.
-- **Log In:** phone/email + password, "Forgot password" tertiary, Primary "Log in".
-- **OTP:** 4–6 boxed digit inputs (auto-advance), resend timer (`caption`), Primary "Verify".
-- **Verify Identity (KYC prompt):** explains why (Escrow/FICA) in plain language; Primary "Verify now" (mock success) · tertiary "Skip for now". Real VerifyNow integration deferred.
-
-**Look:** centered, generous whitespace, single-column, one clear primary button per screen — ANZ onboarding calm. Brand mark at top; cream hero optional on Intent.
-
-**States:** field-level validation; button spinner on submit; error banner for "invalid code / credentials" (mock triggers).
-
----
-
-### 3.13 Remaining skeleton screens (tabulated)
-
-| Screen | Route | Objective | Key elements | Empty/Error |
-|---|---|---|---|---|
-| Splash | `/splash` | Brand load + auth check | Centered logo on `brand.green.900` or cream; no controls | n/a |
-| Onboarding | `/onboarding` | Convey value in 3 slides | PageView, dots, "Skip"/"Next", final "Get started" | n/a |
-| Search & Filter | `/search` | Query + refine listings | Focused search field; filter groups (category, distance slider, budget range, listing type, sort); "Show N results" sticky primary; recent searches | Empty results block |
-| Notifications | `/notifications` | Activity log | Grouped list rows (offer received, booking, escrow, dispute, review); unread = orange dot; tap → deep target | Empty "You're all caught up" |
-| Leave Review | `/booking/:id/review` | Post-gig dual review | 5-star selector (large), optional comment, optional photo, Primary "Submit review" | Inline validation |
-| Settings | `/settings` | Account controls | Mode switch, verification status, notifications toggles, legal links, Sign out (destructive) | n/a |
-| Create Gig Post Wizard | `/create/gig-post` | Merchant listing | See §3.4 deltas | as wizard |
-
----
-
-## 4. Prompt Engineering Guide for Implementation LLMs
-
-**To the implementing model:** Treat this file as a *contract*, not inspiration. Generate a **Flutter** skeleton only — `flutter_riverpod` for state, `GoRouter` for the routes in §2.3, and a strict **feature-first** structure (`lib/features/<feature>/{presentation,application,domain,data}`, shared code in `lib/core/{theme,widgets,router,utils}`). Begin by emitting `core/theme/tokens.dart` from the literal values in §1.2 and derive a single `ThemeData`; **every** colour, radius, spacing, and text style in every widget must reference a token — never a hard-coded hex or magic number. Build each screen in §3 exactly to its stated widget tree, data fields, and the three mandatory states (loading shimmer / empty / error), using the §3 "Global state conventions" so state handling is uniform. All data is **mock**: define domain models and repository *interfaces* in `domain/`, provide `Mock*` implementations in `data/` that return the specified fields from in-memory fixtures behind a 300–800 ms delay (so loading states are visible), and expose them through Riverpod providers — **make no network, Firebase, TradeSafe, VerifyNow, or Google Maps calls**; render the `MapPlaceholder` where a map is specified. Honour the fixed domain vocabulary and lifecycle enum (§2.4) verbatim in class names, badge labels, and route names — do not rename `Gig Request`/`Gig Post`/`Offer`/`Booking`/`Escrow`/`Dispute` to generic marketplace terms. Respect the performance rules in §1.1: `const` constructors, `*.builder` lists, borders over shadows, `formatZar()` for all currency. Do **not** add screens, fields, flows, animations, theming, or "nice-to-have" polish that this document does not specify; where a detail is genuinely unspecified, choose the most minimal, token-consistent option and leave a `// TODO(spec):` comment rather than inventing product behaviour. The deliverable is a clean, modular, compile-ready skeleton whose structure a human can extend phase by phase — fidelity to this spec outranks creativity.
+# Design System: Daala
+
+## 1. Overview
+
+**Creative North Star: "The Sunlit Trade Stall"**
+
+Daala is an open-air marketplace rendered in software. The canvas is sun-bleached cream, the objects on it are clean white cards, and two brand colours split the emotional labour between them: a deep, grounded green that reassures, and a vibrant orange that invites. It should feel like a well-run stall on a bright street — someone you can see, run by someone who has your back — not a bank, not a corporation, and emphatically not a classifieds board. Every surface is soft-cornered and generously spaced, because the moment this product has to earn is the moment a stranger hands over money.
+
+Density is deliberately low and legibility deliberately high. People use this outdoors, one-handed, in hard South African daylight, on entry-level Android hardware, and they arrive with varied reading confidence. So type runs large and heavy, tap targets run generous, colour does the wayfinding, and copy stays plain. The register is **product, not brand**: the interface has no ambition of its own and should disappear into the task of finding, offering, and completing a gig. Where a marketing surface would reach for an effect, this system reaches for a bigger number and more air.
+
+What it explicitly rejects is the classifieds failure mode PRODUCT.md names by hand: *"the Gumtree/OLX-style dense, spammy listing wall — endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe."* Daala answers that structurally. Rows are cards with breathing room, every gig carries a named human with initials and a rating, and money is colour-coded by whether it is settled, protected, or moving. Trust is not a badge bolted onto the corner of a screen; it is the layout.
+
+**Key Characteristics:**
+- Warm cream (`#FAF7EC`) canvas with white cards floating on it — never a cold white, never a grey app-chrome surface.
+- Two brand colours in tension: **green = safe and settled**, **orange = energy and the next action**.
+- Rounded-everything (10–34px); the pill is the signature shape — nav bar, CTAs, tags, toggles, search.
+- Soft ambient shadows carry all depth. This system is intentionally *not* flat and *not* 1px-bordered.
+- One typeface (Outfit) at heavy weights (600–800); hierarchy from weight and size, never a second family.
+- One hero-scale figure per primary screen, and money always coloured by meaning.
+
+## 2. Colors
+
+A warm khaki-neutral foundation carrying exactly two saturated brand colours, each with a fixed job.
+
+### Primary
+- **Deep Trust Green** (`#003716`): The grounded anchor and the colour of settled money. It carries prices (`R65`), the wallet balance card fill, positive transaction amounts (`+R28.00`), the active navigation tab, tag-pill text, verification and trust cues, the "Confirmed" status pill, the selected filter chip, initials avatars, and the secondary "Post Gig" CTA. Rule of thumb: if money is **held, earned, or protected**, it is green.
+
+### Secondary
+- **Hustle Orange** (`#FF823A`): The energy accent and the loudest element on any screen. Its lead job is the single primary forward action — the raised central Post FAB, "Apply Now", and "Withdraw to Bank". Beyond that one action it appears only as a small human-trust or momentum accent: the Home weekly-earnings figure, star ratings (`★ 4.9`), review stars, and the unread-message dot in Inbox. It never fills a large area and never decorates structure.
+
+### Neutral
+- **Screen Cream** (`#FAF7EC`): The background of every screen, and the surface of the modal sheet. The system's warmth lives here, not in the brand colours.
+- **Outer Canvas** (`#EFEDE6`): A half-step darker cream sitting behind the screen as the device/canvas frame.
+- **Card White** (`#FFFFFF`): Every raised card, row, header button, filter chip, speed-dial pill, and the floating nav bar. White is what makes an element read as *a discrete, trustworthy object* against the cream.
+- **Placeholder Khaki** (`#EFE9D4`): Photo, thumbnail, and avatar stand-in blocks, and the skeleton-loading fill. The literal khaki of the theme.
+- **Ink** (`#111111`): Primary text. Muted text is expressed as **alpha over ink**, never as a separate grey token, so it always composites against the cream at true contrast. Two text steps only: **ink-65%** for descriptive body copy, **ink-55%** for meta, captions, field labels, section overlines, and input placeholders. Steps below that (**ink-40%**, **ink-15%**) are non-text only: inactive nav icons, hairlines, the off state of a toggle track.
+- **Structure tints**: dividers are black at 6% (hairlines inside cards, between transaction rows) and 8% (the vertical rule splitting a two-cell card). The segmented-toggle track is black at 5%. The scrim behind sheets and the open FAB is a warm green-black at 40% (`rgba(17,26,20,.4)`) so dimming stays soft rather than funereal.
+
+### Brand tints
+- **Green tint** (`#00371618`, green at 9%): translucent green over cream — tag and skill pills (with green text), the active-tab chip, the "Confirmed" status pill, and the small green icon backings on form rows and speed-dial items. Because it is alpha-over-brand, it always reads as cream showing through green rather than as a separate sage swatch.
+- **Green tint strong** / **Orange tint** (`#00371622` / `#FF823A22`, both at ~13%): the alternating fills of the category-grid tile headers, and the orange icon backing on Home's next-booking row.
+
+### Named Rules
+
+**The One-Action Orange Rule.** Orange leads exactly one primary forward action per screen. Its scarcity *as a button* is the "do this next" signal. Two competing orange CTAs on one screen are prohibited. Orange may additionally appear as a small accent (ratings, weekly earnings, unread dot) but never as a second large action and never as decoration of structure.
+
+**The Green Money Rule.** Settled and protected money is green: prices, positive transaction amounts, the wallet balance card, escrow surfaces, fixed payouts. Money leaving or moving forward is orange (Withdraw, Apply). Money lost to the platform — fees, withdrawals in a transaction list — is neutral ink-55%, never red. The single deliberate exception is Home's "earned this week" figure, rendered orange as a motivational energy highlight rather than a settled balance.
+
+**The Warm-Never-White Rule.** No screen background is pure white and no surface is a cold grey. Backgrounds are cream (`#FAF7EC`); objects are white cards on top of it. A grey app-chrome surface reads as a generic tool and is prohibited.
+
+**The Readable-Muted Rule.** Muted text bottoms out at **ink-55%** (4.7:1 on cream — passes). Anything fainter is not text. This is a deliberate correction to the reference mockup, which sets meta at ink-45% (3.3:1) and search placeholders at ink-35% (2.6:1); both fail against cream and both fail hardest in exactly the bright-daylight, varied-literacy conditions this product ships into. Hierarchy below ink-55% is carried by **size and weight**, which this system has in abundance — never by fading text further.
+
+## 3. Typography
+
+**Display / Body / Label Font:** Outfit (with `system-ui, sans-serif` fallback). There is no second family.
+
+**Character:** One geometric sans doing every job. Outfit is built on near-circular bowls and even stroke weights — clean, modern, and confident, with a friendliness that comes from roundness rather than from calligraphic warmth. It is at its best big and heavy, which suits a system whose hierarchy is carried by hero figures and 800-weight numbers. Hierarchy comes from **weight and size**, never from a second face and never from colour alone. Weights run heavy: nothing structural sits below 600, and every number that matters is 800. No serif, no display face, no mono — a product-register decision that keeps labels, data, and prose visually of a piece.
+
+**The trade-off to watch.** Geometric sans faces differentiate less at small sizes than humanist ones — Outfit's `a` / `o` / `e` share a circle, and its apertures close up under glare. The system's floor sizes (Tab Label at 10px, Meta and Status at 11px) are where this bites, on exactly the outdoor, entry-level-Android, varied-literacy reading this product is built for. Hold the 10px floor as an absolute, keep the small roles at w600 or heavier, and honour The Readable-Muted Rule strictly at these sizes — an ink-55% 11px label in Outfit has no margin left to give away.
+
+### Hierarchy
+- **Display** (w800, 52px, line-height 1.0): The one hero figure on Home (`24 Gigs`). Centred, one per screen, the emotional anchor of the earn view.
+- **Money** (w800, 30px): The wallet balance, set white on the green balance card.
+- **Headline** (w800, 30px / 26px, line-height 1.2): Detail-screen titles (`Help moving a 2-bed apartment`) at 30px; the post-gig wizard title steps to 28px at line-height 1.25. Large left-aligned page titles on primary list screens (`Browse Gigs`, `My Gigs`, `Inbox`) sit at 26px.
+- **Figure** (w800, 22px / 20px / 18px): The paired numbers inside split stat cards (`R65` payout, `~2 hrs` duration, `40 taskers`, `R72` suggested) and the three profile stat tiles (`62`, `98%`, `2023`). Green when the figure is money, ink when it is not.
+- **App-bar Title** (w700, 18px): Centred titles on pushed screens, flanked by round icon buttons (`My Wallet`, `Profile`). The modal sheet header sits one step down at w700/17px.
+- **Section** (w700, 16px): Section headers (`Gigs For You`, `Categories`, `Home & Garden`) and CTA button labels. Prices in gig rows use the same 16px at w800 in green.
+- **Title** (w700, 15px): Card titles and poster names (`Marlo T.`, `Garden cleanup`). Sheet row labels use 15px at w600.
+- **Row Title** (w700, 14px): List-row and speed-dial labels (`Assemble flatpack shelving`, `Post a service`).
+- **Value** (w600, 14px): Fact rows on the detail screen (`Braamfontein 2001`, `Fri 12 Jul, 9:00am`) and transaction descriptions. Transaction amounts use 14px at w800.
+- **Body** (w500, 13px, line-height 1.6, ink-65%): Descriptive helper copy and profile bios. Review quotes step to 12px/1.5. This is app UI, not long-form — keep prose short rather than reaching for a wide measure.
+- **Label** (w700, 13px, ink-55%): Field labels above form rows (`Category`, `Budget`, `Pricing Type`).
+- **Overline** (w700, 13px, UPPERCASE, letter-spacing 0.4px, ink-55%): List groupings and section eyebrows on Wallet and My Gigs (`BALANCE`, `RECENT GIGS`, `TOMORROW`, `THIS WEEK`). This is the *only* sanctioned uppercase treatment in the system.
+- **Caption** (w600, 12px / 11px, ink-55%): Stat-card captions above a figure (`My Offers`, `Estimated Payout`, `Gigs Done`).
+- **Meta** (w500, 12px / 11px, ink-55%): Distances, timestamps, sub-labels (`1.2km · posted 2h ago`, `2m`).
+- **Tag** (w700, 12px): Pill labels and small inline actions (`Save`, `Get Help`, skill chips).
+- **Status** (w700, 11px): Lifecycle status pills (`Confirmed`, `In progress`).
+- **Tab Label** (w600, 10px): Bottom-nav labels only. The floor of the system — nothing else goes this small.
+
+### Named Rules
+
+**The Heavy-Weight Rule.** Hierarchy is carried by weight (700/800) and size, never by colour alone and never by a second typeface. If something needs emphasis it gets heavier or bigger; it does not get a display font, an outline, or a gradient.
+
+**The Big-Number Rule.** Each primary screen earns exactly one hero-scale figure — gigs nearby on Home, the balance on Wallet. Competing large numbers dilute it into a dashboard.
+
+**The Complete-Scale Rule.** Every size and weight a screen needs is a named role in the token file. A screen that reaches for a one-off `fontSize` override has found a missing role — add the role, don't patch the screen. Local overrides are how a documented scale quietly stops being the scale.
+
+## 4. Elevation
+
+This system is **soft-shadow layered — not flat, not bordered**. Depth comes almost entirely from diffuse, low-opacity ambient shadows: cards, chips, the floating nav bar, sheets, and CTAs all lift off the cream on cushioned shadows rather than sitting inside 1px strokes. Borders exist only as *internal dividers* — a hairline between the two cells of a split card, between transaction rows — never as a card's outer edge. Brand CTAs cast a **tinted** shadow in their own hue, an orange glow under the FAB and orange CTA and a green glow under the green CTA, which reads as warmth and importance rather than a hard drop. Opacities stay at or below 16% for neutral shadows; anything darker reads as a 2014 app.
+
+### Shadow Vocabulary
+- **card** (`0 2px 10px rgba(0,0,0,.05)`): The default resting lift under white cards, gig rows, and inbox rows.
+- **card-quiet** (`0 2px 10px rgba(0,0,0,.04)`): The paired Home stat cards, which sit slightly further back so the hero figure above them stays dominant.
+- **sheet-row** (`0 2px 8px rgba(0,0,0,.05)`): Card rows inside the modal sheet, tightened because the sheet is already lifted.
+- **soft** (`0 2px 6px rgba(0,0,0,.06)`): Round header buttons, the header pill button, the search field, and the active segment of a toggle.
+- **chip** (`0 2px 6px rgba(0,0,0,.05)`): Unselected filter chips and white attribute pills.
+- **chip-brand** (`0 2px 6px rgba(0,0,0,.10)`): The green filter/sort button — slightly deeper so a saturated fill still reads as raised.
+- **category** (`0 4px 14px rgba(0,0,0,.07)`): The category grid tiles, which carry a touch more presence than a plain card.
+- **tabbar** (`0 8px 24px rgba(0,0,0,.12)`): The floating pill navigation bar hovering over scrolling content.
+- **speed-item** (`0 8px 18px rgba(0,0,0,.16)`): The speed-dial action pills while the FAB is open, above the scrim.
+- **fab** (`0 8px 18px rgba(255,130,58,.40)`): The orange glow beneath the central Post button.
+- **cta-orange** (`0 6px 16px rgba(255,130,58,.35)`) / **cta-green** (`0 6px 16px rgba(0,55,22,.30)`): Coloured lift under the two primary CTA fills.
+
+### Named Rules
+
+**The Cushioned-Card Rule.** Cards are lifted, never outlined. A white card's edge is defined by its shadow against the cream. An outer `border` on a card is prohibited. The only legitimate strokes in this system are a hairline divider *inside* a container and the 2px green outline on a selected two-option pill.
+
+**The Tinted-Glow Rule.** Primary CTAs and the FAB cast a shadow in their own brand hue, not neutral black. The glow is part of the button's identity, not an effect layered on top of it.
+
+**The Shadow-Ceiling Rule.** Neutral shadow opacity never exceeds 16%, and blur never drops below 6px. If a shadow reads as a hard edge rather than as air under an object, it is wrong — go wider and fainter, never darker and tighter.
+
+## 5. Components
+
+### Buttons
+- **Shape:** Full pill (28px radius), 56px tall, centred label at w700/16px in white.
+- **Primary (orange):** `#FF823A` fill with the `cta-orange` glow. The one forward action on a screen — `Apply Now`, and the central Post FAB.
+- **Secondary (green):** `#003716` fill with the `cta-green` glow. Committing and creating actions — `Post Gig`. (`Withdraw to Bank` is the orange fill at a smaller inline size: 10×18px padding, 18px radius, w700/13px, sitting on the green balance card.)
+- **Header pill:** White pill, 44px tall, 18px horizontal padding, `soft` shadow, green w700/13px label with an optional leading green icon — `Save`, `Get Help`. Lives top-right on pushed screens.
+- **Round icon button:** 44px white circle with the `soft` shadow — back, search, bell, add, edit. The universal chrome affordance, sized to clear both platform touch minimums.
+- **Pressed:** scale to 0.97 and drop the shadow one step, 120ms. **Disabled:** fill at 40% opacity, label at ink-40%, no shadow. **Loading:** label swaps for a 20px white spinner; the pill keeps its width so nothing reflows.
+
+### Chips & Tags
+- **Tag pill:** Green-tint fill (`#00371618`), 14px radius, 6×14px padding, w700/12px green text — `Moving · One-time`, skill chips.
+- **Attribute pill:** White with the `chip` shadow, 14px radius, 8×14px padding, w600/12px ink — neutral gig attributes like `Heavy lifting`, `Own transport`.
+- **Status pill:** 10px radius, 4×10px padding, w700/11px. Positive lifecycle states use the green tint with green text (`Confirmed`); neutral in-flight states use a 6%-black fill with ink-55% text (`In progress`).
+- **Filter chip:** 16px radius, 9×16px padding. Selected is a solid green fill with white w700/12px; unselected is white with the `chip` shadow and ink w600/12px. Horizontally scrolling row, never wrapped.
+- **Segmented toggle:** A 22px-radius track at 5% black with 4px inset padding. The active segment is a white card (18px radius, `soft` shadow, green w700) and the inactive segment is transparent with ink-55% w600. Carries the Home `Earn Moola ⇄ Browse Gigs` switch and the My Gigs `Upcoming / Applied / Completed` tabs.
+- **Two-option selector:** Side-by-side pills at 22px radius with 14px vertical padding. Selected is transparent with a 2px green border and green w700/14px; unselected sits on a 6%-black fill with ink-55% w600/14px. Used for Pricing Type and Schedule in the post-gig form.
+
+### Cards / Containers
+- **Corner style:** 22px radius, universally.
+- **Background:** White on the cream screen. The one variant is the green-filled wallet balance card, which inverts to white text with its caption at white-70%.
+- **Shadow strategy:** `card` by default; `category` for grid tiles; `chip`/`soft` for lightweight pills and rows; `card-quiet` for the recessed Home stat pair. See Elevation.
+- **Border:** None on the outer edge, ever. Split cards use an 8%-black vertical hairline between their two cells; stacked transaction rows are separated by 6%-black horizontal hairlines with none on the last row.
+- **Internal padding:** 16×18px default. 18px all round for split and stat cards, 14×16px for compact rows (inbox, transactions, reviews), and zero padding with `clip` for media-topped cards (category tiles, browse carousel cards).
+- **Signature variants:** the **split card** (two equal cells, caption above figure, divided by one hairline); the **category tile** (76px tint header alternating green-tint-strong and orange-tint, then a 10×12px label block with name and gig count); the **carousel card** (140px wide, 88px khaki media header, then title, distance, and price).
+
+### Inputs / Fields
+The system is **picker-first, not keyboard-first** — the audience is one-handed, outdoors, on expensive data, and a tap beats typing every time.
+- **Field row:** A w700/13px ink-55% label sits above a white card that displays the current value and opens a picker on tap. Value on the right at w800/16px ink for money, w600/15px for text.
+- **Search field:** 48px tall, 24px radius, white with the `soft` shadow, 16px horizontal padding, leading 16px search glyph. Placeholder at w500/14px **ink-55%** — see The Readable-Muted Rule; the mockup's ink-35% placeholder is not to be reproduced.
+- **Toggle switch:** A 46×28 pill track with a 24px white thumb and 2px inset. Green fill when on, ink-15% when off; the thumb crosses in 180ms.
+- **Focus:** a 2px green ring offset 2px from the control, always visible on keyboard focus and never suppressed. **Error:** the value text stays ink, a w500/12px message in ink-55% sits below the row, and the row gains a 2px `#003716` outline — this system has no red; errors are stated in words, not alarm colour.
+
+### Navigation
+- **Floating pill tab bar:** A 68px white bar at 34px radius with the `tabbar` shadow, inset 16px from the screen edges and 16px from the bottom, floating above content rather than docked. Four destinations — **Home · My Gigs · Inbox · Profile** — flanking a raised central Post button. Scroll views pad 110px at the bottom so the last card always clears the bar.
+- **Active tab:** a filled green icon inside a 34×26 green-tint chip (13px radius), label green w600/10px. **Inactive:** an outline icon at ink-40% with a matching label. Icons are 16–18px at 2.2 stroke weight; the icon set is one family throughout, never mixed.
+- **Central Post FAB:** A 52px orange circle raised 26px above the bar with the `fab` glow. One FAB, one purpose — it is never repurposed for a secondary action on any screen.
+- **Safe areas and system gestures:** the bar sits inside the bottom safe-area inset, clearing the iOS home indicator and Android gesture bar. The iOS left-edge back gesture and the Android system Back are never intercepted, and both must dismiss the sheet and close the FAB before they pop a route.
+
+### Post FAB Speed-Dial (signature)
+Tapping the FAB rotates its `+` 45° over 250ms and raises three white action pills from behind the bar — **Post a service · Post a request · Post to media** — stacked upward at 60px intervals, right-aligned 16px from the edge. Each is a 48px-tall 24px-radius white pill with the `speed-item` shadow, a 30px green-tint circular icon backing, and a w700/13px ink label. They enter from `translateY(18px) scale(0.85)` with a 220ms `cubic-bezier(.2,.9,.3,1.4)` transform and a 180ms opacity fade, staggered 0 / 30 / 60ms bottom-up, over a 200ms scrim fade. Tapping the scrim, the FAB, or any item closes it in reverse. Under reduced motion, the pills and scrim cross-fade in 120ms with no transform and no stagger.
+
+### Modal Sheet
+Bottom sheets rise over the scrim to a maximum 88% of screen height, with a 28px top radius, a cream (`#FAF7EC`) surface, and 20×18×40px padding. The header is a three-part row — a green w700/15px `Cancel`, a centred ink w700/17px title, and a `Done` action that is ink-40% until the form is dirty and green once it is. Below it stack value rows and toggle rows as sheet-shadowed cards, with an optional centred w500/12px ink-55% footnote closing the sheet. Slide-up in 220ms `easeOutCubic`; tap-scrim, swipe-down, or `Done` dismisses along the reverse curve. Reserve sheets for a self-contained sub-task with a clear commit point — anything that can be edited in place, is.
+
+### States
+The reference mockup shows only populated, resting screens. Every list and data surface still owes three more, built from tokens already here:
+- **Loading:** khaki (`#EFE9D4`) skeleton blocks in the exact geometry of the card they replace — same radius, same card shadow, same row heights. No spinners inside content, and no shimmer sweep (it burns frames on 2GB hardware).
+- **Empty:** a plain w700/15px line naming what will appear here and the one action that starts it, using the screen's own primary CTA. Never a decorative illustration, never the word "empty".
+- **Error:** an inline w500/13px ink-65% sentence in plain language with a `Try again` header pill. Offline and slow connections are the expected case here, not the exception — never a full-screen error takeover that discards the user's place.
+
+## 6. Do's and Don'ts
+
+### Do:
+- **Do** put every colour, radius, shadow, spacing step, and text style through the tokens in `lib/theme/app_theme.dart` (`AppColors` / `AppRadius` / `AppShadows` / `AppText`). A raw hex or a bare number in a screen is a bug.
+- **Do** add a named role to the token file when a screen needs a size the scale doesn't have. Never a local `fontSize` override — see The Complete-Scale Rule.
+- **Do** keep every screen background cream (`#FAF7EC`) and float white cards on top of it.
+- **Do** lead exactly one primary forward action per screen in orange, and keep orange's other appearances (ratings, weekly earnings, unread dot) small and sparing.
+- **Do** colour money by meaning: green for settled, held, and positive; ink-55% for fees and outgoing; orange only for the Home weekly-earnings highlight and for actions that move money.
+- **Do** write **all** money in South African Rand through the shared formatter — `R1 250`, `R450`, `R37.50` — stored as integer minor units.
+- **Do** use South African places in every example, label, and fixture: suburb and city, `Braamfontein 2001`, `within 5km of Melville`.
+- **Do** lift cards with the `card` / `soft` shadows and let the shadow define the edge; use strokes only as internal hairline dividers or the selected two-option outline.
+- **Do** carry hierarchy with Outfit weights (700/800) and size, and keep exactly one hero-scale number per primary screen.
+- **Do** give primary CTAs and the FAB their tinted brand-hue glow.
+- **Do** surface people, status, and protected-money cues on every list: initials avatar, name, rating, lifecycle status.
+- **Do** ship every interactive component with pressed, disabled, and loading states, and every list with loading, empty, and error states.
+- **Do** keep copy plain, warm, and legible at a glance — `Earn Moola`, `Browse Gigs`, `Apply Now`, `tasker`, `helper`.
+
+### Don't:
+- **Don't** build the classifieds wall. PRODUCT.md names the failure mode exactly: *"the Gumtree/OLX-style dense, spammy listing wall — endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe."* If a list has no named humans, no status, and no breathing room, it is that wall.
+- **Don't** use a pure-white or cold-grey screen background, or put an outer border on a card. (Violates The Warm-Never-White and The Cushioned-Card Rules.)
+- **Don't** show any currency but Rand. The symbol is `R`, prefixed. No other currency symbol appears anywhere in this product.
+- **Don't** carry the reference mockup's placeholder content into real screens. Its foreign-currency amounts and Australian locations exist only because it was a mockup; none of it transfers.
+- **Don't** run two orange *actions* on one screen, use orange to fill a large area, or use it to decorate structure.
+- **Don't** set text below ink-55%, and don't hard-code a grey for muted text — muted is always alpha over ink so it composites truly against the cream. (The Readable-Muted Rule.)
+- **Don't** introduce a second typeface, a serif or display face, or set structural text below weight 600.
+- **Don't** use `border-left`-style side stripes, gradient text, or glassmorphism. None exist in this system and none may be added.
+- **Don't** deepen a shadow past 16% neutral opacity or invent a heavier elevation step. If it reads as a hard edge, it is wrong.
+- **Don't** exceed 250ms on any transition, animate anything continuously, or animate for decoration. Motion conveys state — tab change, sheet, FAB expand — and nothing else. Every animation has a reduced-motion fallback.
+- **Don't** reach for a modal first. Sheets are for self-contained sub-tasks with a commit point; anything editable in place is edited in place.
+- **Don't** reinvent platform affordances. The iOS edge-swipe back and the Android system Back always work, content always sits inside safe-area and window insets, and touch targets never fall below 44pt / 48dp.
+- **Don't** use red, or any colour outside these tokens, to signal an error. Errors are stated in plain words.
