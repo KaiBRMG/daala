@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
@@ -58,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Image.asset('assets/images/daala-logo.png',
             height: 26, fit: BoxFit.contain),
         RoundIconButton(
-            icon: Icons.search, onTap: () => context.push('/browse')),
+            icon: Icons.search,
+            semanticLabel: 'Search gigs',
+            onTap: () => context.push('/search')),
       ],
     );
   }
@@ -68,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.trackFill,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(AppRadius.track),
       ),
       child: Row(
         children: [
@@ -90,17 +93,14 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: active
               ? BoxDecoration(
                   color: AppColors.card,
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(AppRadius.segment),
                   boxShadow: AppShadows.soft,
                 )
               : null,
           child: Text(
             label,
-            style: AppText.metaStrong.copyWith(
-              fontSize: 14,
-              fontWeight: active ? FontWeight.w700 : FontWeight.w600,
-              color: active ? AppColors.green : AppColors.ink45,
-            ),
+            style: AppText.label
+                .copyWith(color: active ? AppColors.green : AppColors.ink55),
           ),
         ),
       ),
@@ -112,14 +112,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       Column(
         children: [
-          Text('Available Nearby',
-              style: AppText.metaStrong
-                  .copyWith(fontSize: 13, color: AppColors.ink50)),
+          Text('Available Nearby', style: AppText.caption),
           const SizedBox(height: 6),
           Text('24 Gigs', style: AppText.hero),
           const SizedBox(height: 6),
-          Text('within 5km of Fitzroy',
-              style: AppText.meta.copyWith(fontSize: 13, color: AppColors.ink40)),
+          Text('within 5km of Melville', style: AppText.meta),
         ],
       ),
       const SizedBox(height: 22),
@@ -130,7 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: _statCard('This Week', '\$410 earned', AppColors.orange,
+            child: _statCard('This Week', '${formatZar(41000)} earned',
+                AppColors.orange,
                 onTap: () => context.push('/wallet')),
           ),
         ],
@@ -140,31 +138,44 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => context.push('/booking/edit'),
         child: Row(
           children: [
-            _emojiCircle('🗓️', AppColors.orangeTint),
+            _iconCircle(Icons.event, AppColors.orange, AppColors.orangeTint),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Garden cleanup — tomorrow 9am', style: AppText.rowTitle),
+                  Text('Garden cleanup — tomorrow 9am',
+                      style: AppText.rowTitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 2),
                   Text('Booked with Marlo T.', style: AppText.meta),
                 ],
               ),
             ),
+            const SizedBox(width: 10),
+            const StatusPill('Confirmed'),
           ],
         ),
       ),
       const SizedBox(height: 22),
       Text('Gigs For You', style: AppText.section),
       const SizedBox(height: 12),
-      _gigRow('Assemble flatpack shelving', '1.2km · posted 2h ago', '\$65'),
-      const SizedBox(height: 10),
-      _gigRow('Logo design for cafe', 'Remote · posted 5h ago', '\$300'),
-      const SizedBox(height: 10),
-      _gigRow('Grocery delivery run', '0.8km · posted 20m ago', '\$28'),
+      for (final gig in _gigsForYou) ...[
+        _gigRow(gig),
+        if (gig != _gigsForYou.last) const SizedBox(height: 10),
+      ],
     ];
   }
+
+  static const List<_Gig> _gigsForYou = [
+    _Gig('Assemble flatpack shelving', '1.2km · posted 2h ago', 6500,
+        'Thabo M.', 'TM', '4.9'),
+    _Gig('Logo design for cafe', 'Remote · posted 5h ago', 30000, 'Naledi K.',
+        'NK', '5.0'),
+    _Gig('Grocery delivery run', '0.8km · posted 20m ago', 2800, 'Sipho D.',
+        'SD', '4.8'),
+  ];
 
   Widget _statCard(String label, String value, Color valueColor,
       {VoidCallback? onTap}) {
@@ -174,47 +185,65 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: AppText.meta
-                  .copyWith(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink50)),
+          Text(label, style: AppText.caption),
           const SizedBox(height: 8),
-          Text(value,
-              style: AppText.metaStrong.copyWith(
-                  fontSize: 17, fontWeight: FontWeight.w700, color: valueColor)),
+          Text(value, style: AppText.section.copyWith(color: valueColor)),
         ],
       ),
     );
   }
 
-  Widget _emojiCircle(String emoji, Color bg) {
+  Widget _iconCircle(IconData icon, Color fg, Color bg) {
     return Container(
       width: 38,
       height: 38,
       alignment: Alignment.center,
       decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
-      child: Text(emoji, style: const TextStyle(fontSize: 18)),
+      child: Icon(icon, size: 20, color: fg),
     );
   }
 
-  Widget _gigRow(String title, String meta, String price) {
+  Widget _gigRow(_Gig gig) {
     return GwCard(
       onTap: () => context.push('/gig'),
       child: Row(
         children: [
-          const PhotoPlaceholder(width: 44, height: 44),
+          const PhotoPlaceholder(width: 52, height: 52),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppText.rowTitle),
-                const SizedBox(height: 2),
-                Text(meta, style: AppText.meta),
+                Text(gig.title,
+                    style: AppText.rowTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    InitialsAvatar(gig.initials, size: 20, fontSize: 9),
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(gig.poster,
+                          style: AppText.caption.copyWith(color: AppColors.ink),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.star_rounded,
+                        size: 14, color: AppColors.orange),
+                    const SizedBox(width: 2),
+                    Text(gig.rating,
+                        style: AppText.caption.copyWith(color: AppColors.ink)),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(gig.meta, style: AppText.meta),
               ],
             ),
           ),
-          const SizedBox(width: 8),
-          Text(price, style: AppText.price),
+          const SizedBox(width: 10),
+          Text(formatZar(gig.priceMinor), style: AppText.price),
         ],
       ),
     );
@@ -225,18 +254,18 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       _sectionHeader('Home & Garden'),
       const SizedBox(height: 12),
-      _horizontalRow(const [
-        ('Weekly hedge trim', '2.4km', '\$45'),
-        ('Garden bed weeding', '1.6km', '\$38'),
-        ('Lawn mowing', '0.9km', '\$55'),
+      _horizontalRow([
+        ('Weekly hedge trim', '2.4km', formatZar(4500)),
+        ('Garden bed weeding', '1.6km', formatZar(3800)),
+        ('Lawn mowing', '0.9km', formatZar(5500)),
       ]),
       const SizedBox(height: 24),
       _sectionHeader('Delivery & Errands'),
       const SizedBox(height: 12),
-      _horizontalRow(const [
-        ('Grocery delivery run', '0.8km', '\$28'),
-        ('Pharmacy pickup', '1.1km', '\$18'),
-        ('Post office run', '2.0km', '\$22'),
+      _horizontalRow([
+        ('Grocery delivery run', '0.8km', formatZar(2800)),
+        ('Pharmacy pickup', '1.1km', formatZar(1800)),
+        ('Post office run', '2.0km', formatZar(2200)),
       ]),
       const SizedBox(height: 24),
       Text('Categories', style: AppText.section),
@@ -250,15 +279,21 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: AppText.section),
-        Text('See all',
-            style: AppText.tag.copyWith(color: AppColors.green, fontSize: 12)),
+        Pressable(
+          onTap: () => context.push('/search'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+            child: Text('See all',
+                style: AppText.tag.copyWith(color: AppColors.green)),
+          ),
+        ),
       ],
     );
   }
 
   Widget _horizontalRow(List<(String, String, String)> items) {
     return SizedBox(
-      height: 158,
+      height: 170,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
@@ -349,4 +384,19 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+}
+
+/// Mock gig fixture for the "Gigs For You" list. Every gig carries a named
+/// human and rating so the list reads as people, not a classifieds wall
+/// (DESIGN.md: "Trust is the interface").
+class _Gig {
+  const _Gig(this.title, this.meta, this.priceMinor, this.poster, this.initials,
+      this.rating);
+
+  final String title;
+  final String meta;
+  final int priceMinor;
+  final String poster;
+  final String initials;
+  final String rating;
 }

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
 
-  static const _txns = [
-    ('Grocery delivery run', '+\$28.00', true),
-    ('Logo design deposit', '+\$150.00', true),
-    ('Platform fee', '-\$4.20', false),
-    ('Withdrawal to bank', '-\$200.00', false),
+  // Signed minor units (cents); positive = money in (green), negative = out.
+  static const _txns = <(String, int)>[
+    ('Grocery delivery run', 2800),
+    ('Logo design deposit', 15000),
+    ('Platform fee', -420),
+    ('Withdrawal to bank', -20000),
   ];
 
   @override
@@ -56,7 +58,7 @@ class WalletScreen extends StatelessWidget {
   }
 
   Widget _overline(String text) => Text(text.toUpperCase(),
-      style: AppText.label.copyWith(color: AppColors.ink50, letterSpacing: 0.3));
+      style: AppText.label.copyWith(color: AppColors.ink55, letterSpacing: 0.3));
 
   Widget _balanceCard() {
     return GwCard(
@@ -70,7 +72,7 @@ class WalletScreen extends StatelessWidget {
               style: AppText.body.copyWith(
                   fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.white70)),
           const SizedBox(height: 6),
-          Text('\$1,978.85',
+          Text(formatZar(197885, cents: true),
               style: AppText.money.copyWith(color: AppColors.white)),
           const SizedBox(height: 16),
           Container(
@@ -94,28 +96,31 @@ class WalletScreen extends StatelessWidget {
       child: Column(
         children: [
           for (var i = 0; i < _txns.length; i++)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              decoration: BoxDecoration(
-                border: i == _txns.length - 1
-                    ? null
-                    : const Border(bottom: BorderSide(color: AppColors.divider)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(_txns[i].$1,
-                      style: AppText.metaStrong
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
-                  Text(_txns[i].$2,
-                      style: AppText.tag.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        color: _txns[i].$3 ? AppColors.green : AppColors.ink60,
-                      )),
-                ],
-              ),
-            ),
+            Builder(builder: (context) {
+              final positive = _txns[i].$2 >= 0;
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                decoration: BoxDecoration(
+                  border: i == _txns.length - 1
+                      ? null
+                      : const Border(bottom: BorderSide(color: AppColors.divider)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_txns[i].$1,
+                        style: AppText.metaStrong
+                            .copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+                    Text(formatZar(_txns[i].$2, cents: true, signed: true),
+                        style: AppText.tag.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: positive ? AppColors.green : AppColors.ink60,
+                        )),
+                  ],
+                ),
+              );
+            }),
         ],
       ),
     );

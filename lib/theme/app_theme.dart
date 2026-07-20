@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Design tokens for the "Groundwork" gig marketplace — Khaki theme.
+/// Design tokens for the Daala gig marketplace — Khaki theme.
 /// Values transcribed 1:1 from the reference design (cream #FAF7EC surfaces,
 /// deep-green + vibrant-orange brand). Typeface is Outfit: the reference
 /// mockup was set in Plus Jakarta Sans, but Outfit is the committed family.
@@ -51,6 +51,9 @@ abstract final class AppRadius {
   static const double sheet = 28;
   static const double chip = 16;
   static const double tag = 14;
+  static const double status = 10; // lifecycle status pill
+  static const double segment = 18; // active segment of a toggle
+  static const double track = 22; // segmented-toggle track
   static const double pill = 24; // search bar / speed-dial items
   static const double tabbar = 34;
 }
@@ -113,15 +116,20 @@ abstract final class AppText {
 
   // Body / meta
   static TextStyle body = _base(13, FontWeight.w500, color: AppColors.ink65, height: 1.6);
-  static TextStyle meta = _base(12, FontWeight.w500, color: AppColors.ink45);
+  // Readable-Muted Rule (DESIGN.md §2): muted text bottoms out at ink-55.
+  static TextStyle meta = _base(12, FontWeight.w500, color: AppColors.ink55);
   static TextStyle metaStrong = _base(14, FontWeight.w600);
   static TextStyle label = _base(13, FontWeight.w700, color: AppColors.ink55);
+  // Stat-card captions above a figure (`My Offers`, `Available Nearby`).
+  static TextStyle caption = _base(12, FontWeight.w600, color: AppColors.ink55);
 
   // Micro
   static TextStyle overline =
-      _base(13, FontWeight.w700, color: AppColors.ink50, spacing: 0.4);
+      _base(13, FontWeight.w700, color: AppColors.ink55, spacing: 0.4);
   static TextStyle tabLabel = _base(10, FontWeight.w600);
   static TextStyle tag = _base(12, FontWeight.w700);
+  // Lifecycle status pills (`Confirmed`, `In progress`).
+  static TextStyle status = _base(11, FontWeight.w700);
 }
 
 /// Single ThemeData derived from the tokens.

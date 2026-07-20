@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
@@ -37,7 +38,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
               statusFg: AppColors.green,
               avatarInitials: 'MT',
               sub: 'Marlo T. · 9:00am',
-              price: '\$65 fixed',
+              price: '${formatZar(6500)} fixed',
             ),
             const SizedBox(height: 16),
             _sectionLabel('This Week'),
@@ -46,9 +47,9 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
               title: 'Logo design for cafe',
               status: 'In progress',
               statusBg: AppColors.trackFill,
-              statusFg: AppColors.ink50,
+              statusFg: AppColors.ink55,
               sub: 'Fri 12 Jul · Remote',
-              price: '\$300 fixed',
+              price: '${formatZar(30000)} fixed',
             ),
             const SizedBox(height: 12),
             _bookingCard(
@@ -57,7 +58,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
               statusBg: AppColors.greenTint,
               statusFg: AppColors.green,
               sub: 'Sat 13 Jul · 0.8km',
-              price: '\$28 fixed',
+              price: '${formatZar(2800)} fixed',
             ),
           ],
         ),
@@ -93,7 +94,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
                     _tabs[i],
                     style: AppText.label.copyWith(
                       fontWeight: _tab == i ? FontWeight.w700 : FontWeight.w600,
-                      color: _tab == i ? AppColors.green : AppColors.ink45,
+                      color: _tab == i ? AppColors.green : AppColors.ink55,
                     ),
                   ),
                 ),
@@ -106,7 +107,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
 
   Widget _sectionLabel(String text) {
     return Text(text.toUpperCase(),
-        style: AppText.label.copyWith(color: AppColors.ink50, letterSpacing: 0.3));
+        style: AppText.label.copyWith(color: AppColors.ink55, letterSpacing: 0.3));
   }
 
   Widget _bookingCard({

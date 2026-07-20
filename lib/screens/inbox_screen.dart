@@ -10,7 +10,7 @@ class InboxScreen extends StatelessWidget {
     ('MT', 'Marlo T.', '2m', 'Sounds good, see you at 9am tomorrow!', true),
     (null, 'Ana R.', '1h', 'Thanks again for the quick turnaround on the shelving!', false),
     (null, 'Theo B.', 'Yesterday', 'Can you send over the final logo files?', false),
-    (null, 'Groundwork Support', '2d', 'Your withdrawal of \$200.00 has been processed.', false),
+    (null, 'Daala Support', '2d', 'Your withdrawal of R200.00 has been processed.', false),
   ];
 
   @override
@@ -55,7 +55,7 @@ class InboxScreen extends StatelessWidget {
                     Text(name, style: AppText.rowTitle),
                     Text(time,
                         style: AppText.meta.copyWith(
-                            fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.ink40)),
+                            fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.ink55)),
                   ],
                 ),
                 const SizedBox(height: 2),
@@ -63,7 +63,7 @@ class InboxScreen extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.body.copyWith(
-                        fontSize: 13, height: 1.2, color: AppColors.ink50)),
+                        fontSize: 13, height: 1.2, color: AppColors.ink55)),
               ],
             ),
           ),

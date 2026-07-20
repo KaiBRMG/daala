@@ -27,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 18),
                   GwCard(
                     child: Text(
-                      'Handy with tools, quick with logos. I take on moving, garden and small design gigs around Fitzroy — reliable and always on time.',
+                      'Handy with tools, quick with logos. I take on moving, garden and small design gigs around Melville — reliable and always on time.',
                       style: AppText.body,
                     ),
                   ),
@@ -116,7 +116,7 @@ class ProfileScreen extends StatelessWidget {
           Text(label,
               textAlign: TextAlign.center,
               style: AppText.meta.copyWith(
-                  fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.ink50)),
+                  fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.ink55)),
         ],
       ),
     );

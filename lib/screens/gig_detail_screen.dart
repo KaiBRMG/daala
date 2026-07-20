@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
@@ -103,7 +104,7 @@ class GigDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          _MetaRow('📍', 'Fitzroy VIC 3065'),
+          _MetaRow('📍', 'Braamfontein 2001'),
           SizedBox(height: 14),
           _MetaRow('🗓️', 'Fri 12 Jul, 9:00am'),
           SizedBox(height: 14),
@@ -125,7 +126,8 @@ class GigDetailScreen extends StatelessWidget {
                 border: Border(
                     right: BorderSide(color: AppColors.dividerStrong)),
               ),
-              child: _payoutCell('Estimated Payout', '\$65', AppColors.green),
+              child: _payoutCell(
+                  'Estimated Payout', formatZar(6500), AppColors.green),
             ),
           ),
           Expanded(
@@ -144,7 +146,7 @@ class GigDetailScreen extends StatelessWidget {
       children: [
         Text(label,
             style: AppText.meta.copyWith(
-                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink50)),
+                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink55)),
         const SizedBox(height: 6),
         Text(value,
             style: AppText.money.copyWith(fontSize: 22, color: color)),

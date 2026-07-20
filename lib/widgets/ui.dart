@@ -2,6 +2,46 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 
+/// Wraps a tappable surface with the design's pressed feedback: a 0.97 scale
+/// over 120ms (DESIGN.md §5 "Pressed"). Returns [child] untouched when there is
+/// no [onTap], and skips the scale under a reduced-motion preference.
+class Pressable extends StatefulWidget {
+  const Pressable({super.key, required this.child, this.onTap});
+
+  final Widget child;
+  final VoidCallback? onTap;
+
+  @override
+  State<Pressable> createState() => _PressableState();
+}
+
+class _PressableState extends State<Pressable> {
+  bool _down = false;
+
+  void _set(bool v) {
+    if (_down != v) setState(() => _down = v);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.onTap == null) return widget.child;
+    final reduceMotion = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+    return GestureDetector(
+      onTap: widget.onTap,
+      onTapDown: (_) => _set(true),
+      onTapUp: (_) => _set(false),
+      onTapCancel: () => _set(false),
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedScale(
+        scale: _down && !reduceMotion ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 120),
+        curve: Curves.easeOut,
+        child: widget.child,
+      ),
+    );
+  }
+}
+
 /// White rounded card matching `.card` in the design (radius 22 + soft shadow).
 class GwCard extends StatelessWidget {
   const GwCard({
@@ -33,8 +73,7 @@ class GwCard extends StatelessWidget {
       clipBehavior: clip ? Clip.antiAlias : Clip.none,
       child: child,
     );
-    if (onTap == null) return content;
-    return GestureDetector(onTap: onTap, behavior: HitTestBehavior.opaque, child: content);
+    return Pressable(onTap: onTap, child: content);
   }
 }
 
@@ -98,6 +137,7 @@ class RoundIconButton extends StatelessWidget {
     super.key,
     required this.icon,
     this.onTap,
+    this.semanticLabel,
     this.size = 44,
     this.iconSize = 18,
     this.bg = AppColors.card,
@@ -106,6 +146,10 @@ class RoundIconButton extends StatelessWidget {
 
   final IconData icon;
   final VoidCallback? onTap;
+
+  /// Spoken label for this icon-only control (screen readers announce nothing
+  /// from a bare glyph). Omit only for a purely decorative button.
+  final String? semanticLabel;
   final double size;
   final double iconSize;
   final Color bg;
@@ -113,19 +157,22 @@ class RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: size,
-        height: size,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: bg,
-          shape: BoxShape.circle,
-          boxShadow: AppShadows.soft,
+    return Semantics(
+      button: true,
+      label: semanticLabel,
+      child: Pressable(
+        onTap: onTap,
+        child: Container(
+          width: size,
+          height: size,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: bg,
+            shape: BoxShape.circle,
+            boxShadow: AppShadows.soft,
+          ),
+          child: Icon(icon, size: iconSize, color: iconColor),
         ),
-        child: Icon(icon, size: iconSize, color: iconColor),
       ),
     );
   }
@@ -189,6 +236,32 @@ class TagPill extends StatelessWidget {
         boxShadow: shadow,
       ),
       child: Text(label, style: AppText.tag.copyWith(color: fg)),
+    );
+  }
+}
+
+/// Lifecycle status pill (`Confirmed`, `In progress`). Positive states use the
+/// green tint with green text; neutral in-flight states use a hairline fill
+/// with ink-55 text. There is no red in this system (DESIGN.md §2).
+class StatusPill extends StatelessWidget {
+  const StatusPill(this.label, {super.key, this.positive = true});
+
+  final String label;
+  final bool positive;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: positive ? AppColors.greenTint : AppColors.divider,
+        borderRadius: BorderRadius.circular(AppRadius.status),
+      ),
+      child: Text(
+        label,
+        style: AppText.status
+            .copyWith(color: positive ? AppColors.green : AppColors.ink55),
+      ),
     );
   }
 }

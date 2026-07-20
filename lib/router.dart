@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'screens/booking_edit_screen.dart';
-import 'screens/browse_screen.dart';
 import 'screens/gig_detail_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/inbox_screen.dart';
 import 'screens/my_gigs_screen.dart';
 import 'screens/post_gig_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/search_screen.dart';
 import 'screens/wallet_screen.dart';
 import 'widgets/app_shell.dart';
 
@@ -38,7 +38,7 @@ final GoRouter appRouter = GoRouter(
     ),
 
     // ── Pushed routes (over the shell) ──
-    GoRoute(path: '/browse', builder: (_, _) => const BrowseScreen()),
+    GoRoute(path: '/search', builder: (_, _) => const SearchScreen()),
     GoRoute(path: '/gig', builder: (_, _) => const GigDetailScreen()),
     GoRoute(path: '/post/:kind', builder: (_, _) => const PostGigScreen()),
     GoRoute(path: '/wallet', builder: (_, _) => const WalletScreen()),

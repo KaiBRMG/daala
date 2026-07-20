@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
@@ -23,7 +24,7 @@ class PostGigScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text('Add details so taskers know what to expect.',
                 style: AppText.metaStrong.copyWith(
-                    fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.ink50)),
+                    fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.ink55)),
             const SizedBox(height: 22),
             _fieldLabel('Category'),
             const SizedBox(height: 8),
@@ -67,7 +68,7 @@ class PostGigScreen extends StatelessWidget {
                               .copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
                     ],
                   ),
-                  Text('\$65–\$90',
+                  Text('${formatZar(6500)}–${formatZar(9000)}',
                       style: AppText.metaStrong
                           .copyWith(fontSize: 16, fontWeight: FontWeight.w800)),
                 ],
@@ -135,7 +136,7 @@ class PostGigScreen extends StatelessWidget {
             style: AppText.metaStrong.copyWith(
               fontSize: 14,
               fontWeight: sel ? FontWeight.w700 : FontWeight.w600,
-              color: sel ? AppColors.green : AppColors.ink40,
+              color: sel ? AppColors.green : AppColors.ink55,
             ),
           ),
         ),
@@ -169,7 +170,7 @@ class PostGigScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(18),
-              child: _cell('Suggested Price', '\$72', AppColors.green),
+              child: _cell('Suggested Price', formatZar(7200), AppColors.green),
             ),
           ),
         ],
@@ -182,7 +183,7 @@ class PostGigScreen extends StatelessWidget {
       children: [
         Text(label,
             style: AppText.meta.copyWith(
-                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink50)),
+                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink55)),
         const SizedBox(height: 6),
         Text(value,
             style: AppText.money.copyWith(fontSize: 20, color: color)),

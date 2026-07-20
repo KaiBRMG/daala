@@ -61,7 +61,7 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
                           onTap: () => context.pop(),
                           child: Text('Done',
                               style: AppText.tag.copyWith(
-                                  fontSize: 15, color: AppColors.ink30)),
+                                  fontSize: 15, color: AppColors.ink40)),
                         ),
                       ],
                     ),
@@ -83,7 +83,7 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
                       'Helpers are notified as soon as you confirm a booking, typically within a few minutes.',
                       textAlign: TextAlign.center,
                       style: AppText.body.copyWith(
-                          fontSize: 12, height: 1.6, color: AppColors.ink45),
+                          fontSize: 12, height: 1.6, color: AppColors.ink55),
                     ),
                   ],
                 ),
@@ -114,7 +114,7 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
     return _rowCard(
       Text(value,
           style: AppText.metaStrong.copyWith(
-              fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.ink50)),
+              fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.ink55)),
       label,
     );
   }

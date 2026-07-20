@@ -1,51 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
-class BrowseScreen extends StatelessWidget {
-  const BrowseScreen({super.key});
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
 
   static const _chips = ['All', 'Moving', 'Design', 'Delivery', 'Garden'];
-  static const _gigs = [
-    ('Assemble flatpack shelving', '1.2km · Moving', '\$65'),
-    ('Logo design for cafe', 'Remote · Design', '\$300'),
-    ('Grocery delivery run', '0.8km · Delivery', '\$28'),
-    ('Weekly hedge trim', '2.4km · Garden', '\$45'),
+  static const _gigs = <(String, String, int)>[
+    ('Assemble flatpack shelving', '1.2km · Moving', 6500),
+    ('Logo design for cafe', 'Remote · Design', 30000),
+    ('Grocery delivery run', '0.8km · Delivery', 2800),
+    ('Weekly hedge trim', '2.4km · Garden', 4500),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: ListView(
-          padding: const EdgeInsets.only(top: 18, bottom: 120),
-          children: [
-            Text('Browse Gigs', style: AppText.screenTitleLg),
-            const SizedBox(height: 16),
-            _searchRow(),
-            const SizedBox(height: 14),
-            _chipRow(),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('142 gigs nearby',
-                    style: AppText.label.copyWith(color: AppColors.ink50)),
-                Text('Sort: Closest',
-                    style: AppText.label.copyWith(color: AppColors.green)),
+    return Scaffold(
+      backgroundColor: AppColors.screen,
+      body: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: ListView(
+            padding: const EdgeInsets.only(top: 6, bottom: 120),
+            children: [
+              _header(context),
+              const SizedBox(height: 18),
+              Text('Search', style: AppText.screenTitleLg),
+              const SizedBox(height: 16),
+              _searchRow(),
+              const SizedBox(height: 14),
+              _chipRow(),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('142 gigs nearby',
+                      style: AppText.label.copyWith(color: AppColors.ink55)),
+                  Text('Sort: Closest',
+                      style: AppText.label.copyWith(color: AppColors.green)),
+                ],
+              ),
+              const SizedBox(height: 12),
+              for (var i = 0; i < _gigs.length; i++) ...[
+                if (i > 0) const SizedBox(height: 10),
+                _gigRow(context, _gigs[i]),
               ],
-            ),
-            const SizedBox(height: 12),
-            for (var i = 0; i < _gigs.length; i++) ...[
-              if (i > 0) const SizedBox(height: 10),
-              _gigRow(context, _gigs[i]),
             ],
-          ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _header(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: RoundIconButton(
+        icon: Icons.arrow_back_ios_new,
+        iconSize: 16,
+        onTap: () => context.pop(),
       ),
     );
   }
@@ -70,7 +87,7 @@ class BrowseScreen extends StatelessWidget {
                     style: AppText.metaStrong.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.ink35)),
+                        color: AppColors.ink55)),
               ],
             ),
           ),
@@ -117,8 +134,9 @@ class BrowseScreen extends StatelessWidget {
     );
   }
 
-  Widget _gigRow(BuildContext context, (String, String, String) g) {
-    final (title, meta, price) = g;
+  Widget _gigRow(BuildContext context, (String, String, int) g) {
+    final (title, meta, priceMinor) = g;
+    final price = formatZar(priceMinor);
     return GwCard(
       onTap: () => context.push('/gig'),
       child: Row(
