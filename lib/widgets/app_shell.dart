@@ -193,7 +193,7 @@ class _Fab extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Transform.translate(
-        offset: const Offset(0, -26),
+        offset: const Offset(0, -13),
         child: Container(
           width: 52,
           height: 52,

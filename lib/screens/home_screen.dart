@@ -354,7 +354,9 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        childAspectRatio: 158 / 120,
+        // Fixed extent, not an aspect ratio: deriving tile height from the
+        // device width overflows the text on narrow screens.
+        mainAxisExtent: 134,
       ),
       itemBuilder: (context, i) {
         final (name, count, tint) = cats[i];
@@ -365,7 +367,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(height: 76, color: tint),
+              // Flexible, so the tint block yields height to the labels
+              // rather than the labels overflowing the tile.
+              Expanded(child: Container(color: tint)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 child: Column(
