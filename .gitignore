@@ -33,6 +33,10 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Node — only used by tools/set-link-domain.mjs (firebase-admin).
+# Never commit the installed tree; `npm install` regenerates it from the lockfile.
+node_modules/
+
 # Symbolication related
 app.*.symbols
 
