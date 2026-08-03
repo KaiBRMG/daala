@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase service account keys — FULL-ADMIN credentials, never commit.
+# Used by tools/set-link-domain.mjs; delete the file once it has run.
+tools/service-account.json
+**/service-account*.json
+*-firebase-adminsdk-*.json

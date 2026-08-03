@@ -42,6 +42,324 @@ class _PressableState extends State<Pressable> {
   }
 }
 
+/// Which brand fill a [GwButton] wears.
+///
+/// The One-Action Orange Rule (DESIGN.md §2): [GwButtonTone.orange] leads the
+/// single forward action on a screen — never two on one screen.
+/// [GwButtonTone.green] carries committing and creating actions.
+enum GwButtonTone { orange, green }
+
+/// The primary CTA pill: 56 tall, 28 radius, centred w700/16 white label, with
+/// the button's own brand-hue glow (The Tinted-Glow Rule).
+///
+/// Ships all four states DESIGN.md §5 specifies — resting, pressed (via
+/// [Pressable]), disabled (fill at 40%, ink-40 label, no shadow), and loading
+/// (a white spinner in a pill that keeps its width so nothing reflows).
+class GwButton extends StatelessWidget {
+  const GwButton({
+    super.key,
+    required this.label,
+    this.onTap,
+    this.tone = GwButtonTone.orange,
+    this.loading = false,
+    this.icon,
+  });
+
+  final String label;
+
+  /// `null` renders the disabled state. So does [loading].
+  final VoidCallback? onTap;
+  final GwButtonTone tone;
+  final bool loading;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onTap != null && !loading;
+    final fill = tone == GwButtonTone.orange ? AppColors.orange : AppColors.green;
+    final glow = tone == GwButtonTone.orange
+        ? AppShadows.orangeCta
+        : AppShadows.greenCta;
+
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: label,
+      child: Pressable(
+        onTap: enabled ? onTap : null,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          height: 56,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            // Disabled is the fill at 40%, never a grey — this system has no
+            // neutral button colour.
+            color: enabled ? fill : fill.withValues(alpha: 0.4),
+            borderRadius: BorderRadius.circular(AppRadius.button),
+            boxShadow: enabled ? glow : null,
+          ),
+          child: loading
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.4,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.white),
+                  ),
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (icon != null) ...[
+                      Icon(
+                        icon,
+                        size: 18,
+                        color: enabled ? AppColors.white : AppColors.ink40,
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                    ],
+                    Text(
+                      label,
+                      style: AppText.section.copyWith(
+                        color: enabled ? AppColors.white : AppColors.ink40,
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The quiet counterpart to [GwButton]: a green w700/15 text action with a
+/// 48dp-tall hit area. Used for "Log in with Email", "Change number", "Skip" —
+/// secondary routes that must not compete with the orange CTA.
+class GwTextAction extends StatelessWidget {
+  const GwTextAction({
+    super.key,
+    required this.label,
+    this.onTap,
+    this.color = AppColors.green,
+  });
+
+  final String label;
+  final VoidCallback? onTap;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onTap != null;
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      child: Pressable(
+        onTap: onTap,
+        child: Container(
+          height: 48,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl2),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: AppText.value.copyWith(
+              fontWeight: FontWeight.w700,
+              color: enabled ? color : AppColors.ink40,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// An inline message under a field or CTA.
+///
+/// DESIGN.md §5: "this system has no red; errors are stated in words, not alarm
+/// colour." So an error and a hint differ only in weight and in whether a small
+/// green glyph leads — the sentence carries the meaning.
+class InlineNotice extends StatelessWidget {
+  const InlineNotice(this.message, {super.key, this.emphasis = false});
+
+  final String message;
+
+  /// `true` for errors and things the user must act on: adds the leading glyph
+  /// and steps the text up to ink-65.
+  final bool emphasis;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      liveRegion: emphasis,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (emphasis) ...[
+            const Padding(
+              padding: EdgeInsets.only(top: 1),
+              child: Icon(
+                Icons.info_outline_rounded,
+                size: 15,
+                color: AppColors.green,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+          ],
+          Expanded(
+            child: Text(
+              message,
+              style: AppText.body.copyWith(
+                color: emphasis ? AppColors.ink65 : AppColors.ink55,
+                height: 1.45,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A thin determinate progress rail for a multi-step flow.
+///
+/// Deliberately not a Material `LinearProgressIndicator`: this is a 4px track at
+/// 5% black with a green fill and fully rounded ends, matching the segmented
+/// toggle's track treatment rather than introducing a second progress vocabulary.
+class ProgressRail extends StatelessWidget {
+  const ProgressRail({super.key, required this.progress});
+
+  /// 0..1.
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      value: '${(progress * 100).round()} percent complete',
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadius.status),
+        child: Container(
+          height: 4,
+          color: AppColors.trackFill,
+          child: FractionallySizedBox(
+            alignment: Alignment.centerLeft,
+            widthFactor: progress.clamp(0.0, 1.0),
+            child: const ColoredBox(color: AppColors.green),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The design's two-option selector: side-by-side pills at 22 radius. Selected
+/// is transparent with a 2px green outline (the one sanctioned stroke in this
+/// system); unselected sits on a 6%-black fill with ink-55 text.
+class TwoOptionSelector<T> extends StatelessWidget {
+  const TwoOptionSelector({
+    super.key,
+    required this.options,
+    required this.selected,
+    required this.onChanged,
+    this.subtitleBuilder,
+  });
+
+  /// Ordered `(value, label)` pairs — exactly two.
+  final List<(T, String)> options;
+  final T? selected;
+  final ValueChanged<T> onChanged;
+
+  /// Optional supporting line under each label.
+  final String Function(T value)? subtitleBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    // IntrinsicHeight gives the Row a bounded height to stretch into. Without
+    // it, `stretch` inherits the unbounded height a ListView hands its children
+    // and the whole scroll view fails to lay out. Two children only, so the
+    // extra intrinsic pass is negligible.
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < options.length; i++) ...[
+            if (i > 0) const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: _Option(
+                label: options[i].$2,
+                subtitle: subtitleBuilder?.call(options[i].$1),
+                selected: options[i].$1 == selected,
+                onTap: () => onChanged(options[i].$1),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _Option extends StatelessWidget {
+  const _Option({
+    required this.label,
+    required this.subtitle,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final String? subtitle;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: Pressable(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.xl,
+          ),
+          decoration: BoxDecoration(
+            color: selected ? null : AppColors.trackFill,
+            borderRadius: BorderRadius.circular(AppRadius.track),
+            border: selected
+                ? Border.all(color: AppColors.green, width: 2)
+                : null,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: AppText.metaStrong.copyWith(
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+                  color: selected ? AppColors.green : AppColors.ink55,
+                ),
+              ),
+              if (subtitle != null) ...[
+                const SizedBox(height: 3),
+                Text(
+                  subtitle!,
+                  textAlign: TextAlign.center,
+                  style: AppText.meta.copyWith(fontSize: 11),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// White rounded card matching `.card` in the design (radius 22 + soft shadow).
 class GwCard extends StatelessWidget {
   const GwCard({

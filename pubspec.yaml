@@ -43,6 +43,13 @@ dependencies:
   flutter_riverpod: ^3.3.2
   go_router: ^17.3.0
   google_fonts: ^6.2.1
+  # Phase 2: remembers the address a sign-in link was sent to, so opening the
+  # link on the same device needs no retyping. Also caches the "seen the intro"
+  # flag. Small key/value store only — no PII beyond that pending address.
+  shared_preferences: ^2.5.3
+  # Phase 2: opens the Terms and Privacy Notice in the system browser from the
+  # consent line, rather than embedding a webview.
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

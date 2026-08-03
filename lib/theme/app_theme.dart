@@ -44,6 +44,23 @@ abstract final class AppColors {
   static const Color white70 = Color(0xB3FFFFFF);
 }
 
+/// Spacing scale (DESIGN.md `spacing`). Screens added from Phase 2 onward use
+/// these steps rather than inlining numbers; the Phase 1 screens still inline
+/// theirs — see the migration note in CLAUDE.md.
+abstract final class AppSpacing {
+  static const double xs = 6;
+  static const double sm = 8;
+  static const double md = 10;
+  static const double lg = 12;
+  static const double xl = 14;
+  static const double xl2 = 16;
+  static const double xl3 = 18;
+  static const double xl4 = 22;
+
+  /// Standard horizontal screen gutter (matches the Phase 1 screens' 18px).
+  static const double gutter = 18;
+}
+
 /// Corner radii.
 abstract final class AppRadius {
   static const double card = 22;
@@ -122,6 +139,16 @@ abstract final class AppText {
   static TextStyle label = _base(13, FontWeight.w700, color: AppColors.ink55);
   // Stat-card captions above a figure (`My Offers`, `Available Nearby`).
   static TextStyle caption = _base(12, FontWeight.w600, color: AppColors.ink55);
+
+  /// Fact-row / sheet-row value text (w600/15) — DESIGN.md "Title" step.
+  static TextStyle value = _base(15, FontWeight.w600);
+
+  /// Large single-line input text (phone number, email) — sized so a typed
+  /// value reads at arm's length in daylight without becoming a headline.
+  static TextStyle inputValue = _base(22, FontWeight.w700);
+
+  /// One OTP / date cell. Same 22px w800 as the split-card figure role.
+  static TextStyle inputCell = _base(22, FontWeight.w800);
 
   // Micro
   static TextStyle overline =

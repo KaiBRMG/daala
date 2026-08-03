@@ -1,0 +1,123 @@
+rules_version = '2';
+
+// Daala — Firestore security rules (Phase 2: identity only).
+//
+// Shape of the identity data:
+//
+//   config/legal                 public read, console-only write
+//   users/{uid}                  public card — any signed-in user may read
+//   users/{uid}/private/contact  PII — owner only, both ways
+//   users/{uid}/consents/{id}    legal evidence — owner read, create-only
+//
+// The split is what keeps email addresses, phone numbers, and dates of birth
+// off other people's devices while a gig list still renders a poster's name,
+// rating, and verification badge from one cheap document read.
+//
+// Collections for gigs, offers, bookings, and messages arrive in Phases 3-5.
+// Anything not matched below is denied by the closing rule.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // ── Published legal versions ──
+    // Read by every launch to decide whether the Terms-update screen is owed.
+    // Written only from the console or a deploy script; no client may bump the
+    // version, or a client could suppress its own consent prompt.
+    match /config/legal {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ── Public profile card ──
+    match /users/{uid} {
+
+      // Any signed-in user, because every gig row, offer, and chat header
+      // renders the other person's name and trust signals. Signed-out reads
+      // are refused: the marketplace is not a public directory.
+      allow read: if signedIn();
+
+      // Created once, by its owner, at the end of onboarding.
+      allow create: if isOwner(uid)
+        && incoming().keys().hasOnly([
+             'firstName', 'lastInitial', 'goal', 'verified', 'ratingCount',
+             'gigsCompleted', 'termsVersion', 'createdAt', 'photoPath',
+             'suburb', 'ratingAverage'
+           ])
+        && incoming().firstName is string
+        && incoming().firstName.size() >= 1
+        && incoming().firstName.size() <= 40
+        && incoming().lastInitial is string
+        && incoming().lastInitial.size() <= 1
+        && incoming().goal in ['make_money', 'get_things_done']
+        // Trust markers and counters start at their floor and are never
+        // client-settable thereafter.
+        && incoming().verified == false
+        && incoming().ratingCount == 0
+        && incoming().gigsCompleted == 0
+        && incoming().createdAt == request.time;
+
+      // Updates are limited to fields the user genuinely owns. Notably absent:
+      // `verified` (earned through KYC in Phase 8), `ratingAverage`,
+      // `ratingCount`, and `gigsCompleted` — all of which become server-owned.
+      // A user who could set `verified` could fake the single strongest trust
+      // signal in the product.
+      allow update: if isOwner(uid)
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+             'firstName', 'lastInitial', 'goal', 'photoPath', 'suburb',
+             'termsVersion'
+           ])
+        // Consent only ever moves forward.
+        && (!('termsVersion' in incoming().diff(existing()).affectedKeys())
+            || incoming().termsVersion >= existing().termsVersion);
+
+      // Account deletion is a POPIA right, but a bare client delete would
+      // orphan gigs, bookings, and escrow records. It becomes a server-side
+      // erasure flow — see CLAUDE.md § Deferred to later phases.
+      allow delete: if false;
+
+      // ── Owner-only PII ──
+      match /private/{document} {
+        allow read, write: if isOwner(uid);
+      }
+
+      // ── Consent evidence ──
+      // Append-only: the owner may add an acceptance and read their history,
+      // but nobody may edit or erase one. A mutable consent record is not
+      // evidence of anything.
+      match /consents/{consentId} {
+        allow read: if isOwner(uid);
+        allow create: if isOwner(uid)
+          && incoming().keys().hasOnly([
+               'termsVersion', 'privacyVersion', 'source', 'acceptedAt',
+               'recordedAt'
+             ])
+          && incoming().termsVersion is int
+          && incoming().privacyVersion is int
+          && incoming().source in ['signup', 'terms_update']
+          && incoming().recordedAt == request.time;
+        allow update, delete: if false;
+      }
+    }
+
+    // Default deny. Every collection added in a later phase needs its own rule
+    // written deliberately, rather than inheriting an open default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

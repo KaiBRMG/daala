@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Universal Links for the Firebase email sign-in link.
+
+	  This is the file equivalent of ticking "Associated Domains" in Xcode's
+	  Signing & Capabilities tab. It was written by hand because the project is
+	  developed on Windows; it does the same job, and Xcode will show the
+	  capability as enabled when the project is next opened on a Mac.
+
+	  Portal state: the Associated Domains and Push Notifications capabilities
+	  are enabled on the App ID. Provisioning profiles created before that still
+	  need regenerating (Xcode automatic signing does it on first build).
+
+	  ⚠️ PRE-RELEASE BLOCKER — `?mode=developer` below ⚠️
+
+	  That suffix bypasses Apple's AASA caching CDN so a freshly published
+	  association file is picked up immediately. It is correct for development
+	  and WRONG for anything shipped: with it in place, a released build's
+	  Universal Links silently fail — no error, the link just opens Safari.
+
+	  Before any TestFlight or App Store build, this must read exactly:
+
+	      <string>applinks:login.daala.co.za</string>
+
+	  It also requires Settings -> Developer -> Associated Domains Development
+	  to be switched on for the device, which only exists on a development
+	  device — another reason it cannot work in production.
+
+	  Tracked in CLAUDE.md -> Outstanding.
+	-->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:login.daala.co.za?mode=developer</string>
+	</array>
+</dict>
+</plist>
