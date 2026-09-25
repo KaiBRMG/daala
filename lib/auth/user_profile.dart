@@ -20,6 +20,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// Which side of the marketplace the user says they came for. Both sides stay
 /// available to every account — this only seeds the Home screen's default
 /// Earn⇄Browse position and the first-run recommendations.
+///
+/// [makeMoney] is the Merchant side (earns by doing work); [getThingsDone] is
+/// the Buyer side (hires someone for a task).
 enum UserGoal {
   makeMoney('make_money', 'Make Money'),
   getThingsDone('get_things_done', 'Get Things Done');

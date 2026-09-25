@@ -2,7 +2,7 @@
 ///
 /// Not part of the signup flow by design. It is raised the first time the user
 /// does something that *creates* a reason to be notified — applying for a gig,
-/// hiring someone, sending a first message — because a permission prompt asked
+/// hiring a merchant, sending a first message — because a permission prompt asked
 /// at that moment converts far better than one fired at launch, and a denied
 /// iOS prompt can never be asked again.
 ///
@@ -98,7 +98,7 @@ class _NotificationsSheetState extends ConsumerState<_NotificationsSheet> {
                 width: 44,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppColors.ink15,
+                  color: AppColors.inkHairline,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -109,13 +109,13 @@ class _NotificationsSheetState extends ConsumerState<_NotificationsSheet> {
               height: 56,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
-                color: AppColors.greenTint,
+                color: AppColors.creamTint,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.notifications_active_rounded,
                 size: 26,
-                color: AppColors.green,
+                color: AppColors.cream,
               ),
             ),
             const SizedBox(height: AppSpacing.xl3),
@@ -127,7 +127,6 @@ class _NotificationsSheetState extends ConsumerState<_NotificationsSheet> {
             ),
             const SizedBox(height: AppSpacing.xl4),
             GwCard(
-              shadow: AppShadows.soft,
               child: Row(
                 children: [
                   Expanded(
@@ -161,7 +160,7 @@ class _NotificationsSheetState extends ConsumerState<_NotificationsSheet> {
             const SizedBox(height: AppSpacing.xs),
             GwTextAction(
               label: 'Not now',
-              color: AppColors.ink55,
+              color: AppColors.inkMuted,
               onTap: () => Navigator.of(context).pop(false),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -177,8 +176,8 @@ class _NotificationsSheetState extends ConsumerState<_NotificationsSheet> {
   }
 }
 
-/// The design's 46×28 pill toggle: green when on, ink-15 when off, with a 24px
-/// white thumb crossing in 180ms.
+/// The design's 46×28 pill toggle: cream track and green thumb when on, a
+/// hairline track and cream thumb when off, crossing in 180ms.
 class _Toggle extends StatelessWidget {
   const _Toggle({required this.value, required this.onChanged});
 
@@ -200,14 +199,14 @@ class _Toggle extends StatelessWidget {
           padding: const EdgeInsets.all(2),
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: value ? AppColors.green : AppColors.ink15,
+            color: value ? AppColors.cream : AppColors.inkHairline,
             borderRadius: BorderRadius.circular(AppRadius.tag),
           ),
           child: Container(
             width: 24,
             height: 24,
-            decoration: const BoxDecoration(
-              color: AppColors.card,
+            decoration: BoxDecoration(
+              color: value ? AppColors.green : AppColors.cream,
               shape: BoxShape.circle,
             ),
           ),

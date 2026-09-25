@@ -8,7 +8,7 @@ import '../widgets/ui.dart';
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
 
-  // Signed minor units (cents); positive = money in (green), negative = out.
+  // Signed minor units (cents); positive = money in (cream), negative = out.
   static const _txns = <(String, int)>[
     ('Grocery delivery run', 2800),
     ('Logo design deposit', 15000),
@@ -58,22 +58,21 @@ class WalletScreen extends StatelessWidget {
   }
 
   Widget _overline(String text) => Text(text.toUpperCase(),
-      style: AppText.label.copyWith(color: AppColors.ink55, letterSpacing: 0.3));
+      style: AppText.label.copyWith(color: AppColors.inkMuted, letterSpacing: 0.3));
 
   Widget _balanceCard() {
     return GwCard(
-      color: AppColors.green,
-      shadow: AppShadows.card,
+      color: AppColors.cream,
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Available Balance',
               style: AppText.body.copyWith(
-                  fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.white70)),
+                  fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.greenMuted)),
           const SizedBox(height: 6),
           Text(formatZar(197885, cents: true),
-              style: AppText.money.copyWith(color: AppColors.white)),
+              style: AppText.money.copyWith(color: AppColors.green)),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
@@ -82,7 +81,7 @@ class WalletScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
             ),
             child: Text('Withdraw to Bank',
-                style: AppText.tag.copyWith(fontSize: 13, color: AppColors.white)),
+                style: AppText.tag.copyWith(fontSize: 13, color: AppColors.green)),
           ),
         ],
       ),
@@ -115,7 +114,7 @@ class WalletScreen extends StatelessWidget {
                         style: AppText.tag.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
-                          color: positive ? AppColors.green : AppColors.ink60,
+                          color: positive ? AppColors.cream : AppColors.inkSoft,
                         )),
                   ],
                 ),
@@ -131,7 +130,7 @@ class WalletScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
-          const Text('💳', style: TextStyle(fontSize: 18)),
+          const Icon(Icons.credit_card_rounded, size: 20, color: AppColors.cream),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -143,7 +142,7 @@ class WalletScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(Icons.add, size: 18, color: AppColors.green),
+          const Icon(Icons.add, size: 18, color: AppColors.cream),
         ],
       ),
     );

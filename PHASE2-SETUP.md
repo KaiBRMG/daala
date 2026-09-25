@@ -8,7 +8,7 @@ Ordered so that nothing blocks on something below it. **Tasks 1–5 are required
 
 ## 1. Generate the iOS Firebase config ⚠️ blocks iOS entirely
 
-`ios/Runner/GoogleService-Info.plist` does not exist, and `lib/firebase_options.dart` currently throws on iOS with instructions rather than shipping made-up keys.
+⬜ **Still outstanding.** The iOS app is registered (its app id is already in `firebase.json`), but `ios/Runner/GoogleService-Info.plist` does not exist, and `lib/firebase_options.dart` currently throws on iOS with instructions rather than shipping made-up keys. Android is configured (`android/app/google-services.json` is present).
 
 ```bash
 dart pub global activate flutterfire_cli
@@ -36,11 +36,7 @@ Firebase Console → **Authentication → Sign-in method**:
 firebase deploy --only firestore:rules --project daala-69a44
 ```
 
-You may need to add a `firestore` block to `firebase.json` first (it currently only has the Flutter block):
-
-```json
-"firestore": { "rules": "firestore.rules", "indexes": "firestore.indexes.json" }
-```
+`firebase.json` already has the `firestore` block pointing at `firestore.rules`, so the command works as-is. Re-run it whenever `firestore.rules` changes — the repo copy is not live until deployed.
 
 No composite indexes are needed for Phase 2 — every query is a document get.
 
@@ -178,7 +174,7 @@ Firebase Console → **Authentication → Templates → Email address sign-in.**
 
 ## 10. Android minSdk check
 
-`android/app/build.gradle.kts` uses `flutter.minSdkVersion`. `ActionCodeSettings` in `auth_repository.dart` declares `androidMinimumVersion: '23'`. Firebase Auth and Play Integrity both need **API 23+**; confirm the resolved value isn't lower, and set `minSdk = 23` explicitly if it is.
+⬜ Not yet verified. `android/app/build.gradle.kts` still uses `flutter.minSdkVersion`. `ActionCodeSettings` in `auth_repository.dart` declares `androidMinimumVersion: '23'`. Firebase Auth and Play Integrity both need **API 23+**; confirm the resolved value isn't lower, and set `minSdk = 23` explicitly if it is.
 
 Note: CLAUDE.md's performance target says "Android 6.0+", which *is* API 23 — so this should be consistent, just verify it.
 

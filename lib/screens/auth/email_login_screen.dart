@@ -3,11 +3,15 @@
 /// **Reworked from phase2.md's email-OTP design.** Firebase has no email OTP;
 /// the mechanism is a passwordless sign-in link, so there is no code grid here.
 ///
-/// It also drops the spec's "does this email exist?" branch. Firebase's email
-/// enumeration protection blocks that lookup by default, and defeating it would
-/// hand anyone a way to test whether a given address has a Daala account. The
-/// screen sends the link either way and says so neutrally — with a permanent
-/// route into phone signup, so a genuinely new user is never dead-ended.
+/// Email is a way back *into* an account, never a way to make one. The copy
+/// says so up front — "if you have an account with us, we'll send you a link" —
+/// and a permanent "New to Daala?" route sends newcomers to phone signup.
+///
+/// The screen cannot check the address first: Firebase's email enumeration
+/// protection blocks that lookup, and defeating it would let anyone test who
+/// has a Daala account. So the send is unconditional and neutral, and the
+/// no-account rule is enforced when the link is opened
+/// ([AuthRepository.completeEmailLink]), where no account is ever created.
 library;
 
 import 'package:flutter/material.dart';
@@ -76,8 +80,8 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
 
     return AuthScaffold(
       title: 'Log in with email',
-      subtitle: 'Enter the email on your Daala account and we’ll send you a '
-          'link that signs you straight in. No password to remember.',
+      subtitle: 'If you have an account with us, we’ll send you a link that '
+          'signs you straight in. No password to remember.',
       onBack: context.canPop() ? context.pop : null,
       footer: Column(
         mainAxisSize: MainAxisSize.min,
@@ -106,7 +110,7 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
             autofillHints: const [AutofillHints.email],
             autocorrect: false,
             style: AppText.value.copyWith(fontSize: 17),
-            cursorColor: AppColors.green,
+            cursorColor: AppColors.cream,
             onSubmitted: (_) => valid ? _send() : null,
             decoration: InputDecoration(
               isDense: true,
@@ -115,7 +119,7 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
               hintStyle: AppText.value.copyWith(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
-                color: AppColors.ink55,
+                color: AppColors.inkMuted,
               ),
             ),
           ),
@@ -127,10 +131,10 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
         const SizedBox(height: AppSpacing.xl4 + AppSpacing.xs),
         // The new-user route, always present rather than surfaced by an
         // existence check. A first-time visitor who guessed wrong finds their
-        // way here without us confirming who is and isn't registered.
+        // way here without us confirming who is and isn't registered. `go`,
+        // not `pop`: this screen isn't always stacked on the phone page.
         GwCard(
-          shadow: AppShadows.soft,
-          onTap: () => context.pop(),
+          onTap: () => context.go('/auth/phone'),
           child: Row(
             children: [
               Container(
@@ -138,13 +142,13 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
                 height: 36,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
-                  color: AppColors.greenTint,
+                  color: AppColors.creamTint,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.person_add_alt_rounded,
                   size: 17,
-                  color: AppColors.green,
+                  color: AppColors.cream,
                 ),
               ),
               const SizedBox(width: AppSpacing.lg),
@@ -152,10 +156,11 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('New to Daala?', style: AppText.rowTitle),
+                    Text('New to Daala? Create an account',
+                        style: AppText.rowTitle),
                     const SizedBox(height: 2),
                     Text(
-                      'Create your account with a phone number',
+                      'Accounts are made with your phone number',
                       style: AppText.meta.copyWith(fontSize: 11),
                     ),
                   ],
@@ -164,7 +169,7 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
               const Icon(
                 Icons.chevron_right_rounded,
                 size: 20,
-                color: AppColors.ink40,
+                color: AppColors.inkFaint,
               ),
             ],
           ),

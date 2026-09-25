@@ -55,7 +55,7 @@ class PhoneNumberField extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 autofillHints: const [AutofillHints.telephoneNumber],
                 style: AppText.inputValue,
-                cursorColor: AppColors.green,
+                cursorColor: AppColors.cream,
                 inputFormatters: [NationalPhoneFormatter(region)],
                 onChanged: onChanged,
                 onSubmitted: (_) => onSubmitted?.call(),
@@ -67,7 +67,7 @@ class PhoneNumberField extends StatelessWidget {
                     region,
                   ).replaceAll('0', '·'),
                   hintStyle: AppText.inputValue.copyWith(
-                    color: AppColors.ink40,
+                    color: AppColors.inkMuted,
                     letterSpacing: 1,
                   ),
                 ),
@@ -94,7 +94,7 @@ Future<DialRegion?> showRegionPicker(
   );
 }
 
-/// The dial-code button. A 44-tall white pill so it clears both platform touch
+/// The dial-code button. A 44-tall pill, sunk to the ground tone, so it clears both platform touch
 /// minimums, and it reads as tappable next to a plain input.
 class _RegionButton extends StatelessWidget {
   const _RegionButton({required this.region, required this.onTap});
@@ -130,7 +130,7 @@ class _RegionButton extends StatelessWidget {
               const Icon(
                 Icons.expand_more_rounded,
                 size: 18,
-                color: AppColors.ink55,
+                color: AppColors.inkMuted,
               ),
             ],
           ),
@@ -189,7 +189,6 @@ class _RegionPickerSheet extends StatelessWidget {
                   horizontal: AppSpacing.xl2,
                   vertical: AppSpacing.xl,
                 ),
-                shadow: AppShadows.soft,
                 onTap: () => context.pop(region),
                 child: Row(
                   children: [
@@ -198,14 +197,14 @@ class _RegionPickerSheet extends StatelessWidget {
                     Expanded(child: Text(region.name, style: AppText.value)),
                     Text(
                       region.display,
-                      style: AppText.value.copyWith(color: AppColors.ink55),
+                      style: AppText.value.copyWith(color: AppColors.inkMuted),
                     ),
                     if (region.iso == selected.iso) ...[
                       const SizedBox(width: AppSpacing.md),
                       const Icon(
                         Icons.check_rounded,
                         size: 18,
-                        color: AppColors.green,
+                        color: AppColors.cream,
                       ),
                     ],
                   ],

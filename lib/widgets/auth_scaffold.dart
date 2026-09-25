@@ -1,6 +1,6 @@
 /// Shared chrome for every Phase 2 auth screen.
 ///
-/// One layout so the flow reads as a single journey: cream canvas, a round back
+/// One layout so the flow reads as a single journey: green ground, a round back
 /// button top-left, a large left-aligned headline, and a footer that rises with
 /// the keyboard instead of hiding behind it. Content scrolls; the CTA never
 /// scrolls away.
@@ -183,9 +183,9 @@ class _ConsentLineState extends State<ConsentLine> {
   Widget build(BuildContext context) {
     final linkStyle = AppText.meta.copyWith(
       fontWeight: FontWeight.w700,
-      color: AppColors.green,
+      color: AppColors.cream,
       decoration: TextDecoration.underline,
-      decorationColor: AppColors.green,
+      decorationColor: AppColors.cream,
     );
 
     return Text.rich(
@@ -212,8 +212,8 @@ class _ConsentLineState extends State<ConsentLine> {
   }
 }
 
-/// A white field card: a w700/13 ink-55 label above a 22-radius white card that
-/// holds the control. The system's picker-first field row (DESIGN.md §5),
+/// A field card: a w700/13 inkMuted label above a flat card-tone block that
+/// holds the control, outlined in cream while focused. The system's picker-first field row (DESIGN.md §5),
 /// adapted to take a live input instead of a static value.
 class FieldShell extends StatelessWidget {
   const FieldShell({
@@ -250,11 +250,10 @@ class FieldShell extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.card,
             borderRadius: BorderRadius.circular(AppRadius.card),
-            boxShadow: AppShadows.card,
             // Always a 2px border, transparent when unfocused, so gaining focus
             // never nudges the layout by 4px.
             border: Border.all(
-              color: focused ? AppColors.green : Colors.transparent,
+              color: focused ? AppColors.cream : Colors.transparent,
               width: 2,
             ),
           ),

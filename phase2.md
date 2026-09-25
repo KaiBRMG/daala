@@ -1,5 +1,15 @@
 # Phase 2
 
+> **Original brief — superseded where it conflicts with the build.** Kept for the screen copy and intent. The implemented flow differs deliberately:
+>
+> - **SMS codes are 6 digits**, not 4 — Firebase always sends 6.
+> - **There is no email OTP.** Firebase has no such thing; email is a passwordless **sign-in link**, and it is a second credential linked to the *same* uid, never a second account.
+> - **No database lookups for existence.** "New user?" comes from `additionalUserInfo.isNewUser`; "needs onboarding?" is the absence of `users/{uid}`. The Screen 7 "Does email exist?" branch was **not built** — it would be a user-enumeration leak and Firebase blocks it anyway. Email login always sends the link and confirms neutrally.
+> - An email link on an unknown address creates an email-only account, which must then attach a phone (`/auth/link-phone`) before onboarding.
+> - The country picker is limited to **ZA + SADC**, matching the SMS region policy.
+>
+> CLAUDE.md → *Identity contract* is authoritative.
+
 ## 1. Architectural Guidelines & Tech Stack
 * **Auth Backend:** Firebase Authentication (Phone Auth primary, Email Auth secondary)
 * **Authentication Paradigm:** Passwordless (SMS OTP and Email OTP)
@@ -110,7 +120,7 @@
 
 ### Screen 6A: Notification Setup (Deferred)
 * **Purpose:** Request system-level push notification permissions *only* when relevant to the user's actions, maximizing opt-in rates.
-* **Trigger Event:** e.g., Applying for a gig, hiring a worker, or messaging a user for the first time.
+* **Trigger Event:** e.g., Applying for a gig, hiring a merchant, or messaging a user for the first time.
 * **UI Components (Modal/Bottom Sheet):**
   * **Main Header:** "Turn on Notifications?"
   * **Subtext:** "Don't miss important alerts like gig updates or account activity."

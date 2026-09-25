@@ -377,8 +377,14 @@ class AuthRepository {
   ///
   /// Deliberately does not check whether the address belongs to an account. A
   /// client-side existence check leaks who is registered, and Firebase's email
-  /// enumeration protection blocks it anyway. The email-login screen therefore
-  /// shows the same neutral confirmation either way.
+  /// enumeration protection blocks it anyway (`fetchSignInMethodsForEmail`
+  /// returns empty for everyone). The email-login screen therefore says "if you
+  /// have an account with us, we'll send you a link" either way.
+  ///
+  /// The rule that email can never *create* an account is enforced where it
+  /// can't be bypassed — when the link is opened, in [completeEmailLink]. The
+  /// send endpoint is callable with nothing but the public API key, so a check
+  /// here would only be a courtesy.
   Future<void> sendEmailSignInLink(String email) async {
     try {
       await _auth.sendSignInLinkToEmail(
@@ -404,6 +410,11 @@ class AuthRepository {
   /// * **Signed out** (the email-login case) — signs in with the link. If the
   ///   address was linked during onboarding this resolves to the original
   ///   account, which is the whole reason the linking step exists.
+  ///
+  /// Email is never a way to **create** an account. Firebase cannot be stopped
+  /// from minting a uid when an unknown address opens its link, so that uid is
+  /// deleted on the spot and [kNoAccountCode] is thrown: a new person signs up
+  /// with their phone number, which stays the primary credential.
   Future<SignInResult> completeEmailLink({
     required String email,
     required String link,
@@ -434,10 +445,38 @@ class AuthRepository {
     }
 
     final result = await _signInWithCredential(credential);
-    if (!result.isNewUser) {
-      await _markEmailVerified(result.uid, email.trim());
+    final phone = _auth.currentUser?.phoneNumber;
+    if (phone == null || phone.isEmpty) {
+      await _discardEmailOnlyAccount(isNewUser: result.isNewUser);
+      throw const AuthFailure(
+        'There’s no Daala account with this email yet. Create one with your '
+        'phone number — you can add your email after.',
+        code: kNoAccountCode,
+        canRetry: false,
+      );
     }
+    await _markEmailVerified(result.uid, email.trim());
     return result;
+  }
+
+  /// Undoes a sign-in that landed on an account with no phone number.
+  ///
+  /// A uid this sign-in just created is deleted outright — it owns nothing, and
+  /// leaving it would let the address later sign in to an account with no
+  /// primary credential. An older phone-less uid is only signed out of, never
+  /// deleted: this code did not create it.
+  Future<void> _discardEmailOnlyAccount({required bool isNewUser}) async {
+    final user = _auth.currentUser;
+    if (user == null) return;
+    if (isNewUser) {
+      try {
+        await user.delete();
+      } catch (_) {
+        // Non-fatal: an empty uid is left behind, and the check above rejects
+        // it again on every future link.
+      }
+    }
+    await _auth.signOut();
   }
 
   Future<void> _markEmailVerified(String uid, String email) async {
@@ -559,6 +598,11 @@ const String kEmailLinkDomain = 'login.daala.co.za';
 /// [kEmailLinkDomain] and be listed under Authentication → Authorised domains.
 const String kEmailLinkContinueUrl =
     'https://login.daala.co.za/auth/email-link';
+
+/// [AuthFailure.code] when an email link was opened for an address that has no
+/// Daala account. The handler screen routes this to phone signup rather than
+/// printing it as an error.
+const String kNoAccountCode = 'no-account';
 
 const String kAndroidPackageName = 'za.co.daala.daala';
 const String kIosBundleId = 'za.co.daala.daala';

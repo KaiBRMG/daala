@@ -225,8 +225,8 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
           ],
           GwButton(
             label: 'Complete Setup',
-            // Green: this is a committing, account-creating action.
-            tone: GwButtonTone.green,
+            // Cream: a committing, account-creating action (The Inversion Rule).
+            tone: GwButtonTone.cream,
             loading: _saving,
             // Stays tappable while incomplete so tapping explains what's
             // missing, rather than leaving a dead button and no reason why.
@@ -340,7 +340,7 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   }
 }
 
-/// The already-verified address, shown in the same white card the editable
+/// The already-verified address, shown in the same field card the editable
 /// fields use so the form still reads as one column, with a check that says why
 /// it isn't editable.
 class _ConfirmedEmail extends StatelessWidget {
@@ -364,7 +364,7 @@ class _ConfirmedEmail extends StatelessWidget {
           const Icon(
             Icons.check_circle_outline_rounded,
             size: 18,
-            color: AppColors.green,
+            color: AppColors.cream,
           ),
         ],
       ),
@@ -372,7 +372,7 @@ class _ConfirmedEmail extends StatelessWidget {
   }
 }
 
-/// A labelled text field inside the system's white field card.
+/// A labelled text field inside the system's field card.
 class _TextFieldShell extends StatelessWidget {
   const _TextFieldShell({
     required this.label,
@@ -407,7 +407,7 @@ class _TextFieldShell extends StatelessWidget {
         autofillHints: autofillHints,
         textInputAction: TextInputAction.next,
         onSubmitted: onSubmitted,
-        cursorColor: AppColors.green,
+        cursorColor: AppColors.cream,
         style: AppText.value.copyWith(fontSize: 16),
         decoration: InputDecoration(
           isDense: true,
@@ -418,7 +418,7 @@ class _TextFieldShell extends StatelessWidget {
           hintStyle: AppText.value.copyWith(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: AppColors.ink55,
+            color: AppColors.inkMuted,
           ),
         ),
       ),
@@ -570,7 +570,7 @@ class _DateCellState extends State<_DateCell> {
               FilteringTextInputFormatter.digitsOnly,
               LengthLimitingTextInputFormatter(widget.length),
             ],
-            cursorColor: AppColors.green,
+            cursorColor: AppColors.cream,
             style:
                 AppText.value.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
             onChanged: (value) {
@@ -585,7 +585,7 @@ class _DateCellState extends State<_DateCell> {
               hintStyle: AppText.value.copyWith(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: AppColors.ink55,
+                color: AppColors.inkMuted,
               ),
             ),
           ),

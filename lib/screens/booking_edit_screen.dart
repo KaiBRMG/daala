@@ -53,7 +53,7 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
                           onTap: () => context.pop(),
                           child: Text('Cancel',
                               style: AppText.tag.copyWith(
-                                  fontSize: 15, color: AppColors.green)),
+                                  fontSize: 15, color: AppColors.cream)),
                         ),
                         Text('Edit Booking',
                             style: AppText.appBarTitle.copyWith(fontSize: 17)),
@@ -61,7 +61,7 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
                           onTap: () => context.pop(),
                           child: Text('Done',
                               style: AppText.tag.copyWith(
-                                  fontSize: 15, color: AppColors.ink40)),
+                                  fontSize: 15, color: AppColors.cream)),
                         ),
                       ],
                     ),
@@ -76,14 +76,14 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
                     _toggleRow('Reminder', _reminder,
                         (v) => setState(() => _reminder = v)),
                     const SizedBox(height: 12),
-                    _toggleRow('Auto-confirm Helper', _autoConfirm,
+                    _toggleRow('Auto-confirm Merchant', _autoConfirm,
                         (v) => setState(() => _autoConfirm = v)),
                     const SizedBox(height: 20),
                     Text(
-                      'Helpers are notified as soon as you confirm a booking, typically within a few minutes.',
+                      'Merchants are notified as soon as you confirm a booking, typically within a few minutes.',
                       textAlign: TextAlign.center,
                       style: AppText.body.copyWith(
-                          fontSize: 12, height: 1.6, color: AppColors.ink55),
+                          fontSize: 12, height: 1.6, color: AppColors.inkMuted),
                     ),
                   ],
                 ),
@@ -97,7 +97,6 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
 
   Widget _rowCard(Widget trailing, String label) {
     return GwCard(
-      shadow: AppShadows.soft,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -114,7 +113,7 @@ class _BookingEditScreenState extends State<BookingEditScreen> {
     return _rowCard(
       Text(value,
           style: AppText.metaStrong.copyWith(
-              fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.ink55)),
+              fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.inkMuted)),
       label,
     );
   }
@@ -139,7 +138,7 @@ class _GwSwitch extends StatelessWidget {
         height: 28,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: value ? AppColors.green : AppColors.ink15,
+          color: value ? AppColors.cream : AppColors.inkHairline,
           borderRadius: BorderRadius.circular(14),
         ),
         child: AnimatedAlign(
@@ -148,8 +147,9 @@ class _GwSwitch extends StatelessWidget {
           child: Container(
             width: 24,
             height: 24,
-            decoration: const BoxDecoration(
-                color: AppColors.white, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: value ? AppColors.green : AppColors.cream,
+                shape: BoxShape.circle),
           ),
         ),
       ),

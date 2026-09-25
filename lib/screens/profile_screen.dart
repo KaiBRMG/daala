@@ -116,7 +116,7 @@ class ProfileScreen extends StatelessWidget {
           Text(label,
               textAlign: TextAlign.center,
               style: AppText.meta.copyWith(
-                  fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.ink55)),
+                  fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.inkMuted)),
         ],
       ),
     );
@@ -143,7 +143,7 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 6),
           Text(body,
               style: AppText.body.copyWith(
-                  fontSize: 12, height: 1.5, color: AppColors.ink60)),
+                  fontSize: 12, height: 1.5, color: AppColors.inkSoft)),
         ],
       ),
     );

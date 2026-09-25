@@ -34,9 +34,9 @@ class GigDetailScreen extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: const [
-                _WhitePill('Heavy lifting'),
-                _WhitePill('Own transport'),
-                _WhitePill('Flexible timing'),
+                _SkillPill('Heavy lifting'),
+                _SkillPill('Own transport'),
+                _SkillPill('Flexible timing'),
               ],
             ),
             const SizedBox(height: 22),
@@ -64,14 +64,13 @@ class GigDetailScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.card,
             borderRadius: BorderRadius.circular(22),
-            boxShadow: AppShadows.soft,
           ),
           child: Row(
             children: [
-              const Icon(Icons.favorite_border, size: 16, color: AppColors.green),
+              const Icon(Icons.favorite_border, size: 16, color: AppColors.cream),
               const SizedBox(width: 6),
               Text('Save',
-                  style: AppText.tag.copyWith(fontSize: 13, color: AppColors.green)),
+                  style: AppText.tag.copyWith(fontSize: 13, color: AppColors.cream)),
             ],
           ),
         ),
@@ -104,11 +103,11 @@ class GigDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          _MetaRow('📍', 'Braamfontein 2001'),
+          _MetaRow(Icons.place_outlined, 'Braamfontein 2001'),
           SizedBox(height: 14),
-          _MetaRow('🗓️', 'Fri 12 Jul, 9:00am'),
+          _MetaRow(Icons.event_outlined, 'Fri 12 Jul, 9:00am'),
           SizedBox(height: 14),
-          _MetaRow('👥', '1–2 helpers needed'),
+          _MetaRow(Icons.group_outlined, '1–2 merchants needed'),
         ],
       ),
     );
@@ -127,7 +126,7 @@ class GigDetailScreen extends StatelessWidget {
                     right: BorderSide(color: AppColors.dividerStrong)),
               ),
               child: _payoutCell(
-                  'Estimated Payout', formatZar(6500), AppColors.green),
+                  'Estimated Payout', formatZar(6500), AppColors.cream),
             ),
           ),
           Expanded(
@@ -146,7 +145,7 @@ class GigDetailScreen extends StatelessWidget {
       children: [
         Text(label,
             style: AppText.meta.copyWith(
-                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink55)),
+                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.inkMuted)),
         const SizedBox(height: 6),
         Text(value,
             style: AppText.money.copyWith(fontSize: 22, color: color)),
@@ -161,25 +160,24 @@ class GigDetailScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.orange,
         borderRadius: BorderRadius.circular(AppRadius.button),
-        boxShadow: AppShadows.orangeCta,
       ),
       child: Text('Apply Now',
           style: AppText.metaStrong.copyWith(
-              fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.white)),
+              fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.green)),
     );
   }
 }
 
 class _MetaRow extends StatelessWidget {
-  const _MetaRow(this.emoji, this.text);
-  final String emoji;
+  const _MetaRow(this.icon, this.text);
+  final IconData icon;
   final String text;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(emoji, style: const TextStyle(fontSize: 16)),
+        Icon(icon, size: 18, color: AppColors.inkMuted),
         const SizedBox(width: 10),
         Text(text,
             style: AppText.metaStrong.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
@@ -188,8 +186,8 @@ class _MetaRow extends StatelessWidget {
   }
 }
 
-class _WhitePill extends StatelessWidget {
-  const _WhitePill(this.label);
+class _SkillPill extends StatelessWidget {
+  const _SkillPill(this.label);
   final String label;
 
   @override
@@ -199,7 +197,6 @@ class _WhitePill extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.card,
         borderRadius: BorderRadius.circular(AppRadius.tag),
-        boxShadow: AppShadows.soft,
       ),
       child: Text(label,
           style: AppText.tag.copyWith(fontSize: 12, fontWeight: FontWeight.w600)),

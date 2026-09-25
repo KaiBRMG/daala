@@ -1,17 +1,24 @@
-# daala
+# Daala
 
-A new Flutter project.
+A two-sided gig marketplace for South Africa's informal economy — one account that both earns and hires. Flutter (Android + iOS), Riverpod, GoRouter, Firebase Auth + Cloud Firestore.
 
-## Getting Started
+## Docs
 
-This project is a starting point for a Flutter application.
+| File | What it is |
+|---|---|
+| [CLAUDE.md](CLAUDE.md) | Operating contract: stack, folder layout, identity model, rules, roadmap, and what's outstanding. **Start here.** |
+| [DESIGN.md](DESIGN.md) | Visual blueprint — the "Groundwork" tokens and component vocabulary. Machine copy lives in `lib/theme/app_theme.dart`. |
+| [PRODUCT.md](PRODUCT.md) | Audience, purpose, positioning, design principles. |
+| [PHASE2-SETUP.md](PHASE2-SETUP.md) | Console / DNS / store tasks only the owner can do, with status. |
+| [phase2.md](phase2.md) | Original Phase 2 brief. Superseded where it conflicts with the built flow — see its header. |
 
-A few resources to get you started if this is your first Flutter project:
+## Build
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```bash
+flutter pub get
+flutter analyze   # the verification step — must be clean
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Status
+
+Phase 2 (auth & onboarding) is code-complete. Email-link sign-in is unverified end to end, and iOS needs its Firebase config generated before it can boot. Details in CLAUDE.md → *Outstanding*.

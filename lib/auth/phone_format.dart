@@ -1,7 +1,7 @@
 /// Phone number entry helpers for the Daala sign-in flow.
 ///
 /// Daala launches in South Africa, so `+27` is the default and the picker
-/// carries only the SADC neighbours a cross-border tasker might use. Shipping a
+/// carries only the SADC neighbours a cross-border merchant might use. Shipping a
 /// ~250-country dataset to a data-light audience buys nothing, and a narrow
 /// list keeps the Firebase Auth SMS region policy tight (see CLAUDE.md § Phase 2
 /// operations) — the cheapest available defence against SMS toll fraud.

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../theme/app_theme.dart';
 
 /// Authenticated app shell: the four primary tabs plus the elevated orange
-/// FAB that expands into a "Post" speed-dial (service / request / media).
+/// FAB that expands into a "Post" speed-dial (listing / task / media).
 ///
 /// Bar layout mirrors the design: [Home] [My Gigs] [ + ] [Inbox] [Profile].
 class AppShell extends StatefulWidget {
@@ -93,9 +93,8 @@ class _TabBar extends StatelessWidget {
     return Container(
       height: 68,
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: AppColors.raised,
         borderRadius: BorderRadius.circular(AppRadius.tabbar),
-        boxShadow: AppShadows.tabbar,
       ),
       child: Row(
         children: [
@@ -151,7 +150,8 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? AppColors.green : AppColors.ink40;
+    // Inactive stays at inkMuted, not fainter: the labels are text.
+    final color = active ? AppColors.cream : AppColors.inkMuted;
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -165,11 +165,12 @@ class _NavItem extends StatelessWidget {
                 width: 34,
                 height: 26,
                 alignment: Alignment.center,
+                // Active is inverted: a solid cream chip with a green glyph.
                 decoration: BoxDecoration(
-                  color: AppColors.greenTint,
+                  color: AppColors.cream,
                   borderRadius: BorderRadius.circular(13),
                 ),
-                child: Icon(iconFilled, size: 16, color: color),
+                child: Icon(iconFilled, size: 16, color: AppColors.green),
               )
             else
               Icon(iconOutline, size: 18, color: color),
@@ -195,18 +196,20 @@ class _Fab extends StatelessWidget {
       child: Transform.translate(
         offset: const Offset(0, -13),
         child: Container(
-          width: 52,
-          height: 52,
+          width: 58,
+          height: 58,
           alignment: Alignment.center,
-          decoration: const BoxDecoration(
+          // No glow: a ring of the ground colour cuts the FAB out of the bar,
+          // which is how a flat system says "raised".
+          decoration: BoxDecoration(
             color: AppColors.orange,
             shape: BoxShape.circle,
-            boxShadow: AppShadows.fab,
+            border: Border.all(color: AppColors.screen, width: 4),
           ),
           child: AnimatedRotation(
             turns: open ? 0.125 : 0, // 45°
             duration: const Duration(milliseconds: 250),
-            child: const Icon(Icons.add, size: 22, color: AppColors.white),
+            child: const Icon(Icons.add, size: 22, color: AppColors.green),
           ),
         ),
       ),
@@ -224,8 +227,8 @@ class _SpeedDial extends StatelessWidget {
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).padding.bottom * 0.4;
     final items = [
-      (Icons.handyman_outlined, 'Post a service', 'service'),
-      (Icons.help_outline_rounded, 'Post a request', 'request'),
+      (Icons.handyman_outlined, 'Post a listing', 'listing'),
+      (Icons.help_outline_rounded, 'Post a task', 'task'),
       (Icons.image_outlined, 'Post to media', 'media'),
     ];
     return Positioned(
@@ -277,7 +280,7 @@ class _SpeedItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSlide(
       duration: Duration(milliseconds: 220 + delayMs),
-      curve: Curves.easeOutBack,
+      curve: Curves.easeOutCubic,
       offset: open ? Offset.zero : const Offset(0, 0.4),
       child: AnimatedOpacity(
         duration: Duration(milliseconds: 180 + delayMs),
@@ -288,9 +291,8 @@ class _SpeedItem extends StatelessWidget {
             height: 48,
             padding: const EdgeInsets.fromLTRB(14, 0, 18, 0),
             decoration: BoxDecoration(
-              color: AppColors.card,
+              color: AppColors.raised,
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              boxShadow: AppShadows.speedItem,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -300,10 +302,10 @@ class _SpeedItem extends StatelessWidget {
                   height: 30,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
-                    color: AppColors.greenTint,
+                    color: AppColors.creamTint,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, size: 15, color: AppColors.green),
+                  child: Icon(icon, size: 15, color: AppColors.cream),
                 ),
                 const SizedBox(width: 10),
                 Text(label,

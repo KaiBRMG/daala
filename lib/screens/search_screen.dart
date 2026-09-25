@@ -39,9 +39,9 @@ class SearchScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('142 gigs nearby',
-                      style: AppText.label.copyWith(color: AppColors.ink55)),
+                      style: AppText.label.copyWith(color: AppColors.inkMuted)),
                   Text('Sort: Closest',
-                      style: AppText.label.copyWith(color: AppColors.green)),
+                      style: AppText.label.copyWith(color: AppColors.cream)),
                 ],
               ),
               const SizedBox(height: 12),
@@ -77,17 +77,16 @@ class SearchScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.card,
               borderRadius: BorderRadius.circular(24),
-              boxShadow: AppShadows.soft,
             ),
             child: Row(
               children: [
-                const Icon(Icons.search, size: 16, color: AppColors.ink40),
+                const Icon(Icons.search, size: 16, color: AppColors.inkFaint),
                 const SizedBox(width: 8),
                 Text('Search gigs near you',
                     style: AppText.metaStrong.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.ink55)),
+                        color: AppColors.inkMuted)),
               ],
             ),
           ),
@@ -95,8 +94,8 @@ class SearchScreen extends StatelessWidget {
         const SizedBox(width: 8),
         const RoundIconButton(
           icon: Icons.tune,
-          bg: AppColors.green,
-          iconColor: AppColors.white,
+          bg: AppColors.cream,
+          iconColor: AppColors.green,
           iconSize: 17,
         ),
       ],
@@ -116,16 +115,15 @@ class SearchScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: active ? AppColors.green : AppColors.card,
+              color: active ? AppColors.cream : AppColors.card,
               borderRadius: BorderRadius.circular(AppRadius.chip),
-              boxShadow: active ? null : AppShadows.soft,
             ),
             child: Text(
               _chips[i],
               style: AppText.tag.copyWith(
                 fontSize: 12,
                 fontWeight: active ? FontWeight.w700 : FontWeight.w600,
-                color: active ? AppColors.white : AppColors.ink,
+                color: active ? AppColors.green : AppColors.ink,
               ),
             ),
           );

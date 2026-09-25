@@ -49,7 +49,7 @@ class EmailConflictScreen extends ConsumerWidget {
         children: [
           GwButton(
             label: 'Log in with Email',
-            tone: GwButtonTone.green,
+            tone: GwButtonTone.cream,
             onTap: () => context.go('/auth/email'),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -71,13 +71,12 @@ class EmailConflictScreen extends ConsumerWidget {
             horizontal: AppSpacing.xl2,
             vertical: AppSpacing.xl,
           ),
-          shadow: AppShadows.soft,
           child: Row(
             children: [
               const Icon(
                 Icons.alternate_email_rounded,
                 size: 18,
-                color: AppColors.green,
+                color: AppColors.cream,
               ),
               const SizedBox(width: AppSpacing.lg),
               Expanded(

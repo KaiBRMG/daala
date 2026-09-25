@@ -22,9 +22,9 @@ class PostGigScreen extends StatelessWidget {
             Text('Set up your gig to find the right help',
                 style: AppText.postTitle),
             const SizedBox(height: 8),
-            Text('Add details so taskers know what to expect.',
+            Text('Add details so merchants know what to expect.',
                 style: AppText.metaStrong.copyWith(
-                    fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.ink55)),
+                    fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.inkMuted)),
             const SizedBox(height: 22),
             _fieldLabel('Category'),
             const SizedBox(height: 8),
@@ -59,8 +59,9 @@ class PostGigScreen extends StatelessWidget {
                         height: 36,
                         alignment: Alignment.center,
                         decoration: const BoxDecoration(
-                            color: AppColors.greenTint, shape: BoxShape.circle),
-                        child: const Text('💰', style: TextStyle(fontSize: 16)),
+                            color: AppColors.creamTint, shape: BoxShape.circle),
+                        child: const Icon(Icons.payments_outlined,
+                            size: 18, color: AppColors.cream),
                       ),
                       const SizedBox(width: 12),
                       Text('Budget Range',
@@ -108,10 +109,9 @@ class PostGigScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.card,
             borderRadius: BorderRadius.circular(22),
-            boxShadow: AppShadows.soft,
           ),
           child: Text('Get Help',
-              style: AppText.tag.copyWith(fontSize: 13, color: AppColors.green)),
+              style: AppText.tag.copyWith(fontSize: 13, color: AppColors.cream)),
         ),
       ],
     );
@@ -129,14 +129,14 @@ class PostGigScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: sel ? null : AppColors.trackFill,
             borderRadius: BorderRadius.circular(22),
-            border: sel ? Border.all(color: AppColors.green, width: 2) : null,
+            border: sel ? Border.all(color: AppColors.cream, width: 2) : null,
           ),
           child: Text(
             text,
             style: AppText.metaStrong.copyWith(
               fontSize: 14,
               fontWeight: sel ? FontWeight.w700 : FontWeight.w600,
-              color: sel ? AppColors.green : AppColors.ink55,
+              color: sel ? AppColors.cream : AppColors.inkMuted,
             ),
           ),
         ),
@@ -164,13 +164,13 @@ class PostGigScreen extends StatelessWidget {
                 border: Border(
                     right: BorderSide(color: AppColors.dividerStrong)),
               ),
-              child: _cell('Estimated Reach', '40 taskers', AppColors.ink),
+              child: _cell('Estimated Reach', '40 merchants', AppColors.ink),
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(18),
-              child: _cell('Suggested Price', formatZar(7200), AppColors.green),
+              child: _cell('Suggested Price', formatZar(7200), AppColors.cream),
             ),
           ),
         ],
@@ -183,7 +183,7 @@ class PostGigScreen extends StatelessWidget {
       children: [
         Text(label,
             style: AppText.meta.copyWith(
-                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.ink55)),
+                fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.inkMuted)),
         const SizedBox(height: 6),
         Text(value,
             style: AppText.money.copyWith(fontSize: 20, color: color)),
@@ -196,13 +196,12 @@ class PostGigScreen extends StatelessWidget {
       height: 56,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: AppColors.green,
+        color: AppColors.cream,
         borderRadius: BorderRadius.circular(AppRadius.button),
-        boxShadow: AppShadows.greenCta,
       ),
       child: Text('Post Gig',
           style: AppText.metaStrong.copyWith(
-              fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.white)),
+              fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.green)),
     );
   }
 }

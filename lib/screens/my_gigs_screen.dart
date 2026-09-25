@@ -34,7 +34,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
             _bookingCard(
               title: 'Garden cleanup',
               status: 'Confirmed',
-              statusBg: AppColors.greenTint,
+              statusBg: AppColors.cream,
               statusFg: AppColors.green,
               avatarInitials: 'MT',
               sub: 'Marlo T. · 9:00am',
@@ -47,7 +47,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
               title: 'Logo design for cafe',
               status: 'In progress',
               statusBg: AppColors.trackFill,
-              statusFg: AppColors.ink55,
+              statusFg: AppColors.inkMuted,
               sub: 'Fri 12 Jul · Remote',
               price: '${formatZar(30000)} fixed',
             ),
@@ -55,7 +55,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
             _bookingCard(
               title: 'Grocery delivery run',
               status: 'Confirmed',
-              statusBg: AppColors.greenTint,
+              statusBg: AppColors.cream,
               statusFg: AppColors.green,
               sub: 'Sat 13 Jul · 0.8km',
               price: '${formatZar(2800)} fixed',
@@ -85,16 +85,15 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
                   alignment: Alignment.center,
                   decoration: _tab == i
                       ? BoxDecoration(
-                          color: AppColors.card,
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: AppShadows.soft,
+                          color: AppColors.cream,
+                          borderRadius: BorderRadius.circular(AppRadius.segment),
                         )
                       : null,
                   child: Text(
                     _tabs[i],
                     style: AppText.label.copyWith(
                       fontWeight: _tab == i ? FontWeight.w700 : FontWeight.w600,
-                      color: _tab == i ? AppColors.green : AppColors.ink55,
+                      color: _tab == i ? AppColors.green : AppColors.inkMuted,
                     ),
                   ),
                 ),
@@ -107,7 +106,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
 
   Widget _sectionLabel(String text) {
     return Text(text.toUpperCase(),
-        style: AppText.label.copyWith(color: AppColors.ink55, letterSpacing: 0.3));
+        style: AppText.label.copyWith(color: AppColors.inkMuted, letterSpacing: 0.3));
   }
 
   Widget _bookingCard({
@@ -150,7 +149,7 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
               const SizedBox(width: 10),
               Text(sub,
                   style: AppText.body
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.ink60)),
+                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.inkSoft)),
             ],
           ),
           const SizedBox(height: 10),

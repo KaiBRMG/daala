@@ -174,13 +174,13 @@ class _ReassuranceRow extends StatelessWidget {
           height: 34,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
-            color: AppColors.greenTint,
+            color: AppColors.creamTint,
             shape: BoxShape.circle,
           ),
           child: const Icon(
             Icons.visibility_off_rounded,
             size: 16,
-            color: AppColors.green,
+            color: AppColors.cream,
           ),
         ),
         const SizedBox(width: AppSpacing.lg),

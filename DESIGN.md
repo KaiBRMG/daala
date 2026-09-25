@@ -1,81 +1,93 @@
 ---
 name: Daala
-description: A warm, trust-forward gig marketplace for South Africa's informal economy — one account that both earns and hires.
+description: A dark, flat, trust-forward gig marketplace for South Africa's informal economy, where one account both earns and hires.
 colors:
-  brand-green: "#003716"
-  hustle-orange: "#FF823A"
-  screen-cream: "#FAF7EC"
-  outer-canvas: "#EFEDE6"
-  card-white: "#FFFFFF"
-  placeholder-khaki: "#EFE9D4"
-  ink: "#111111"
-  ink-65: "#111111A6"
-  ink-55: "#1111118C"
-  ink-40: "#11111166"
-  ink-15: "#11111126"
-  green-tint: "#00371618"
-  green-tint-strong: "#00371622"
-  orange-tint: "#FF823A22"
-  divider: "#0000000F"
-  divider-strong: "#00000014"
-  track: "#0000000D"
-  scrim: "#111A1466"
+  night-green: "#003716"
+  night-canvas: "#002A10"
+  stall-card: "#114424"
+  placeholder-green: "#1B4C2C"
+  raised-green: "#225232"
+  cream: "#F5F5DC"
+  market-orange: "#ED7D31"
+  ink-body: "#F5F5DCC7"
+  ink-soft: "#F5F5DCBD"
+  ink-muted: "#F5F5DCB0"
+  ink-faint: "#F5F5DC66"
+  ink-hairline: "#F5F5DC26"
+  green-muted: "#003716B3"
+  cream-tint: "#F5F5DC1A"
+  cream-tint-strong: "#F5F5DC29"
+  orange-tint: "#ED7D312E"
+  divider: "#F5F5DC14"
+  divider-strong: "#F5F5DC1F"
+  track: "#F5F5DC12"
+  scrim: "#001A0A99"
+  selection: "#ED7D314D"
 typography:
   display:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "52px"
     fontWeight: 800
     lineHeight: 1.0
+    letterSpacing: "-1px"
   money:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "30px"
     fontWeight: 800
-    lineHeight: 1.0
+    letterSpacing: "-0.5px"
   headline:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "30px"
     fontWeight: 800
     lineHeight: 1.2
+    letterSpacing: "-0.5px"
+  headline-post:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "28px"
+    fontWeight: 800
+    lineHeight: 1.25
+    letterSpacing: "-0.4px"
   headline-page:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "26px"
     fontWeight: 800
-    lineHeight: 1.2
+    letterSpacing: "-0.3px"
+  input-value:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "22px"
+    fontWeight: 700
   figure:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "22px"
     fontWeight: 800
-    lineHeight: 1.0
   app-bar:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "18px"
     fontWeight: 700
-    lineHeight: 1.3
   section:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 700
-    lineHeight: 1.3
   price:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 800
-    lineHeight: 1.3
   title:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "15px"
     fontWeight: 700
-    lineHeight: 1.3
+  value:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "15px"
+    fontWeight: 600
   row-title:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "14px"
     fontWeight: 700
-    lineHeight: 1.3
-  value:
+  meta-strong:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "14px"
     fontWeight: 600
-    lineHeight: 1.3
   body:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "13px"
@@ -85,7 +97,6 @@ typography:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "13px"
     fontWeight: 700
-    lineHeight: 1.3
   overline:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "13px"
@@ -95,38 +106,34 @@ typography:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "12px"
     fontWeight: 600
-    lineHeight: 1.3
   meta:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "12px"
     fontWeight: 500
-    lineHeight: 1.4
   tag:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "12px"
     fontWeight: 700
-    lineHeight: 1.2
   status:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "11px"
     fontWeight: 700
-    lineHeight: 1.2
   tab:
     fontFamily: "Outfit, system-ui, sans-serif"
     fontSize: "10px"
     fontWeight: 600
-    lineHeight: 1.2
 rounded:
-  status: "10px"
+  status: "8px"
+  segment: "12px"
   tag: "14px"
-  chip: "16px"
-  segment: "18px"
-  card: "22px"
-  track: "22px"
+  card: "16px"
+  track: "16px"
+  chip: "20px"
   pill: "24px"
+  sheet: "24px"
   button: "28px"
-  sheet: "28px"
   tabbar: "34px"
+  circle: "50%"
 spacing:
   xs: "6px"
   sm: "8px"
@@ -136,349 +143,381 @@ spacing:
   "2xl": "16px"
   "3xl": "18px"
   "4xl": "22px"
+  gutter: "18px"
 components:
   button-primary:
-    backgroundColor: "{colors.hustle-orange}"
-    textColor: "{colors.card-white}"
+    backgroundColor: "{colors.market-orange}"
+    textColor: "{colors.night-green}"
     typography: "{typography.section}"
     rounded: "{rounded.button}"
     height: "56px"
     padding: "0 24px"
-  button-secondary:
-    backgroundColor: "{colors.brand-green}"
-    textColor: "{colors.card-white}"
+  button-cream:
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     typography: "{typography.section}"
     rounded: "{rounded.button}"
     height: "56px"
     padding: "0 24px"
+  button-disabled:
+    backgroundColor: "{colors.raised-green}"
+    textColor: "{colors.ink-faint}"
+    typography: "{typography.section}"
+    rounded: "{rounded.button}"
+    height: "56px"
+  button-text:
+    textColor: "{colors.cream}"
+    typography: "{typography.value}"
+    height: "48px"
+    padding: "0 16px"
+  button-round-icon:
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.circle}"
+    size: "44px"
+  button-round-icon-inverted:
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
+    rounded: "{rounded.circle}"
+    size: "44px"
   button-header-pill:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.brand-green}"
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.cream}"
     typography: "{typography.label}"
     rounded: "{rounded.pill}"
     height: "44px"
     padding: "0 18px"
-  button-round-icon:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.tabbar}"
-    size: "44px"
   card:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.cream}"
     rounded: "{rounded.card}"
     padding: "16px 18px"
   card-balance:
-    backgroundColor: "{colors.brand-green}"
-    textColor: "{colors.card-white}"
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     rounded: "{rounded.card}"
     padding: "20px"
+  field:
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.cream}"
+    typography: "{typography.input-value}"
+    rounded: "{rounded.card}"
+    padding: "12px 16px"
+  search-field:
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.ink-muted}"
+    typography: "{typography.meta-strong}"
+    rounded: "{rounded.pill}"
+    height: "48px"
+    padding: "0 16px"
   tag-pill:
-    backgroundColor: "{colors.green-tint}"
-    textColor: "{colors.brand-green}"
+    backgroundColor: "{colors.cream-tint}"
+    textColor: "{colors.cream}"
     typography: "{typography.tag}"
     rounded: "{rounded.tag}"
     padding: "6px 14px"
   attribute-pill:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.cream}"
     typography: "{typography.caption}"
     rounded: "{rounded.tag}"
     padding: "8px 14px"
-  status-pill:
-    backgroundColor: "{colors.green-tint}"
-    textColor: "{colors.brand-green}"
+  status-pill-positive:
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     typography: "{typography.status}"
     rounded: "{rounded.status}"
     padding: "4px 10px"
   status-pill-neutral:
-    backgroundColor: "{colors.divider}"
-    textColor: "{colors.ink-55}"
+    backgroundColor: "{colors.cream-tint}"
+    textColor: "{colors.ink-body}"
     typography: "{typography.status}"
     rounded: "{rounded.status}"
     padding: "4px 10px"
   filter-chip:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.stall-card}"
+    textColor: "{colors.cream}"
     typography: "{typography.caption}"
     rounded: "{rounded.chip}"
     padding: "9px 16px"
   filter-chip-selected:
-    backgroundColor: "{colors.brand-green}"
-    textColor: "{colors.card-white}"
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     typography: "{typography.tag}"
     rounded: "{rounded.chip}"
     padding: "9px 16px"
+  segment-track:
+    backgroundColor: "{colors.track}"
+    rounded: "{rounded.track}"
+    padding: "4px"
   segment-active:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.brand-green}"
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     typography: "{typography.label}"
     rounded: "{rounded.segment}"
     padding: "10px 0"
   segment-inactive:
-    textColor: "{colors.ink-55}"
+    textColor: "{colors.ink-muted}"
     typography: "{typography.label}"
     rounded: "{rounded.segment}"
     padding: "10px 0"
   option-selected:
-    textColor: "{colors.brand-green}"
+    textColor: "{colors.cream}"
     typography: "{typography.row-title}"
     rounded: "{rounded.track}"
-    padding: "14px 0"
+    padding: "14px 12px"
   option-unselected:
-    backgroundColor: "{colors.divider}"
-    textColor: "{colors.ink-55}"
-    typography: "{typography.value}"
+    backgroundColor: "{colors.track}"
+    textColor: "{colors.ink-muted}"
+    typography: "{typography.meta-strong}"
     rounded: "{rounded.track}"
-    padding: "14px 0"
-  search-field:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink-55}"
-    typography: "{typography.value}"
-    rounded: "{rounded.pill}"
-    height: "48px"
-    padding: "0 16px"
+    padding: "14px 12px"
   avatar-initials:
-    backgroundColor: "{colors.brand-green}"
-    textColor: "{colors.card-white}"
-    rounded: "{rounded.tabbar}"
+    backgroundColor: "{colors.raised-green}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.circle}"
     size: "44px"
   photo-placeholder:
-    backgroundColor: "{colors.placeholder-khaki}"
+    backgroundColor: "{colors.placeholder-green}"
     rounded: "{rounded.tag}"
   tab-bar:
-    backgroundColor: "{colors.card-white}"
+    backgroundColor: "{colors.raised-green}"
     rounded: "{rounded.tabbar}"
     height: "68px"
   tab-active:
-    backgroundColor: "{colors.green-tint}"
-    textColor: "{colors.brand-green}"
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     typography: "{typography.tab}"
-    rounded: "{rounded.status}"
+    width: "34px"
+    height: "26px"
   tab-inactive:
-    textColor: "{colors.ink-40}"
+    textColor: "{colors.ink-muted}"
     typography: "{typography.tab}"
   fab-post:
-    backgroundColor: "{colors.hustle-orange}"
-    textColor: "{colors.card-white}"
-    rounded: "{rounded.tabbar}"
-    size: "52px"
+    backgroundColor: "{colors.market-orange}"
+    textColor: "{colors.night-green}"
+    rounded: "{rounded.circle}"
+    size: "58px"
   speed-dial-item:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.raised-green}"
+    textColor: "{colors.cream}"
     typography: "{typography.label}"
     rounded: "{rounded.pill}"
     height: "48px"
     padding: "0 18px 0 14px"
   sheet:
-    backgroundColor: "{colors.screen-cream}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.night-green}"
+    textColor: "{colors.cream}"
     rounded: "{rounded.sheet}"
     padding: "20px 18px 40px"
   toggle-on:
-    backgroundColor: "{colors.brand-green}"
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.night-green}"
     rounded: "{rounded.tag}"
     width: "46px"
     height: "28px"
   toggle-off:
-    backgroundColor: "{colors.ink-15}"
+    backgroundColor: "{colors.ink-hairline}"
+    textColor: "{colors.cream}"
     rounded: "{rounded.tag}"
     width: "46px"
     height: "28px"
+  progress-rail:
+    backgroundColor: "{colors.track}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.status}"
+    height: "4px"
 ---
 
 # Design System: Daala
 
-
 ## 1. Overview
 
-**Creative North Star: "The Sunlit Trade Stall"**
+**Creative North Star: "Night Market"**
 
-Daala is an open-air marketplace rendered in software. The canvas is sun-bleached cream, the objects on it are clean white cards, and two brand colours split the emotional labour between them: a deep, grounded green that reassures, and a vibrant orange that invites. It should feel like a well-run stall on a bright street — someone you can see, run by someone who has your back — not a bank, not a corporation, and emphatically not a classifieds board. Every surface is soft-cornered and generously spaced, because the moment this product has to earn is the moment a stranger hands over money.
+Daala is the stall street after dark: the brand green is not an accent laid on a page, it *is* the page. Every screen sits on deep night green, the objects on it are the same green lifted a step or two toward cream, and cream itself is the light the market is lit by: it is the text, and it is the one bright fill that marks what is selected, settled, or protected. Orange is the single lantern hung over the next thing to do. Nothing casts a shadow; things read as separate because their tone is separate, the way stalls read against a street at night.
 
-Density is deliberately low and legibility deliberately high. People use this outdoors, one-handed, in hard South African daylight, on entry-level Android hardware, and they arrive with varied reading confidence. So type runs large and heavy, tap targets run generous, colour does the wayfinding, and copy stays plain. The register is **product, not brand**: the interface has no ambition of its own and should disappear into the task of finding, offering, and completing a gig. Where a marketing surface would reach for an effect, this system reaches for a bigger number and more air.
+Density stays low and legibility stays high, because the conditions have not changed: people use this one-handed, outdoors, often in hard South African daylight, on entry-level Android hardware with expensive data, and they arrive with varied reading confidence. A dark ground helps here rather than hurts: cream on green holds 12.3:1, the muted-text floor still holds 6.4:1 on the ground, and a flat system with no blur, no shadow, and no gradient is cheap to paint on 2GB hardware. Type runs large and heavy, tap targets run generous, and the brightest thing on any screen is always the thing that matters most: the money you hold, the step you're on, or the action to take next.
 
-What it explicitly rejects is the classifieds failure mode PRODUCT.md names by hand: *"the Gumtree/OLX-style dense, spammy listing wall — endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe."* Daala answers that structurally. Rows are cards with breathing room, every gig carries a named human with initials and a rating, and money is colour-coded by whether it is settled, protected, or moving. Trust is not a badge bolted onto the corner of a screen; it is the layout.
+What it rejects is the classifieds wall PRODUCT.md names: *the Gumtree/OLX-style dense, spammy listing wall, endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe.* It also refuses its own former self: the cream canvas, white cards, and soft ambient shadows of "The Sunlit Trade Stall" are retired. Trust is still the interface: every gig row carries a named person, a rating, and a status; protected money is the loudest flat object on screen; errors are sentences, never red.
 
 **Key Characteristics:**
-- Warm cream (`#FAF7EC`) canvas with white cards floating on it — never a cold white, never a grey app-chrome surface.
-- Two brand colours in tension: **green = safe and settled**, **orange = energy and the next action**.
-- Rounded-everything (10–34px); the pill is the signature shape — nav bar, CTAs, tags, toggles, search.
-- Soft ambient shadows carry all depth. This system is intentionally *not* flat and *not* 1px-bordered.
-- One typeface (Outfit) at heavy weights (600–800); hierarchy from weight and size, never a second family.
-- One hero-scale figure per primary screen, and money always coloured by meaning.
+- Night green (`night-green`) is the screen; depth comes from tonal steps of cream mixed into green, never from shadows.
+- Cream is both the foreground and the one bright fill. Anything sitting on cream or orange is set in green.
+- Inversion is the selection grammar: active tab, active segment, selected chip, positive status, and protected money all flip to a solid cream fill with green text.
+- One orange forward action per screen; orange CTAs carry green labels.
+- Tight containers (card 16px, sheet 24px) and full pills for things you press or read as a label (CTA 28px, nav bar 34px).
+- One typeface (Outfit) at heavy weights, one hero figure per primary screen, and money always cream at w800.
 
 ## 2. Colors
 
-A warm khaki-neutral foundation carrying exactly two saturated brand colours, each with a fixed job.
+A single deep green ground, three tonal steps lifted from it, cream as the light, and one orange.
 
 ### Primary
-- **Deep Trust Green** (`#003716`): The grounded anchor and the colour of settled money. It carries prices (`R65`), the wallet balance card fill, positive transaction amounts (`+R28.00`), the active navigation tab, tag-pill text, verification and trust cues, the "Confirmed" status pill, the selected filter chip, initials avatars, and the secondary "Post Gig" CTA. Rule of thumb: if money is **held, earned, or protected**, it is green.
+- **Night Green** (`night-green`): The screen. Every scaffold, the modal sheets, the app bar, the system navigation bar, and the ring cut around the FAB. It is also the *ink on bright fills*: every label on an orange or cream fill, the glyph in the active tab chip, the balance figure on the wallet card.
+- **Cream** (`cream`): The foreground and the one bright fill. As text it is primary ink, prices, and money. As a fill it marks selection and protection: the active tab chip, the active toggle segment, the selected filter chip, the positive status pill, the switch when on, the progress rail's fill, the secondary CTA, and the wallet balance card.
 
 ### Secondary
-- **Hustle Orange** (`#FF823A`): The energy accent and the loudest element on any screen. Its lead job is the single primary forward action — the raised central Post FAB, "Apply Now", and "Withdraw to Bank". Beyond that one action it appears only as a small human-trust or momentum accent: the Home weekly-earnings figure, star ratings (`★ 4.9`), review stars, and the unread-message dot in Inbox. It never fills a large area and never decorates structure.
+- **Market Orange** (`market-orange`): The lantern. It fills the single forward action on a screen (`Apply Now`, the Post FAB, `Withdraw to Bank`) and appears otherwise only as small accents: star ratings, the unread dot in Inbox, the splash screen's short working rule. Category heads and the next-booking icon are cream tints. Orange on green holds 4.9:1; cream on orange fails, so orange fills always carry green labels.
 
-### Neutral
-- **Screen Cream** (`#FAF7EC`): The background of every screen, and the surface of the modal sheet. The system's warmth lives here, not in the brand colours.
-- **Outer Canvas** (`#EFEDE6`): A half-step darker cream sitting behind the screen as the device/canvas frame.
-- **Card White** (`#FFFFFF`): Every raised card, row, header button, filter chip, speed-dial pill, and the floating nav bar. White is what makes an element read as *a discrete, trustworthy object* against the cream.
-- **Placeholder Khaki** (`#EFE9D4`): Photo, thumbnail, and avatar stand-in blocks, and the skeleton-loading fill. The literal khaki of the theme.
-- **Ink** (`#111111`): Primary text. Muted text is expressed as **alpha over ink**, never as a separate grey token, so it always composites against the cream at true contrast. Two text steps only: **ink-65%** for descriptive body copy, **ink-55%** for meta, captions, field labels, section overlines, and input placeholders. Steps below that (**ink-40%**, **ink-15%**) are non-text only: inactive nav icons, hairlines, the off state of a toggle track.
-- **Structure tints**: dividers are black at 6% (hairlines inside cards, between transaction rows) and 8% (the vertical rule splitting a two-cell card). The segmented-toggle track is black at 5%. The scrim behind sheets and the open FAB is a warm green-black at 40% (`rgba(17,26,20,.4)`) so dimming stays soft rather than funereal.
+### Neutral (tonal surfaces)
+- **Night Canvas** (`night-canvas`): Half a step darker than the screen, behind it as the device frame.
+- **Stall Card** (`stall-card`): The +1 step. Cards, gig rows, field shells, the search field, round header buttons, unselected filter chips, attribute pills.
+- **Placeholder Green** (`placeholder-green`): Photo, thumbnail, and media stand-ins, between card and raised so a placeholder reads as "something goes here" inside a card.
+- **Raised Green** (`raised-green`): The +2 step. The floating nav bar, speed-dial pills, initials avatars, and the disabled CTA fill.
 
-### Brand tints
-- **Green tint** (`#00371618`, green at 9%): translucent green over cream — tag and skill pills (with green text), the active-tab chip, the "Confirmed" status pill, and the small green icon backings on form rows and speed-dial items. Because it is alpha-over-brand, it always reads as cream showing through green rather than as a separate sage swatch.
-- **Green tint strong** / **Orange tint** (`#00371622` / `#FF823A22`, both at ~13%): the alternating fills of the category-grid tile headers, and the orange icon backing on Home's next-booking row.
+### Neutral (ink steps)
+Ink is cream at fixed alphas over the ground, never a separate grey, so every step stays the same hue.
+- **Ink Body** (`ink-body`, 78%): Descriptive copy, bios, emphasised inline notices, neutral status text.
+- **Ink Soft** (`ink-soft`, 74%): Secondary amounts: outgoing transactions and fees, booking sub-lines.
+- **Ink Muted** (`ink-muted`, 69%): The text floor. Meta, captions, field labels, overlines, placeholders, inactive segment and nav labels. Holds 4.8:1 on `stall-card` and 6.4:1 on `night-green`.
+- **Ink Faint** (`ink-faint`, 40%) and **Ink Hairline** (`ink-hairline`, 15%): Non-text only. Faint is for disabled labels, the search glyph, and the idle `Done` action; hairline is the off track of a switch and the sheet grab handle.
+- **Green Muted** (`green-muted`, 70% green): Secondary text on a cream fill (the wallet card's caption, the escrow card's overline).
+
+### Structure and tints
+- **Divider** (`divider`, 8%) separates stacked rows inside a card; **Divider Strong** (`divider-strong`, 12%) is the vertical rule in a split card. Neither ever outlines a card.
+- **Track** (`track`, 7%) is the segmented-toggle track, the unselected two-option tile, and the progress rail's empty track.
+- **Cream Tint** (`cream-tint`, 10%) backs tag pills, neutral status pills, and small icon circles; **Cream Tint Strong** (16%) and **Orange Tint** (18%) alternate on the category-tile heads.
+- **Scrim** (`scrim`): 60% night green behind the open speed-dial and every sheet.
+- **Selection** (`selection`): orange at 30% for selected text; the cursor is cream and the handles orange.
 
 ### Named Rules
 
-**The One-Action Orange Rule.** Orange leads exactly one primary forward action per screen. Its scarcity *as a button* is the "do this next" signal. Two competing orange CTAs on one screen are prohibited. Orange may additionally appear as a small accent (ratings, weekly earnings, unread dot) but never as a second large action and never as decoration of structure.
+**The Flat-Tone Rule.** Depth is tone, never shadow. A surface one step up is `stall-card`; two steps up is `raised-green`. `AppShadows` no longer exists and nothing in the system may cast a shadow, glow, or blur.
 
-**The Green Money Rule.** Settled and protected money is green: prices, positive transaction amounts, the wallet balance card, escrow surfaces, fixed payouts. Money leaving or moving forward is orange (Withdraw, Apply). Money lost to the platform — fees, withdrawals in a transaction list — is neutral ink-55%, never red. The single deliberate exception is Home's "earned this week" figure, rendered orange as a motivational energy highlight rather than a settled balance.
+**The Green-On-Bright Rule.** Anything set on a cream or orange fill is green: labels, glyphs, figures, spinners. Cream on orange is prohibited (it fails contrast), and white does not exist in this system.
 
-**The Warm-Never-White Rule.** No screen background is pure white and no surface is a cold grey. Backgrounds are cream (`#FAF7EC`); objects are white cards on top of it. A grey app-chrome surface reads as a generic tool and is prohibited.
+**The Inversion Rule.** Selection, settlement, and protection are shown by inverting: a solid cream fill with green content. Active tab, active segment, selected filter chip, positive status, switch on, secondary CTA, and the wallet balance card all use it. Nothing else may be a solid cream block, or the grammar stops meaning "this one".
 
-**The Readable-Muted Rule.** Muted text bottoms out at **ink-55%** (4.7:1 on cream — passes). Anything fainter is not text. This is a deliberate correction to the reference mockup, which sets meta at ink-45% (3.3:1) and search placeholders at ink-35% (2.6:1); both fail against cream and both fail hardest in exactly the bright-daylight, varied-literacy conditions this product ships into. Hierarchy below ink-55% is carried by **size and weight**, which this system has in abundance — never by fading text further.
+**The One-Action Orange Rule.** Orange fills exactly one primary forward action per screen. Two orange CTAs on one screen are prohibited. Orange's other appearances (ratings, unread dot, the splash rule) stay small and never decorate structure.
+
+**The Cream Money Rule.** Money is cream at w800. Prices, payouts, incoming transactions, and suggested prices are cream; protected money (the wallet balance, held-in-escrow) is the loudest flat object on screen, a solid cream block with the figure in green. Money leaving (fees, withdrawals in a list) steps down to `ink-soft`, never red. Orange is reserved for actions that move money; no figure is ever orange, weekly earnings included.
+
+**The Readable-Muted Rule.** Text bottoms out at `ink-muted`. `ink-faint` and `ink-hairline` are for shapes, disabled states, and glyphs only. Below the floor, hierarchy is carried by size and weight, never by fading text further.
 
 ## 3. Typography
 
-**Display / Body / Label Font:** Outfit (with `system-ui, sans-serif` fallback). There is no second family.
+**Display / Body / Label Font:** Outfit (with `system-ui, sans-serif` fallback), loaded through `google_fonts`. There is no second family.
 
-**Character:** One geometric sans doing every job. Outfit is built on near-circular bowls and even stroke weights — clean, modern, and confident, with a friendliness that comes from roundness rather than from calligraphic warmth. It is at its best big and heavy, which suits a system whose hierarchy is carried by hero figures and 800-weight numbers. Hierarchy comes from **weight and size**, never from a second face and never from colour alone. Weights run heavy: nothing structural sits below 600, and every number that matters is 800. No serif, no display face, no mono — a product-register decision that keeps labels, data, and prose visually of a piece.
-
-**The trade-off to watch.** Geometric sans faces differentiate less at small sizes than humanist ones — Outfit's `a` / `o` / `e` share a circle, and its apertures close up under glare. The system's floor sizes (Tab Label at 10px, Meta and Status at 11px) are where this bites, on exactly the outdoor, entry-level-Android, varied-literacy reading this product is built for. Hold the 10px floor as an absolute, keep the small roles at w600 or heavier, and honour The Readable-Muted Rule strictly at these sizes — an ink-55% 11px label in Outfit has no margin left to give away.
+**Character:** One geometric sans doing every job, at heavy weights. Outfit's round bowls read friendly without calligraphic warmth, and it is best big and heavy, which suits a system carried by hero figures and w800 money. Large display roles carry slight negative tracking (-1px at 52px, -0.5px at 30px, down to -0.3px at 26px) so they close up into solid shapes on the dark ground. Geometric faces close their apertures under glare, so the floor sizes (10px tab labels, 11px status) stay at w600 or heavier and never drop below `ink-muted`.
 
 ### Hierarchy
-- **Display** (w800, 52px, line-height 1.0): The one hero figure on Home (`24 Gigs`). Centred, one per screen, the emotional anchor of the earn view.
-- **Money** (w800, 30px): The wallet balance, set white on the green balance card.
-- **Headline** (w800, 30px / 26px, line-height 1.2): Detail-screen titles (`Help moving a 2-bed apartment`) at 30px; the post-gig wizard title steps to 28px at line-height 1.25. Large left-aligned page titles on primary list screens (`Browse Gigs`, `My Gigs`, `Inbox`) sit at 26px.
-- **Figure** (w800, 22px / 20px / 18px): The paired numbers inside split stat cards (`R65` payout, `~2 hrs` duration, `40 taskers`, `R72` suggested) and the three profile stat tiles (`62`, `98%`, `2023`). Green when the figure is money, ink when it is not.
-- **App-bar Title** (w700, 18px): Centred titles on pushed screens, flanked by round icon buttons (`My Wallet`, `Profile`). The modal sheet header sits one step down at w700/17px.
-- **Section** (w700, 16px): Section headers (`Gigs For You`, `Categories`, `Home & Garden`) and CTA button labels. Prices in gig rows use the same 16px at w800 in green.
-- **Title** (w700, 15px): Card titles and poster names (`Marlo T.`, `Garden cleanup`). Sheet row labels use 15px at w600.
-- **Row Title** (w700, 14px): List-row and speed-dial labels (`Assemble flatpack shelving`, `Post a service`).
-- **Value** (w600, 14px): Fact rows on the detail screen (`Braamfontein 2001`, `Fri 12 Jul, 9:00am`) and transaction descriptions. Transaction amounts use 14px at w800.
-- **Body** (w500, 13px, line-height 1.6, ink-65%): Descriptive helper copy and profile bios. Review quotes step to 12px/1.5. This is app UI, not long-form — keep prose short rather than reaching for a wide measure.
-- **Label** (w700, 13px, ink-55%): Field labels above form rows (`Category`, `Budget`, `Pricing Type`).
-- **Overline** (w700, 13px, UPPERCASE, letter-spacing 0.4px, ink-55%): List groupings and section eyebrows on Wallet and My Gigs (`BALANCE`, `RECENT GIGS`, `TOMORROW`, `THIS WEEK`). This is the *only* sanctioned uppercase treatment in the system.
-- **Caption** (w600, 12px / 11px, ink-55%): Stat-card captions above a figure (`My Offers`, `Estimated Payout`, `Gigs Done`).
-- **Meta** (w500, 12px / 11px, ink-55%): Distances, timestamps, sub-labels (`1.2km · posted 2h ago`, `2m`).
-- **Tag** (w700, 12px): Pill labels and small inline actions (`Save`, `Get Help`, skill chips).
-- **Status** (w700, 11px): Lifecycle status pills (`Confirmed`, `In progress`).
-- **Tab Label** (w600, 10px): Bottom-nav labels only. The floor of the system — nothing else goes this small.
+- **Display** (w800, 52px, 1.0): The one hero figure on a primary screen: Home's `24 Gigs`, the carousel's weekly-earnings figure.
+- **Money** (w800, 30px): The wallet balance and the escrow amount, green on the cream card.
+- **Headline** (w800, 30px, 1.2): Detail-screen titles. The post-gig wizard title uses **Headline Post** (28px, 1.25).
+- **Page Headline** (w800, 26px): Left-aligned titles on primary list screens and every auth screen.
+- **Input Value** (w700, 22px) / **Figure** (w800, 22px): A typed phone number or email; one OTP or date cell, and the paired numbers in a split card.
+- **App-bar Title** (w700, 18px): Centred titles on pushed screens, between round icon buttons.
+- **Section** (w700, 16px): Section headers and CTA labels. **Price** is the same size at w800 in cream.
+- **Title** (w700, 15px): Card titles and poster names. **Value** (w600, 15px): fact rows, sheet rows, text actions at w700.
+- **Row Title** (w700, 14px): List-row and speed-dial labels. **Meta Strong** (w600, 14px): transaction descriptions, option-tile labels, search placeholder.
+- **Body** (w500, 13px, 1.6, `ink-body`): Helper copy, subtitles, bios, inline notices.
+- **Label** (w700, 13px, `ink-muted`): Field labels and toggle-segment labels.
+- **Overline** (w700, 13px, +0.4px, UPPERCASE, `ink-muted`): List groupings (`TOMORROW`, `THIS WEEK`, `BALANCE`) and the caption over a single figure (`HELD IN ESCROW`). Never above a headline.
+- **Caption** (w600, 12px, `ink-muted`): Stat-card captions over a figure. **Meta** (w500, 12px, `ink-muted`): distances, timestamps, consent line.
+- **Tag** (w700, 12px): Pill labels and small inline actions (`See all`, `Save`).
+- **Status** (w700, 11px): Lifecycle pills.
+- **Tab Label** (w600, 10px): Bottom-nav labels only. The floor of the system.
 
 ### Named Rules
 
-**The Heavy-Weight Rule.** Hierarchy is carried by weight (700/800) and size, never by colour alone and never by a second typeface. If something needs emphasis it gets heavier or bigger; it does not get a display font, an outline, or a gradient.
+**The Heavy-Weight Rule.** Hierarchy is carried by weight (700/800) and size, never by colour alone and never by a second typeface. Emphasis gets heavier or bigger, not a display face, an outline, or a gradient.
 
-**The Big-Number Rule.** Each primary screen earns exactly one hero-scale figure — gigs nearby on Home, the balance on Wallet. Competing large numbers dilute it into a dashboard.
+**The Big-Number Rule.** Each primary screen earns exactly one hero-scale figure: gigs nearby on Home, the balance on Wallet. Competing large numbers turn it into a dashboard.
 
-**The Complete-Scale Rule.** Every size and weight a screen needs is a named role in the token file. A screen that reaches for a one-off `fontSize` override has found a missing role — add the role, don't patch the screen. Local overrides are how a documented scale quietly stops being the scale.
+**The Complete-Scale Rule.** Every size and weight a screen needs is a named role in `AppText`. A screen reaching for a one-off `fontSize` override has found a missing role: add the role, don't patch the screen.
 
 ## 4. Elevation
 
-This system is **soft-shadow layered — not flat, not bordered**. Depth comes almost entirely from diffuse, low-opacity ambient shadows: cards, chips, the floating nav bar, sheets, and CTAs all lift off the cream on cushioned shadows rather than sitting inside 1px strokes. Borders exist only as *internal dividers* — a hairline between the two cells of a split card, between transaction rows — never as a card's outer edge. Brand CTAs cast a **tinted** shadow in their own hue, an orange glow under the FAB and orange CTA and a green glow under the green CTA, which reads as warmth and importance rather than a hard drop. Opacities stay at or below 16% for neutral shadows; anything darker reads as a 2014 app.
-
-### Shadow Vocabulary
-- **card** (`0 2px 10px rgba(0,0,0,.05)`): The default resting lift under white cards, gig rows, and inbox rows.
-- **card-quiet** (`0 2px 10px rgba(0,0,0,.04)`): The paired Home stat cards, which sit slightly further back so the hero figure above them stays dominant.
-- **sheet-row** (`0 2px 8px rgba(0,0,0,.05)`): Card rows inside the modal sheet, tightened because the sheet is already lifted.
-- **soft** (`0 2px 6px rgba(0,0,0,.06)`): Round header buttons, the header pill button, the search field, and the active segment of a toggle.
-- **chip** (`0 2px 6px rgba(0,0,0,.05)`): Unselected filter chips and white attribute pills.
-- **chip-brand** (`0 2px 6px rgba(0,0,0,.10)`): The green filter/sort button — slightly deeper so a saturated fill still reads as raised.
-- **category** (`0 4px 14px rgba(0,0,0,.07)`): The category grid tiles, which carry a touch more presence than a plain card.
-- **tabbar** (`0 8px 24px rgba(0,0,0,.12)`): The floating pill navigation bar hovering over scrolling content.
-- **speed-item** (`0 8px 18px rgba(0,0,0,.16)`): The speed-dial action pills while the FAB is open, above the scrim.
-- **fab** (`0 8px 18px rgba(255,130,58,.40)`): The orange glow beneath the central Post button.
-- **cta-orange** (`0 6px 16px rgba(255,130,58,.35)`) / **cta-green** (`0 6px 16px rgba(0,55,22,.30)`): Coloured lift under the two primary CTA fills.
+This system is **fully flat**. There are no shadows, glows, or blurs anywhere: `AppShadows` was removed, the `ThemeData` zeroes every Material elevation and sets the shadow colour transparent, and splash and highlight ink are off. Depth is conveyed by three tonal steps above the ground (`stall-card`, `placeholder-green`, `raised-green`) and by inversion to cream for the few objects that must be loudest. Strokes exist only as hairline dividers *inside* a card, the 2px cream outline on a selected two-option tile, the 2px cream focus outline on a field, and the 4px ground-coloured ring around the FAB.
 
 ### Named Rules
 
-**The Cushioned-Card Rule.** Cards are lifted, never outlined. A white card's edge is defined by its shadow against the cream. An outer `border` on a card is prohibited. The only legitimate strokes in this system are a hairline divider *inside* a container and the 2px green outline on a selected two-option pill.
+**The Tone-Step Rule.** Something that sits on something else is one tone lighter. Cards on the ground are `stall-card`; the nav bar and speed-dial pills that float over cards are `raised-green`; a sheet drops back to the ground tone above the scrim so its cards read as cards again.
 
-**The Tinted-Glow Rule.** Primary CTAs and the FAB cast a shadow in their own brand hue, not neutral black. The glow is part of the button's identity, not an effect layered on top of it.
+**The Cut-Out Rule.** "Raised" in a flat system is said with a gap, not a shadow: the FAB is lifted half out of the nav bar and wrapped in a 4px ring of the ground colour, which cuts it cleanly out of the bar.
 
-**The Shadow-Ceiling Rule.** Neutral shadow opacity never exceeds 16%, and blur never drops below 6px. If a shadow reads as a hard edge rather than as air under an object, it is wrong — go wider and fainter, never darker and tighter.
+**The Hairline-Inside Rule.** A card's edge is its tone change. An outer border on a card is prohibited; dividers live only between rows or cells within one card.
 
 ## 5. Components
 
 ### Buttons
-- **Shape:** Full pill (28px radius), 56px tall, centred label at w700/16px in white.
-- **Primary (orange):** `#FF823A` fill with the `cta-orange` glow. The one forward action on a screen — `Apply Now`, and the central Post FAB.
-- **Secondary (green):** `#003716` fill with the `cta-green` glow. Committing and creating actions — `Post Gig`. (`Withdraw to Bank` is the orange fill at a smaller inline size: 10×18px padding, 18px radius, w700/13px, sitting on the green balance card.)
-- **Header pill:** White pill, 44px tall, 18px horizontal padding, `soft` shadow, green w700/13px label with an optional leading green icon — `Save`, `Get Help`. Lives top-right on pushed screens.
-- **Round icon button:** 44px white circle with the `soft` shadow — back, search, bell, add, edit. The universal chrome affordance, sized to clear both platform touch minimums.
-- **Pressed:** scale to 0.97 and drop the shadow one step, 120ms. **Disabled:** fill at 40% opacity, label at ink-40%, no shadow. **Loading:** label swaps for a 20px white spinner; the pill keeps its width so nothing reflows.
+- **Shape:** Full pill (`rounded.button`), 56px tall, centred Section-weight label. Pressed scales to 0.97 over 120ms (skipped under reduced motion); fill changes animate over 150ms.
+- **Primary (orange):** `market-orange` fill, green label. The one forward action: `Apply Now`, `Send Code`, `Verify`, `Continue`.
+- **Cream:** `cream` fill, green label. Committing and creating actions: finishing a form (`Complete Setup`, `Post Gig`), agreeing (`I Agree`), or the alternative route on a fork (`Log in with Email` on the email-conflict screen). Never beside an orange CTA of equal weight.
+- **Disabled:** drops to `raised-green` with an `ink-faint` label, never a grey. **Loading:** a 20px green spinner in a pill that keeps its width.
+- **Text action:** cream Value-weight label at w700 in a 48dp hit area, for secondary routes (`Log in with Email`, `Change number`, `Skip`). Never competes with the CTA.
+- **Round icon button:** 44px `stall-card` circle, cream glyph: back, search, add. The inverted variant (`cream` circle, green glyph) is the search filter button.
+- **Header pill:** 44px `stall-card` pill with a cream glyph and label (`Save`).
+- **Inline money action:** `Withdraw to Bank` is a compact orange pill with a green label, sitting on the cream balance card.
 
 ### Chips & Tags
-- **Tag pill:** Green-tint fill (`#00371618`), 14px radius, 6×14px padding, w700/12px green text — `Moving · One-time`, skill chips.
-- **Attribute pill:** White with the `chip` shadow, 14px radius, 8×14px padding, w600/12px ink — neutral gig attributes like `Heavy lifting`, `Own transport`.
-- **Status pill:** 10px radius, 4×10px padding, w700/11px. Positive lifecycle states use the green tint with green text (`Confirmed`); neutral in-flight states use a 6%-black fill with ink-55% text (`In progress`).
-- **Filter chip:** 16px radius, 9×16px padding. Selected is a solid green fill with white w700/12px; unselected is white with the `chip` shadow and ink w600/12px. Horizontally scrolling row, never wrapped.
-- **Segmented toggle:** A 22px-radius track at 5% black with 4px inset padding. The active segment is a white card (18px radius, `soft` shadow, green w700) and the inactive segment is transparent with ink-55% w600. Carries the Home `Earn Moola ⇄ Browse Gigs` switch and the My Gigs `Upcoming / Applied / Completed` tabs.
-- **Two-option selector:** Side-by-side pills at 22px radius with 14px vertical padding. Selected is transparent with a 2px green border and green w700/14px; unselected sits on a 6%-black fill with ink-55% w600/14px. Used for Pricing Type and Schedule in the post-gig form.
+- **Tag pill:** `cream-tint` fill, cream Tag label, `rounded.tag`, 6×14px. Categories and skills.
+- **Attribute pill:** `stall-card` fill, cream w600/12px, 8×14px: `Heavy lifting`, `Own transport`.
+- **Status pill:** `rounded.status`, 4×10px, Status type. Positive states (`Confirmed`) are solid cream with green text, the brightest small object on a row; neutral in-flight states (`In progress`) use `cream-tint` with `ink-body` text.
+- **Filter chip:** `rounded.chip`, 9×16px, horizontally scrolling. Selected inverts to cream with green w700; unselected is `stall-card` with cream w600.
+- **Segmented toggle:** a `track` fill at `rounded.track` with 4px inset; the active segment inverts to a cream `rounded.segment` block with a green Label; inactive is transparent with `ink-muted`. Carries Home's `Earn Moola / Browse Gigs` and My Gigs' `Upcoming / Applied / Completed`.
+- **Two-option selector:** side-by-side tiles at `rounded.track`, 14px vertical padding. Selected is transparent with a 2px cream outline and cream w700; unselected sits on `track` with `ink-muted` w600.
 
 ### Cards / Containers
-- **Corner style:** 22px radius, universally.
-- **Background:** White on the cream screen. The one variant is the green-filled wallet balance card, which inverts to white text with its caption at white-70%.
-- **Shadow strategy:** `card` by default; `category` for grid tiles; `chip`/`soft` for lightweight pills and rows; `card-quiet` for the recessed Home stat pair. See Elevation.
-- **Border:** None on the outer edge, ever. Split cards use an 8%-black vertical hairline between their two cells; stacked transaction rows are separated by 6%-black horizontal hairlines with none on the last row.
-- **Internal padding:** 16×18px default. 18px all round for split and stat cards, 14×16px for compact rows (inbox, transactions, reviews), and zero padding with `clip` for media-topped cards (category tiles, browse carousel cards).
-- **Signature variants:** the **split card** (two equal cells, caption above figure, divided by one hairline); the **category tile** (76px tint header alternating green-tint-strong and orange-tint, then a 10×12px label block with name and gig count); the **carousel card** (140px wide, 88px khaki media header, then title, distance, and price).
+- **Corner style:** `rounded.card`.
+- **Background:** `stall-card` on the ground. The one bright variant is the protected-money card: solid cream, `green-muted` caption, green Money figure, and the orange withdraw action.
+- **Shadow strategy:** none (see Elevation). **Border:** none on the outer edge.
+- **Internal padding:** 16×18px default; 18px for split and stat cards; 14×16px for compact rows; zero with clipping for media-topped cards.
+- **Signature variants:** the **split card** (two equal cells, caption over a 22px figure, one `divider-strong` rule between); the **category tile** (a flexible tint head alternating `cream-tint-strong` and `cream-tint`, then name and count); the **carousel card** (140px wide, 88px `placeholder-green` media head, title, distance, price).
 
 ### Inputs / Fields
-The system is **picker-first, not keyboard-first** — the audience is one-handed, outdoors, on expensive data, and a tap beats typing every time.
-- **Field row:** A w700/13px ink-55% label sits above a white card that displays the current value and opens a picker on tap. Value on the right at w800/16px ink for money, w600/15px for text.
-- **Search field:** 48px tall, 24px radius, white with the `soft` shadow, 16px horizontal padding, leading 16px search glyph. Placeholder at w500/14px **ink-55%** — see The Readable-Muted Rule; the mockup's ink-35% placeholder is not to be reproduced.
-- **Toggle switch:** A 46×28 pill track with a 24px white thumb and 2px inset. Green fill when on, ink-15% when off; the thumb crosses in 180ms.
-- **Focus:** a 2px green ring offset 2px from the control, always visible on keyboard focus and never suppressed. **Error:** the value text stays ink, a w500/12px message in ink-55% sits below the row, and the row gains a 2px `#003716` outline — this system has no red; errors are stated in words, not alarm colour.
+- **Field shell:** a Label above a `stall-card` block at `rounded.card`, 12×16px padding. It always carries a 2px border, transparent at rest and cream when focused, so focus never shifts layout. Typed values use Input Value.
+- **Search field:** 48px `stall-card` pill at `rounded.pill`, `ink-faint` leading glyph, `ink-muted` placeholder.
+- **Toggle switch:** 46×28 track at `rounded.tag`, 2px inset, 24px thumb. On: cream track, green thumb. Off: `ink-hairline` track, cream thumb. Thumb crosses in 180ms.
+- **Progress rail:** a 4px `track` bar with a cream fill and `rounded.status` ends, for multi-step auth flows.
+- **Errors:** there is no red. An error is an `InlineNotice`: a sentence in `ink-body` led by a small cream info glyph; a hint is the same sentence in `ink-muted` with no glyph.
 
 ### Navigation
-- **Floating pill tab bar:** A 68px white bar at 34px radius with the `tabbar` shadow, inset 16px from the screen edges and 16px from the bottom, floating above content rather than docked. Four destinations — **Home · My Gigs · Inbox · Profile** — flanking a raised central Post button. Scroll views pad 110px at the bottom so the last card always clears the bar.
-- **Active tab:** a filled green icon inside a 34×26 green-tint chip (13px radius), label green w600/10px. **Inactive:** an outline icon at ink-40% with a matching label. Icons are 16–18px at 2.2 stroke weight; the icon set is one family throughout, never mixed.
-- **Central Post FAB:** A 52px orange circle raised 26px above the bar with the `fab` glow. One FAB, one purpose — it is never repurposed for a secondary action on any screen.
-- **Safe areas and system gestures:** the bar sits inside the bottom safe-area inset, clearing the iOS home indicator and Android gesture bar. The iOS left-edge back gesture and the Android system Back are never intercepted, and both must dismiss the sheet and close the FAB before they pop a route.
-
-### Post FAB Speed-Dial (signature)
-Tapping the FAB rotates its `+` 45° over 250ms and raises three white action pills from behind the bar — **Post a service · Post a request · Post to media** — stacked upward at 60px intervals, right-aligned 16px from the edge. Each is a 48px-tall 24px-radius white pill with the `speed-item` shadow, a 30px green-tint circular icon backing, and a w700/13px ink label. They enter from `translateY(18px) scale(0.85)` with a 220ms `cubic-bezier(.2,.9,.3,1.4)` transform and a 180ms opacity fade, staggered 0 / 30 / 60ms bottom-up, over a 200ms scrim fade. Tapping the scrim, the FAB, or any item closes it in reverse. Under reduced motion, the pills and scrim cross-fade in 120ms with no transform and no stagger.
+- **Floating pill tab bar:** a 68px `raised-green` bar at `rounded.tabbar`, inset 16px from the sides and bottom, floating over content. **Home · My Gigs · [+] · Inbox · Profile.** Scroll views pad ~120px at the bottom to clear it.
+- **Active tab:** inverted: a 34×26 cream chip with a filled 16px green glyph, label cream. **Inactive:** an 18px outline glyph and label at `ink-muted`, because the labels are text.
+- **Post FAB:** a 58px orange circle with a green `+`, lifted 13px out of the bar and ringed 4px in the ground colour. It rotates 45° over 250ms when open. One FAB, one purpose.
+- **Speed-dial:** three `raised-green` pills (48px, `rounded.pill`) with a 30px `cream-tint` icon circle and a cream 13px w700 label: `Post a listing · Post a task · Post to media`. They slide up with a slight overshoot and fade over the scrim, staggered 30ms apart.
 
 ### Modal Sheet
-Bottom sheets rise over the scrim to a maximum 88% of screen height, with a 28px top radius, a cream (`#FAF7EC`) surface, and 20×18×40px padding. The header is a three-part row — a green w700/15px `Cancel`, a centred ink w700/17px title, and a `Done` action that is ink-40% until the form is dirty and green once it is. Below it stack value rows and toggle rows as sheet-shadowed cards, with an optional centred w500/12px ink-55% footnote closing the sheet. Slide-up in 220ms `easeOutCubic`; tap-scrim, swipe-down, or `Done` dismisses along the reverse curve. Reserve sheets for a self-contained sub-task with a clear commit point — anything that can be edited in place, is.
+Sheets rise over the `scrim` to at most 88% of screen height, on the **ground tone** (`night-green`) with a `rounded.sheet` top edge, so the `stall-card` rows inside read as cards again. The header is `Cancel` (cream) · centred title · `Done` (`ink-faint` until there's something to commit). Rows are `stall-card` cards; a centred `ink-muted` footnote may close the sheet.
+
+### Logo and Splash
+The official wordmark in its cream variant (`kLogoOnDark`, exported from `public/logo/light.svg`) sits straight on the ground with no plate. The splash is the wordmark alone, the tagline (`Get it done. Get paid.`) in `ink-body`, and a 44×3px orange rule in place of a spinner. It is the only screen with nothing but the brand on it. **Shutters open:** the wordmark is clipped into its five glyphs, which rise from behind the baseline left to right (easeOutQuart, no overshoot). The tagline then fades in and the rule draws out from its centre, all within 860ms. If the session is still resolving, the rule drifts slowly side to side as the working signal. Under reduced motion the finished composition shows with no motion.
 
 ### States
-The reference mockup shows only populated, resting screens. Every list and data surface still owes three more, built from tokens already here:
-- **Loading:** khaki (`#EFE9D4`) skeleton blocks in the exact geometry of the card they replace — same radius, same card shadow, same row heights. No spinners inside content, and no shimmer sweep (it burns frames on 2GB hardware).
-- **Empty:** a plain w700/15px line naming what will appear here and the one action that starts it, using the screen's own primary CTA. Never a decorative illustration, never the word "empty".
-- **Error:** an inline w500/13px ink-65% sentence in plain language with a `Try again` header pill. Offline and slow connections are the expected case here, not the exception — never a full-screen error takeover that discards the user's place.
+- **Loading:** `placeholder-green` blocks in the geometry of the card they replace. No shimmer and no spinner inside content.
+- **Empty:** a plain Title line naming what will appear and the screen's own CTA to start it.
+- **Error:** an inline sentence and a way to try again; never a full-screen takeover, never red.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** put every colour, radius, shadow, spacing step, and text style through the tokens in `lib/theme/app_theme.dart` (`AppColors` / `AppRadius` / `AppShadows` / `AppText`). A raw hex or a bare number in a screen is a bug.
-- **Do** add a named role to the token file when a screen needs a size the scale doesn't have. Never a local `fontSize` override — see The Complete-Scale Rule.
-- **Do** keep every screen background cream (`#FAF7EC`) and float white cards on top of it.
-- **Do** lead exactly one primary forward action per screen in orange, and keep orange's other appearances (ratings, weekly earnings, unread dot) small and sparing.
-- **Do** colour money by meaning: green for settled, held, and positive; ink-55% for fees and outgoing; orange only for the Home weekly-earnings highlight and for actions that move money.
-- **Do** write **all** money in South African Rand through the shared formatter — `R1 250`, `R450`, `R37.50` — stored as integer minor units.
-- **Do** use South African places in every example, label, and fixture: suburb and city, `Braamfontein 2001`, `within 5km of Melville`.
-- **Do** lift cards with the `card` / `soft` shadows and let the shadow define the edge; use strokes only as internal hairline dividers or the selected two-option outline.
-- **Do** carry hierarchy with Outfit weights (700/800) and size, and keep exactly one hero-scale number per primary screen.
-- **Do** give primary CTAs and the FAB their tinted brand-hue glow.
+- **Do** take every colour, radius, spacing step, and text style from `lib/theme/app_theme.dart` (`AppColors` / `AppSpacing` / `AppRadius` / `AppText`). A raw hex or a bare number in a screen is a bug.
+- **Do** set every screen on `night-green` and lift objects by tone: `stall-card` for cards, `raised-green` for what floats over cards.
+- **Do** set anything on a cream or orange fill in green (The Green-On-Bright Rule).
+- **Do** show selection, positive status, and protected money by inverting to solid cream with green content (The Inversion Rule).
+- **Do** fill exactly one forward action per screen in orange, with a green label; use the cream CTA for committing actions that aren't the lead.
+- **Do** set money cream at w800, protected balances as the cream block, and fees and outgoing amounts in `ink-soft`.
+- **Do** write all money in South African Rand through `formatZar` (`R1 250`, `R450`, `R37.50`), stored as integer minor units, and use South African places in every example.
+- **Do** keep text at `ink-muted` or brighter; carry lower hierarchy with size and weight.
 - **Do** surface people, status, and protected-money cues on every list: initials avatar, name, rating, lifecycle status.
-- **Do** ship every interactive component with pressed, disabled, and loading states, and every list with loading, empty, and error states.
-- **Do** keep copy plain, warm, and legible at a glance — `Earn Moola`, `Browse Gigs`, `Apply Now`, `tasker`, `helper`.
+- **Do** carry hierarchy with Outfit at 700/800, keep one hero figure per primary screen, and add a named `AppText` role instead of a local override.
+- **Do** keep copy plain and warm, and use the fixed nouns: `Buyer`, `Merchant`, `Task`, `Listing`.
+- **Do** ship pressed, disabled, and loading states on interactive components, and loading, empty, and error states on every list.
 
 ### Don't:
-- **Don't** build the classifieds wall. PRODUCT.md names the failure mode exactly: *"the Gumtree/OLX-style dense, spammy listing wall — endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe."* If a list has no named humans, no status, and no breathing room, it is that wall.
-- **Don't** use a pure-white or cold-grey screen background, or put an outer border on a card. (Violates The Warm-Never-White and The Cushioned-Card Rules.)
-- **Don't** show any currency but Rand. The symbol is `R`, prefixed. No other currency symbol appears anywhere in this product.
-- **Don't** carry the reference mockup's placeholder content into real screens. Its foreign-currency amounts and Australian locations exist only because it was a mockup; none of it transfers.
-- **Don't** run two orange *actions* on one screen, use orange to fill a large area, or use it to decorate structure.
-- **Don't** set text below ink-55%, and don't hard-code a grey for muted text — muted is always alpha over ink so it composites truly against the cream. (The Readable-Muted Rule.)
-- **Don't** introduce a second typeface, a serif or display face, or set structural text below weight 600.
-- **Don't** use `border-left`-style side stripes, gradient text, or glassmorphism. None exist in this system and none may be added.
-- **Don't** deepen a shadow past 16% neutral opacity or invent a heavier elevation step. If it reads as a hard edge, it is wrong.
-- **Don't** exceed 250ms on any transition, animate anything continuously, or animate for decoration. Motion conveys state — tab change, sheet, FAB expand — and nothing else. Every animation has a reduced-motion fallback.
-- **Don't** reach for a modal first. Sheets are for self-contained sub-tasks with a commit point; anything editable in place is edited in place.
-- **Don't** reinvent platform affordances. The iOS edge-swipe back and the Android system Back always work, content always sits inside safe-area and window insets, and touch targets never fall below 44pt / 48dp.
+- **Don't** build the classifieds wall: *"the Gumtree/OLX-style dense, spammy listing wall, endless undifferentiated rows, no sense of who is real, and nothing that makes handing over money feel safe."*
+- **Don't** add a shadow, glow, blur, or gradient to anything, or an outer border to a card (The Flat-Tone and Hairline-Inside Rules).
+- **Don't** bring back the cream canvas or white cards, and don't use pure white anywhere.
+- **Don't** put cream text on orange, or any colour but green on a bright fill.
+- **Don't** use a solid cream fill for anything that isn't selected, settled, protected, or the cream CTA.
+- **Don't** run two orange actions on one screen, fill a large area with orange, or use it to decorate structure.
+- **Don't** set text in `ink-faint` or `ink-hairline`, or hard-code a grey for muted text.
 - **Don't** use red, or any colour outside these tokens, to signal an error. Errors are stated in plain words.
+- **Don't** show any currency but Rand.
+- **Don't** introduce a second typeface or set structural text below w600.
+- **Don't** use emoji or text glyphs as icons; use the one Material rounded/outline icon family.
+- **Don't** put an uppercase overline above a headline as a kicker; overlines label a group or a single figure.
+- **Don't** exceed 250ms on a state transition or animate for decoration, and give every animation a reduced-motion path.
+- **Don't** intercept the iOS edge-swipe back or Android system Back, or let a touch target fall below 44pt / 48dp.

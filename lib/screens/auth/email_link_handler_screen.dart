@@ -14,6 +14,11 @@
 ///   user in, resolving to their original account precisely because onboarding
 ///   linked the address.
 ///
+/// An address with no Daala account never gets one here: the repository throws
+/// [kNoAccountCode], and this screen says so and points at phone signup. Saying
+/// so is safe at this point — whoever opened the link has proven they own the
+/// inbox, which is not true of anyone typing an address into the login screen.
+///
 /// If the address isn't stored locally (the link was opened on another device),
 /// it asks for it rather than failing. Firebase requires the email back to stop
 /// a leaked link signing anyone in, so this prompt is a security control, not a
@@ -42,7 +47,7 @@ class EmailLinkHandlerScreen extends ConsumerStatefulWidget {
       _EmailLinkHandlerScreenState();
 }
 
-enum _Stage { working, needsEmail, done, failed }
+enum _Stage { working, needsEmail, done, noAccount, failed }
 
 class _EmailLinkHandlerScreenState
     extends ConsumerState<EmailLinkHandlerScreen> {
@@ -52,10 +57,6 @@ class _EmailLinkHandlerScreenState
   _Stage _stage = _Stage.working;
   String? _message;
   bool _wasLinkedToExisting = false;
-
-  /// The address had no account, so Firebase created one. It has an email and
-  /// nothing else, so a phone number is the next thing asked for.
-  bool _isNewAccount = false;
 
   @override
   void initState() {
@@ -124,7 +125,7 @@ class _EmailLinkHandlerScreenState
 
     final wasSignedIn = ref.read(authRepositoryProvider).currentUser != null;
     try {
-      final result = await ref.read(authRepositoryProvider).completeEmailLink(
+      await ref.read(authRepositoryProvider).completeEmailLink(
             email: email,
             link: widget.link,
           );
@@ -133,7 +134,6 @@ class _EmailLinkHandlerScreenState
       setState(() {
         _stage = _Stage.done;
         _wasLinkedToExisting = wasSignedIn;
-        _isNewAccount = result.isNewUser;
       });
       // Let the confirmation land, then hand back to the session redirect.
       await Future<void>.delayed(const Duration(milliseconds: 1200));
@@ -142,6 +142,12 @@ class _EmailLinkHandlerScreenState
     } catch (error) {
       if (!mounted) return;
       final failure = describeAuthError(error);
+      if (failure.code == kNoAccountCode) {
+        await ref.read(pendingEmailStoreProvider).clearPendingEmail();
+        if (!mounted) return;
+        setState(() => _stage = _Stage.noAccount);
+        return;
+      }
       // The address belongs to another account. That is a decision to make, not
       // an error to read, so it gets its own screen rather than a sentence.
       if (failure.code == 'email-already-in-use' ||
@@ -156,6 +162,14 @@ class _EmailLinkHandlerScreenState
     }
   }
 
+  /// Leaves the handler for phone signup. The repository has already signed
+  /// the throwaway uid out, so releasing lands on a signed-out session where
+  /// `/auth/phone` is allowed.
+  void _createAccount() {
+    ref.read(emailLinkHandledProvider.notifier).release();
+    context.go('/auth/phone');
+  }
+
   @override
   Widget build(BuildContext context) {
     return switch (_stage) {
@@ -165,10 +179,8 @@ class _EmailLinkHandlerScreenState
           focusNode: _focus,
           onSubmit: () => _complete(_email.text.trim()),
         ),
-      _Stage.done => _Done(
-          linked: _wasLinkedToExisting,
-          isNewAccount: _isNewAccount,
-        ),
+      _Stage.done => _Done(linked: _wasLinkedToExisting),
+      _Stage.noAccount => _NoAccount(onCreateAccount: _createAccount),
       _Stage.failed => _Failed(
           message: _message ?? 'That link didn’t work.',
           onRetry: () => context.go('/auth/email'),
@@ -193,7 +205,7 @@ class _Working extends StatelessWidget {
               height: 26,
               child: CircularProgressIndicator(
                 strokeWidth: 2.4,
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.green),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.cream),
               ),
             ),
             const SizedBox(height: AppSpacing.xl3),
@@ -240,7 +252,7 @@ class _NeedsEmail extends StatelessWidget {
             autocorrect: false,
             autofillHints: const [AutofillHints.email],
             style: AppText.value.copyWith(fontSize: 17),
-            cursorColor: AppColors.green,
+            cursorColor: AppColors.cream,
             onSubmitted: (_) => valid ? onSubmit() : null,
             decoration: InputDecoration(
               isDense: true,
@@ -249,7 +261,7 @@ class _NeedsEmail extends StatelessWidget {
               hintStyle: AppText.value.copyWith(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
-                color: AppColors.ink55,
+                color: AppColors.inkMuted,
               ),
             ),
           ),
@@ -260,16 +272,11 @@ class _NeedsEmail extends StatelessWidget {
 }
 
 class _Done extends StatelessWidget {
-  const _Done({required this.linked, required this.isNewAccount});
+  const _Done({required this.linked});
 
   /// `true` when the email was attached to an existing account rather than
   /// used to sign in — the onboarding path.
   final bool linked;
-
-  /// `true` when the address had no account and Firebase made one. Promising
-  /// "taking you to Daala" here would be a lie: the next screen asks for a
-  /// phone number.
-  final bool isNewAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -286,34 +293,27 @@ class _Done extends StatelessWidget {
                 height: 76,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
-                  color: AppColors.greenTint,
+                  color: AppColors.creamTint,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.check_rounded,
                   size: 34,
-                  color: AppColors.green,
+                  color: AppColors.cream,
                 ),
               ),
               const SizedBox(height: AppSpacing.xl4),
               Text(
-                switch ((linked, isNewAccount)) {
-                  (true, _) => 'Email confirmed',
-                  (false, true) => 'Email verified',
-                  (false, false) => 'You’re in',
-                },
+                linked ? 'Email confirmed' : 'You’re in',
                 style: AppText.detailTitle,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.md),
               Text(
-                switch ((linked, isNewAccount)) {
-                  (true, _) => 'It’s now your backup way into this account if '
-                      'you ever lose your phone.',
-                  (false, true) => 'One more step — we just need a phone '
-                      'number to finish setting you up.',
-                  (false, false) => 'Taking you to Daala.',
-                },
+                linked
+                    ? 'It’s now your backup way into this account if you '
+                        'ever lose your phone.'
+                    : 'Taking you to Daala.',
                 textAlign: TextAlign.center,
                 style: AppText.body.copyWith(fontSize: 14),
               ),
@@ -321,6 +321,25 @@ class _Done extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The link was genuine but the address has no Daala account. Not a failure to
+/// retry — a new person, sent to the one place accounts are made.
+class _NoAccount extends StatelessWidget {
+  const _NoAccount({required this.onCreateAccount});
+
+  final VoidCallback onCreateAccount;
+
+  @override
+  Widget build(BuildContext context) {
+    return AuthScaffold(
+      title: 'New to Daala?',
+      subtitle: 'There’s no Daala account with this email yet. Create one with '
+          'your phone number — you can add your email after.',
+      footer: GwButton(label: 'Create an account', onTap: onCreateAccount),
+      children: const [],
     );
   }
 }

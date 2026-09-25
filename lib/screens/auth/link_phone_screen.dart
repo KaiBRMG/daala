@@ -177,13 +177,12 @@ class _SignedInAs extends StatelessWidget {
         horizontal: AppSpacing.xl2,
         vertical: AppSpacing.xl,
       ),
-      shadow: AppShadows.soft,
       child: Row(
         children: [
           const Icon(
             Icons.mark_email_read_outlined,
             size: 18,
-            color: AppColors.green,
+            color: AppColors.cream,
           ),
           const SizedBox(width: AppSpacing.lg),
           Expanded(
@@ -224,13 +223,13 @@ class _ReassuranceRow extends StatelessWidget {
           height: 34,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
-            color: AppColors.greenTint,
+            color: AppColors.creamTint,
             shape: BoxShape.circle,
           ),
           child: const Icon(
             Icons.visibility_off_rounded,
             size: 16,
-            color: AppColors.green,
+            color: AppColors.cream,
           ),
         ),
         const SizedBox(width: AppSpacing.lg),

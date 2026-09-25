@@ -70,8 +70,11 @@ final introSeenProvider = FutureProvider<bool>(
 /// flash, without ever *adding* delay to a slow boot: the router waits on the
 /// session and this timer in parallel, so on a slow connection the floor costs
 /// nothing.
+///
+/// Sits just past the splash's 860ms shutter entrance so the settled wordmark
+/// and rule hold for a beat before the redirect, rather than leaving mid-draw.
 final splashFloorProvider = FutureProvider<void>(
-  (ref) => Future<void>.delayed(const Duration(milliseconds: 850)),
+  (ref) => Future<void>.delayed(const Duration(milliseconds: 1000)),
 );
 
 /// Where a signed-in — or signed-out — person actually stands.
@@ -84,14 +87,13 @@ class SignedOut extends Session {
   const SignedOut();
 }
 
-/// Signed in with an email link on an address that had no account, so Firebase
-/// minted a fresh uid carrying an email and nothing else.
+/// Signed in to a uid with no phone number and no profile.
 ///
-/// This state is unavoidable rather than a bug: `sendSignInLinkToEmail` cannot
-/// be made conditional on an account existing (that check is exactly what email
-/// enumeration protection forbids), and opening an unknown address's link
-/// creates the account. The phone number is the primary credential, so it has
-/// to be attached to this uid before onboarding can run.
+/// New sign-ups can no longer reach this: an email link on an address with no
+/// account is rejected and its uid deleted in
+/// [AuthRepository.completeEmailLink]. It remains as a safety net for any
+/// email-only uid created before that rule, so such a person is still made to
+/// attach the primary credential before onboarding can run.
 class NeedsPhone extends Session {
   const NeedsPhone(this.uid, {this.email});
 

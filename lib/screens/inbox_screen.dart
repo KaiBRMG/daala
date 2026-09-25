@@ -55,7 +55,7 @@ class InboxScreen extends StatelessWidget {
                     Text(name, style: AppText.rowTitle),
                     Text(time,
                         style: AppText.meta.copyWith(
-                            fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.ink55)),
+                            fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.inkMuted)),
                   ],
                 ),
                 const SizedBox(height: 2),
@@ -63,7 +63,7 @@ class InboxScreen extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.body.copyWith(
-                        fontSize: 13, height: 1.2, color: AppColors.ink55)),
+                        fontSize: 13, height: 1.2, color: AppColors.inkMuted)),
               ],
             ),
           ),

@@ -1,12 +1,12 @@
 # CLAUDE.md — Daala (Phase 2)
 
-Daala is a two-sided gig marketplace: a unified, single-application ecosystem on Android and iOS with a lightweight SEO website. Every user has **one account** that can act as either a **Consumer** (needs a task done) or a **Merchant** (does the work) — the app deliberately blurs the line so people cycle between earning and spending. Mission: mobilise South Africa's informal economy and give unemployed youth and tradespeople an income and skill-growth ladder.
+Daala is a two-sided gig marketplace: a unified, single-application ecosystem on Android and iOS with a lightweight SEO website. Every user has **one account** that can act as either a **Buyer** (needs a task done) or a **Merchant** (does the work) — the app deliberately blurs the line so people cycle between earning and spending. Mission: mobilise South Africa's informal economy and give unemployed youth and tradespeople an income and skill-growth ladder.
 
 ---
 
 ## ⭐ Source of truth
 
-- **[DESIGN.md](DESIGN.md) is the authoritative visual blueprint** — it documents the imported **"Groundwork" Khaki** design (Creative North Star: *"The Sunlit Trade Stall"*): design tokens, colour rules, typography, elevation, and the component vocabulary the screens are built from. **Treat its tokens and named rules as a contract.**
+- **[DESIGN.md](DESIGN.md) is the authoritative visual blueprint** — it documents the **"Night Market"** design — dark, flat, on the brand green (#003716) with cream (#F5F5DC) foreground and orange (#ED7D31) accent: design tokens, colour rules, typography, elevation, and the component vocabulary the screens are built from. **Treat its tokens and named rules as a contract.**
 - **This file (CLAUDE.md) is the operating contract**: stack decisions, folder conventions, and the non-negotiable rules. Where the two overlap they agree; DESIGN.md holds the exhaustive visual detail. **Read DESIGN.md before generating or editing any screen.**
 - The design was imported from a Claude Design project and **transcribed 1:1 into `lib/theme/app_theme.dart`** — that theme file is the machine source of the tokens DESIGN.md describes.
 
@@ -19,7 +19,7 @@ Daala is a two-sided gig marketplace: a unified, single-application ecosystem on
 | UI framework | **Flutter (Dart, stable)** | Single codebase, Android + iOS. Never React/Next. |
 | State | **Riverpod** (`flutter_riverpod`) | App is wrapped in `ProviderScope`. As screens gain real state, lift it into providers; keep it out of widget internals. |
 | Navigation | **GoRouter** (`go_router`) | Declarative routes in `lib/router.dart`; a `StatefulShellRoute` drives the four primary tabs. Deep-link ready (needed later for TradeSafe). |
-| Typography | **`google_fonts`** | Plus Jakarta Sans, loaded via `google_fonts`. In Phase 1 this fetches once at runtime; bundle the font as an asset before ship. |
+| Typography | **`google_fonts`** | Outfit, loaded via `google_fonts`. In Phase 1 this fetches once at runtime; bundle the font as an asset before ship. |
 | Components | **Bespoke, token-driven** | Build `GwCard`/`TagPill`/`RoundIconButton`/etc. from `lib/theme/app_theme.dart` — never a third-party component library. |
 | Auth & data | **Firebase Auth + Cloud Firestore** | Live from Phase 2. Phone (SMS) is the primary credential; email link is a *second credential on the same account*. Access goes through repositories in `lib/auth/`, never SDK calls in widgets. |
 | Local prefs | **`shared_preferences`** | Pending email address for the sign-in link, intro-seen flag, notification preference. Nothing else, and no PII beyond that address. |
@@ -44,7 +44,7 @@ lib/
 ├── money.dart                # formatZar() — the single money helper
 ├── auth/                     # Identity domain. No Firebase SDK types escape this folder.
 │   ├── auth_repository.dart  #   The one seam to Firebase Auth + Firestore for identity
-│   ├── auth_controller.dart  #   Riverpod: Session (SignedOut/NeedsOnboarding/
+│   ├── auth_controller.dart  #   Riverpod: Session (SignedOut/NeedsPhone/NeedsOnboarding/
 │   │                         #     NeedsTermsUpdate/Ready) + router refresh bridge
 │   ├── signup_flow.dart      #   In-flight SignupDraft (number, consent timestamp, verification)
 │   ├── user_profile.dart     #   UserProfile / UserContact models + age gate
@@ -52,10 +52,12 @@ lib/
 │   ├── phone_format.dart     #   SA/SADC dial regions, trunk-zero normalisation, E.164
 │   └── pending_email_store.dart # shared_preferences: pending email, intro-seen flag
 ├── theme/
-│   └── app_theme.dart        # AppColors / AppSpacing / AppRadius / AppShadows / AppText
+│   └── app_theme.dart        # AppColors / AppSpacing / AppRadius / AppText
 ├── widgets/
 │   ├── app_shell.dart        # Floating pill nav + central Post FAB speed-dial
 │   ├── auth_scaffold.dart    # AuthScaffold + FieldShell — shared auth page chrome
+│   ├── phone_field.dart      # PhoneNumberField + region picker — shared by phone
+│   │                         #   login and link-phone so both normalise identically
 │   └── ui.dart               # Cross-screen primitives: GwCard, GwButton, GwTextAction,
 │                             #   TagPill, StatusPill, InlineNotice, ProgressRail,
 │                             #   TwoOptionSelector, RoundIconButton, InitialsAvatar,
@@ -71,14 +73,14 @@ lib/
 **Auth & onboarding screens (in `lib/screens/auth/`):**
 | Screen | Route | Purpose |
 |---|---|---|
-| `splash_screen` | `/splash` | Boot + brand moment. The **only** full-bleed green surface in the app. |
+| `splash_screen` | `/splash` | Boot + brand moment. The cream wordmark alone on the green ground — the only screen with no cards. |
 | `welcome_carousel_screen` | `/welcome` | 3-slide value proposition. Artwork composed from real components, not images. |
 | `phone_login_screen` | `/auth/phone` | Primary entry. Number + one-step legal consent. |
 | `otp_screen` | `/auth/verify` | **6**-digit SMS code (Firebase codes are always 6). |
-| `link_phone_screen` | `/auth/link-phone` | Email-first signup: attaches a number to an account an email link created. Deliberately **not** `/auth/phone` — that screen's "Log in with Email" would loop. |
+| `link_phone_screen` | `/auth/link-phone` | **Legacy** — attaches a number to an email-only uid created before email stopped creating accounts. Deliberately **not** `/auth/phone` — that screen's "Log in with Email" would loop. |
 | `otp_screen` (link mode) | `/auth/link-verify` | Same six cells, but `linkWithCredential` instead of sign-in. |
 | `profile_setup_screen` | `/auth/profile` | Name, email, DOB (18+ gate), goal → atomic profile write. |
-| `email_login_screen` | `/auth/email` | Secondary entry. Sends a passwordless sign-in link. |
+| `email_login_screen` | `/auth/email` | Secondary entry, existing accounts only. Sends a passwordless sign-in link; "New to Daala?" routes to `/auth/phone`. |
 | `email_link_sent_screen` | `/auth/email-sent` | "Check your inbox" + resend cooldown. |
 | `email_link_handler_screen` | `/auth/email-link` | **Deep-link landing.** Links the email to the existing account, or signs in. |
 | `email_conflict_screen` | `/auth/email-conflict` | The address belongs to another account. Detected server-side on link, never by a client-side existence check. |
@@ -94,9 +96,9 @@ Navigation between these is **not** manual. `router.dart` derives a `Session` an
 | `my_gigs_screen` | `/my-gigs` (tab) | The user's own gigs |
 | `inbox_screen` | `/inbox` (tab) | Messages |
 | `profile_screen` | `/profile` (tab) | Own profile |
-| `browse_screen` | `/browse` | Search / discovery |
+| `search_screen` | `/search` | Search / discovery |
 | `gig_detail_screen` | `/gig` | A single gig, poster, payout, Apply |
-| `post_gig_screen` | `/post/:kind` | Create a gig (kind = service / request / media) |
+| `post_gig_screen` | `/post/:kind` | Create a gig (kind = listing / task / media) |
 | `wallet_screen` | `/wallet` | Balance, transactions, payment methods |
 | `booking_edit_screen` | `/booking/edit` | Modal sheet: edit a booking |
 
@@ -106,21 +108,23 @@ Primary navigation is a **floating pill tab bar** (`app_shell.dart`): Home · My
 
 ## Domain terminology
 
-The product is a two-sided marketplace where one account both **earns** (as a Merchant/tasker) and **hires** (as a Consumer). Use these concepts consistently in code and structure:
+The product is a two-sided marketplace where one account both **earns** (as a Merchant) and **hires** (as a Buyer). Use these concepts consistently in code, docs, comments, and UI copy:
 
 | Concept | Meaning |
 |---|---|
-| **Gig** | The unit of work — the thing browsed, posted, applied to, and booked. |
-| **Consumer** | The person who needs a task done (hires). |
-| **Merchant / tasker / helper** | The person who does the work (earns). |
-| **Offer / Apply** | A merchant's bid to do a gig. |
-| **Booking** | A confirmed engagement between the two sides. |
+| **Gig** | The umbrella term for a unit of work — the thing browsed, posted, applied to, and booked. Every gig is either a Task or a Listing. |
+| **Task** | A gig initiated by a **Buyer**: "I need this done." Merchants apply to it. (Formerly "gig request".) |
+| **Listing** | A gig initiated by a **Merchant**: "I offer this service." Buyers book it. (Formerly "gig post".) |
+| **Buyer** | The person who needs a task done (hires). (Formerly "Consumer" / "customer".) |
+| **Merchant** | The person who does the work (earns). (Formerly "worker" / "tasker" / "helper".) |
+| **Offer / Apply** | A Merchant's bid to do a Task. |
+| **Booking** | A confirmed engagement between a Buyer and a Merchant. |
 | **Escrow** | Funds held safely by the platform while work is carried out. |
 | **Wallet** | Balance view: available funds + funds held in escrow. |
 | **Verification badge** | Trust marker unlocked by ID verification (KYC mocked in Phase 1). |
 | **Category** | Home & Garden, Delivery & Errands, Moving & Hauling, Design & Creative, Cleaning, Handyman, … plus an "Other/Custom" fallback. |
 
-**Voice — friendly, not clinical.** User-facing copy is warm and plain ("Earn Moola", "Browse Gigs", "Apply Now", "Get Help", "tasker", "helper") — this matches the design and the varied-literacy audience. There is **no strict fixed-vocabulary rule** on UI strings. Keep code identifiers clear and consistent (`Gig`, `Booking`, `Wallet`), but do not force marketing copy into a rigid taxonomy.
+**Voice — friendly, not clinical.** User-facing copy is warm and plain ("Earn Moola", "Browse Gigs", "Apply Now", "Get Help") — this matches the design and the varied-literacy audience. **The role and gig-type nouns are fixed:** always **Buyer**, **Merchant**, **Task**, and **Listing** — never consumer, customer, worker, tasker, helper, gig request, or gig post. Beyond those four nouns there is no fixed-vocabulary rule on UI strings. Keep code identifiers clear and consistent (`Gig`, `Task`, `Listing`, `Buyer`, `Merchant`, `Booking`, `Wallet`), but do not force the rest of the marketing copy into a rigid taxonomy.
 
 **Lifecycle (drives status where shown).** A gig moves through visible states — roughly `OPEN → OFFER_ACCEPTED → IN_ESCROW → IN_PROGRESS → COMPLETED` (plus `EXPIRED / CANCELLED / DISPUTED → RESOLVED`). Keep any enum backing this clean; the same states will later back Firestore. Trust cues (status, escrow, verification) are first-class UI, never fine print.
 
@@ -137,7 +141,8 @@ Project: **`daala-69a44`** · Android package / iOS bundle: **`za.co.daala.daala
 - **"Is this a new user?" is answered by `additionalUserInfo.isNewUser`**, free, as part of the sign-in. Never query a collection to find out.
 - **"Does this user need onboarding?" is the absence of `users/{uid}`**, not a local flag. That survives reinstalls and abandoned signups.
 - **Never check whether an email exists client-side.** Firebase's email enumeration protection blocks it, and defeating it leaks who is registered. The email login screen sends the link regardless and confirms neutrally.
-- **An email link on an unknown address creates an account.** This follows directly from the rule above and cannot be switched off: the send is unconditional, and opening the link mints a uid with an email and no phone. That state is `NeedsPhone`, and `/auth/link-phone` → `/auth/link-verify` attaches the primary credential to it before onboarding runs. If the number turns out to already own an account, `AuthRepository.linkPhoneToCurrentUser` **discards the email-only uid and adopts the real one** — the phone is primary, so the older account wins.
+- **Email never creates an account.** The send is unconditional (rule above), so the login screen says *"If you have an account with us, we'll send you a link"* and always offers *"New to Daala? Create an account"* → `/auth/phone`. Firebase still mints a uid when an unknown address opens its link; `AuthRepository.completeEmailLink` rejects any link sign-in that lands on a uid with **no phone number**, deletes that uid if it was just created, signs out, and throws `kNoAccountCode`, which the handler shows as a "New to Daala?" screen pointing at phone signup. Enforced at open, not at send, because the send endpoint is callable with just the public API key.
+- **`NeedsPhone` / `/auth/link-phone` is legacy.** No new sign-up reaches it; it is kept only so any email-only uid created before the rule above attaches a phone before onboarding.
 
 ### Collections
 
@@ -180,10 +185,12 @@ Full step-by-step in **[PHASE2-SETUP.md](PHASE2-SETUP.md)**.
 
 | # | Item | Status | Risk if it stays undone |
 |---|---|---|---|
+| 1 | **Generate the iOS Firebase config** (`flutterfire configure`) | **Blocks iOS entirely** | `ios/Runner/GoogleService-Info.plist` is missing and `firebase_options.dart` throws on iOS by design. The iOS app is registered in `firebase.json`; only the generated files are absent. |
 | 5.2 | **Run `tools/set-link-domain.mjs`**, then verify the link host (see below) | **Blocking — not yet run** | Email sign-in links are still generated on the old domain, so the app never receives them. There is **no console UI** for this; it is an Admin SDK call. |
 | 6 | **App Check** (Play Integrity / DeviceCheck) + enforcement on Auth | Deferred | 💰 **SMS toll fraud.** Unprotected phone auth gets drained by bots pumping premium-rate numbers and the bill lands on us. This is the single largest uncontrolled cost in the product. Do it before any public build. |
 | 8 | **Test phone number** in Auth console, and the number + code recorded in **App Store Connect and Play Console review notes** | Outstanding | 🚫 **Store rejection.** Reviewers cannot receive an SMS. Without a test number *and* review notes telling them what it is, the first submission is rejected for an untestable login. |
 | 9 | **Sign-in email template** — Daala voice, sender name, custom sender domain | Deferred | Default Firebase copy from a `firebaseapp.com` sender reads as phishing to a low-trust audience, which is exactly the wrong first impression for this product. |
+| 10 | **Only send email sign-in links to existing accounts.** Owner decision pending between two options. **(a) Recommended: a callable Cloud Function** that looks the address up with the Admin SDK, generates the link with `generateSignInWithEmailLink` only if an account exists, sends it through an email provider (SendGrid / Mailgun / Resend), and returns the same response either way. This needs the Blaze plan and an amendment to *"Phase 2 needs no Cloud Functions"*, and it also closes #9. **(b) An `emailIndex/{email}` lookup doc**, readable by exact address before sign-in. It is cheaper, but it accepts the enumeration oracle the Identity contract forbids. **Never** make `users` queryable by email before sign-in: that exposes every user's address and breaches POPIA. | **Open — awaiting decision** | Links still go to addresses with no account. No account gets created, because `completeEmailLink` deletes the uid and shows "New to Daala?", so the harm is limited to unwanted emails and extra send-quota use. Keep that at-open check as a backstop whichever option ships. |
 | — | **APNs key** — create the `.p8` at developer.apple.com → Keys, upload to Firebase → Cloud Messaging with Key ID + Team ID | **Deferred to Phase 5** | The Push Notifications *capability* is enabled on the App ID, but no key exists. Consequence today: **iOS phone sign-in falls back to a reCAPTCHA webview** instead of silent APNs verification. It works, but it's a worse first screen for a low-trust audience. Not blocking; close it with push in Phase 5. |
 | — | **Revert `?mode=developer`** in `ios/Runner/Runner.entitlements` | **Pre-release blocker** | 🚫 Shipping the developer-mode entitlement makes Universal Links **silently stop working in production** — no error, links just open the browser. Must read `applinks:<host>` with no query before any TestFlight or App Store build. |
 
@@ -233,7 +240,8 @@ Recorded here so they aren't rediscovered late:
 - **Profile photo (Phase 5).** `UserProfile.photoPath` exists and is unused; onboarding deliberately does not ask for a photo, because adding an upload to signup costs completion. Prompt for it contextually later, as with notifications.
 - **Suburb / location (Phase 6).** `UserProfile.suburb` exists and is unused. It is collected with address autocomplete when Maps lands, not typed free-hand at signup.
 - **Terms content + versioning process.** `config/legal` must be seeded before launch, and someone must own bumping `termsVersion` and writing `changeSummary` in plain language when the Terms change.
-- **Phase 1 screen migration.** `home_screen`, `my_gigs_screen`, `inbox_screen`, `profile_screen`, `gig_detail_screen`, `wallet_screen`, `browse/search`, and `post_gig_screen` still carry inline mock fixtures, `$`/USD amounts, and Australian placeholder locations. They also inline spacing numbers rather than using `AppSpacing`. Migrate as each phase reaches them.
+- **Phase 1 screen migration.** Currency and locations are done — every amount goes through `formatZar` and placeholders are South African. What remains: `home_screen`, `my_gigs_screen`, `inbox_screen`, `profile_screen`, `gig_detail_screen`, `wallet_screen`, `search_screen`, `post_gig_screen`, and `booking_edit_screen` still carry inline mock fixtures and inline spacing numbers rather than `AppSpacing`. Migrate as each phase reaches them.
+- **`test/widget_test.dart` is stale.** It is the Phase 1 "boots to Home" test and fails now that boot goes through Firebase and the session redirect. Replace it with tests that don't need a live Firebase (e.g. `phone_format`, `formatZar`, the age gate) rather than mocking the whole SDK.
 - **Rate-limiting the email-link send.** Currently only Firebase's own quota. If abuse appears, the fix is App Check plus a per-address cooldown, not a lookup function.
 
 ---
@@ -241,9 +249,9 @@ Recorded here so they aren't rediscovered late:
 ## Conventions
 
 - `camelCase` variables/functions · `PascalCase` classes/enums · `_privateWidgetHelpers` for screen-local sub-widgets (the established pattern).
-- **Tokens only.** Every colour, radius, shadow, spacing step, and text style comes from `lib/theme/app_theme.dart` (`AppColors` / `AppSpacing` / `AppRadius` / `AppShadows` / `AppText`) — **never a raw hex or magic number in a screen.** If a value is missing, add it to the tokens, don't inline it. `AppSpacing` was added in Phase 2; new code uses it, and Phase 1 screens migrate as they're touched.
+- **Tokens only.** Every colour, radius, spacing step, and text style comes from `lib/theme/app_theme.dart` (`AppColors` / `AppSpacing` / `AppRadius` / `AppText`) — **never a raw hex or magic number in a screen.** If a value is missing, add it to the tokens, don't inline it. `AppSpacing` was added in Phase 2; new code uses it, and Phase 1 screens migrate as they're touched.
 - **Errors are sentences, never colour.** This system has no red (DESIGN.md §5). Every user-visible failure goes through `describeAuthError` (or an equivalent) and renders in plain language via `InlineNotice`.
-- **Currency is ZAR.** All money is South African Rand, formatted through a single shared helper (`R1 250`, `R450`, `R37.50`), stored as integer **minor units** (`*ZarMinor`). ⚠️ The current mock screens still carry `$`/USD and Australian placeholder content (e.g. "Fitzroy VIC") inherited from the design template — **treat these as placeholders to migrate to `R` + South African locations.** Add the formatter when wiring the first real amount.
+- **Currency is ZAR.** All money is South African Rand, formatted through a single shared helper (`R1 250`, `R450`, `R37.50`), stored as integer **minor units** (`*ZarMinor`). The formatter is `formatZar` in `lib/money.dart`; the Phase 1 screens already use it, and their placeholder locations are South African. Never introduce another currency symbol.
 - **Keep business logic thin in widgets.** Inline mock fixtures are fine for the Phase 1 skeleton, but as real data lands, lift it into Riverpod providers rather than growing `setState` logic inside screens.
 - Shared primitives live in `lib/widgets/`; shared tokens in `lib/theme/`. No duplicated card/pill/button implementations per screen.
 - Where DESIGN.md leaves a detail unspecified, pick the **most minimal, token-consistent** option and leave a `// TODO(spec):` comment — do not invent product behaviour.
@@ -255,7 +263,7 @@ Recorded here so they aren't rediscovered late:
 Target: iOS, Android 6.0+, ~2 GB RAM, expensive mobile data, bright-daylight use.
 - `const` constructors everywhere possible (the screens already do this heavily — keep it up).
 - Long/variable lists via `ListView.builder` / `ListView.separated` / `GridView.builder` — **never** map a large list into a `Column`.
-- **Soft ambient shadows are the deliberate elevation language** (see DESIGN.md §4) — cards lift on shadows, not 1px borders. Keep shadow opacities low (≤12%) and reuse the `AppShadows` tokens; do not invent new heavier shadows.
+- **Flat is the deliberate elevation language** (see DESIGN.md §4) — there are no shadows anywhere and no `AppShadows` token. Depth comes only from the tonal surface steps (`screen` → `card` → `raised`). Do not reintroduce `boxShadow` or Material elevation.
 - No heavy or continuous animation; transitions ≤ 250 ms and convey state only (tab change, sheet slide, FAB expand).
 - Images: fixed aspect boxes, lazy-loaded, compressed assets. Use `PhotoPlaceholder` for mock media; never lay out around unbounded intrinsic image sizes.
 
@@ -268,7 +276,7 @@ Target: iOS, Android 6.0+, ~2 GB RAM, expensive mobile data, bright-daylight use
 3. **Tokens only** — one `ThemeData` from `lib/theme/app_theme.dart`; no inline hex or magic numbers anywhere.
 4. **Never trust the client with trust markers.** `verified`, ratings, counters, and money are server-owned. Security rules enforce this; see `firestore.rules`.
 5. **Currency is ZAR** through the shared formatter; migrate the design's `$`/placeholder content to `R` + South African context.
-6. **Honour DESIGN.md's named rules** — The One Orange Rule, The Green Money Rule, The Warm-Never-White Rule, The Cushioned-Card Rule. Trust is the interface: surface people, status, and protected-money cues; never build the spammy classifieds wall.
+6. **Honour DESIGN.md's named rules** — The One-Action Orange Rule, The Cream Money Rule, The Flat-Tone Rule, The Inversion Rule, The Green-On-Bright Rule. Trust is the interface: surface people, status, and protected-money cues; never build the spammy classifieds wall.
 7. **Build to spec** — implement what DESIGN.md and this file describe; don't add screens, flows, theming, or "nice-to-have" polish beyond it. Fidelity to spec outranks creativity.
 8. Follow the Stack, Folder Structure, Conventions, and Performance rules above without deviation.
 
@@ -295,11 +303,11 @@ Running the app is the human's job (Rule 1).
 ### Phase 2 — Auth & Onboarding ← current
 - Firebase Auth wired: phone SMS primary, **email link** secondary (not email OTP — Firebase has no such thing). Splash → carousel → phone → 6-digit OTP → profile setup, plus email login, the deep-link handler, deferred notifications, and the terms-update gate.
 - Session-driven routing, the two-document user model, append-only consent records, and `firestore.rules`.
-- ✅ Code complete, `flutter analyze` clean. Phone sign-in, onboarding, and the terms gate are ready to test.
+- ✅ Code complete, `flutter analyze` clean. Phone sign-in, onboarding, and the terms gate are ready to test **on Android**; iOS can't boot until its Firebase config is generated (Outstanding #1).
 - ⏸️ **The email-link half is not verified working.** The backend link-domain config has not been run and the resulting link host has never been observed. See *Email-link host: unresolved and unverified* above before relying on it or building on top of it.
 
 ### Phase 3 — Gig Posting Wizards
-- Gig Post + Gig Request creation → Firestore; category-specific fields; media selection placeholders.
+- Listing + Task creation → Firestore; category-specific fields; media selection placeholders.
 
 ### Phase 4 — Gig Management & Dashboard
 - Firestore models for gigs/offers; full lifecycle state machine; real-time dashboard via streams; offer/bidding + booking with atomic transactions.

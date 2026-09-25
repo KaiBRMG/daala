@@ -46,15 +46,15 @@ class _PressableState extends State<Pressable> {
 ///
 /// The One-Action Orange Rule (DESIGN.md §2): [GwButtonTone.orange] leads the
 /// single forward action on a screen — never two on one screen.
-/// [GwButtonTone.green] carries committing and creating actions.
-enum GwButtonTone { orange, green }
+/// [GwButtonTone.cream] carries committing and creating actions.
+enum GwButtonTone { orange, cream }
 
-/// The primary CTA pill: 56 tall, 28 radius, centred w700/16 white label, with
-/// the button's own brand-hue glow (The Tinted-Glow Rule).
+/// The primary CTA pill: 56 tall, 28 radius, a flat brand fill with a centred
+/// w700/16 green label. No glow — the fill alone carries the weight.
 ///
 /// Ships all four states DESIGN.md §5 specifies — resting, pressed (via
-/// [Pressable]), disabled (fill at 40%, ink-40 label, no shadow), and loading
-/// (a white spinner in a pill that keeps its width so nothing reflows).
+/// [Pressable]), disabled (the raised surface with an inkMuted label), and
+/// loading (a green spinner in a pill that keeps its width so nothing reflows).
 class GwButton extends StatelessWidget {
   const GwButton({
     super.key,
@@ -76,10 +76,7 @@ class GwButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = onTap != null && !loading;
-    final fill = tone == GwButtonTone.orange ? AppColors.orange : AppColors.green;
-    final glow = tone == GwButtonTone.orange
-        ? AppShadows.orangeCta
-        : AppShadows.greenCta;
+    final fill = tone == GwButtonTone.orange ? AppColors.orange : AppColors.cream;
 
     return Semantics(
       button: true,
@@ -92,11 +89,10 @@ class GwButton extends StatelessWidget {
           height: 56,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            // Disabled is the fill at 40%, never a grey — this system has no
-            // neutral button colour.
-            color: enabled ? fill : fill.withValues(alpha: 0.4),
+            // Disabled drops to the raised surface: a lighter tone of the
+            // ground, never a grey.
+            color: enabled ? fill : AppColors.raised,
             borderRadius: BorderRadius.circular(AppRadius.button),
-            boxShadow: enabled ? glow : null,
           ),
           child: loading
               ? const SizedBox(
@@ -105,7 +101,7 @@ class GwButton extends StatelessWidget {
                   child: CircularProgressIndicator(
                     strokeWidth: 2.4,
                     valueColor:
-                        AlwaysStoppedAnimation<Color>(AppColors.white),
+                        AlwaysStoppedAnimation<Color>(AppColors.green),
                   ),
                 )
               : Row(
@@ -115,14 +111,14 @@ class GwButton extends StatelessWidget {
                       Icon(
                         icon,
                         size: 18,
-                        color: enabled ? AppColors.white : AppColors.ink40,
+                        color: enabled ? AppColors.green : AppColors.inkMuted,
                       ),
                       const SizedBox(width: AppSpacing.sm),
                     ],
                     Text(
                       label,
                       style: AppText.section.copyWith(
-                        color: enabled ? AppColors.white : AppColors.ink40,
+                        color: enabled ? AppColors.green : AppColors.inkMuted,
                       ),
                     ),
                   ],
@@ -133,7 +129,7 @@ class GwButton extends StatelessWidget {
   }
 }
 
-/// The quiet counterpart to [GwButton]: a green w700/15 text action with a
+/// The quiet counterpart to [GwButton]: a cream w700/15 text action with a
 /// 48dp-tall hit area. Used for "Log in with Email", "Change number", "Skip" —
 /// secondary routes that must not compete with the orange CTA.
 class GwTextAction extends StatelessWidget {
@@ -141,7 +137,7 @@ class GwTextAction extends StatelessWidget {
     super.key,
     required this.label,
     this.onTap,
-    this.color = AppColors.green,
+    this.color = AppColors.cream,
   });
 
   final String label;
@@ -165,7 +161,7 @@ class GwTextAction extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppText.value.copyWith(
               fontWeight: FontWeight.w700,
-              color: enabled ? color : AppColors.ink40,
+              color: enabled ? color : AppColors.inkMuted,
             ),
           ),
         ),
@@ -178,14 +174,14 @@ class GwTextAction extends StatelessWidget {
 ///
 /// DESIGN.md §5: "this system has no red; errors are stated in words, not alarm
 /// colour." So an error and a hint differ only in weight and in whether a small
-/// green glyph leads — the sentence carries the meaning.
+/// cream glyph leads — the sentence carries the meaning.
 class InlineNotice extends StatelessWidget {
   const InlineNotice(this.message, {super.key, this.emphasis = false});
 
   final String message;
 
   /// `true` for errors and things the user must act on: adds the leading glyph
-  /// and steps the text up to ink-65.
+  /// and steps the text up to inkBody.
   final bool emphasis;
 
   @override
@@ -201,7 +197,7 @@ class InlineNotice extends StatelessWidget {
               child: Icon(
                 Icons.info_outline_rounded,
                 size: 15,
-                color: AppColors.green,
+                color: AppColors.cream,
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
@@ -210,7 +206,7 @@ class InlineNotice extends StatelessWidget {
             child: Text(
               message,
               style: AppText.body.copyWith(
-                color: emphasis ? AppColors.ink65 : AppColors.ink55,
+                color: emphasis ? AppColors.inkBody : AppColors.inkMuted,
                 height: 1.45,
               ),
             ),
@@ -224,7 +220,7 @@ class InlineNotice extends StatelessWidget {
 /// A thin determinate progress rail for a multi-step flow.
 ///
 /// Deliberately not a Material `LinearProgressIndicator`: this is a 4px track at
-/// 5% black with a green fill and fully rounded ends, matching the segmented
+/// 7% cream with a cream fill and fully rounded ends, matching the segmented
 /// toggle's track treatment rather than introducing a second progress vocabulary.
 class ProgressRail extends StatelessWidget {
   const ProgressRail({super.key, required this.progress});
@@ -244,7 +240,7 @@ class ProgressRail extends StatelessWidget {
           child: FractionallySizedBox(
             alignment: Alignment.centerLeft,
             widthFactor: progress.clamp(0.0, 1.0),
-            child: const ColoredBox(color: AppColors.green),
+            child: const ColoredBox(color: AppColors.cream),
           ),
         ),
       ),
@@ -253,8 +249,8 @@ class ProgressRail extends StatelessWidget {
 }
 
 /// The design's two-option selector: side-by-side pills at 22 radius. Selected
-/// is transparent with a 2px green outline (the one sanctioned stroke in this
-/// system); unselected sits on a 6%-black fill with ink-55 text.
+/// is transparent with a 2px cream outline (the one sanctioned stroke in this
+/// system); unselected sits on a 7%-cream track with inkMuted text.
 class TwoOptionSelector<T> extends StatelessWidget {
   const TwoOptionSelector({
     super.key,
@@ -330,7 +326,7 @@ class _Option extends StatelessWidget {
             color: selected ? null : AppColors.trackFill,
             borderRadius: BorderRadius.circular(AppRadius.track),
             border: selected
-                ? Border.all(color: AppColors.green, width: 2)
+                ? Border.all(color: AppColors.cream, width: 2)
                 : null,
           ),
           child: Column(
@@ -341,7 +337,7 @@ class _Option extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppText.metaStrong.copyWith(
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
-                  color: selected ? AppColors.green : AppColors.ink55,
+                  color: selected ? AppColors.cream : AppColors.inkMuted,
                 ),
               ),
               if (subtitle != null) ...[
@@ -360,14 +356,14 @@ class _Option extends StatelessWidget {
   }
 }
 
-/// White rounded card matching `.card` in the design (radius 22 + soft shadow).
+/// The flat card: one tonal step above the ground, radius 16, no shadow and no
+/// border. The tone difference alone makes it a discrete object.
 class GwCard extends StatelessWidget {
   const GwCard({
     super.key,
     required this.child,
     this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
     this.color = AppColors.card,
-    this.shadow = AppShadows.card,
     this.clip = false,
     this.onTap,
   });
@@ -375,7 +371,6 @@ class GwCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
   final Color color;
-  final List<BoxShadow> shadow;
   final bool clip;
   final VoidCallback? onTap;
 
@@ -386,7 +381,6 @@ class GwCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        boxShadow: shadow,
       ),
       clipBehavior: clip ? Clip.antiAlias : Clip.none,
       child: child,
@@ -395,10 +389,12 @@ class GwCard extends StatelessWidget {
   }
 }
 
-/// Circular initials avatar on deep green (as used for the current user & posters).
+/// Circular initials avatar on the raised tone (the current user & posters).
+/// Tonal rather than a bright fill, so a list of people doesn't become a column
+/// of cream dots competing with the money.
 class InitialsAvatar extends StatelessWidget {
   const InitialsAvatar(this.initials,
-      {super.key, this.size = 44, this.fontSize = 14, this.bg = AppColors.green});
+      {super.key, this.size = 44, this.fontSize = 14, this.bg = AppColors.raised});
 
   final String initials;
   final double size;
@@ -414,14 +410,14 @@ class InitialsAvatar extends StatelessWidget {
       decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
       child: Text(initials,
           style: AppText.rowTitle.copyWith(
-              color: AppColors.white,
+              color: AppColors.cream,
               fontSize: fontSize,
               fontWeight: FontWeight.w800)),
     );
   }
 }
 
-/// Khaki placeholder box standing in for a photo/thumbnail (data-ph in design).
+/// Tonal placeholder box standing in for a photo/thumbnail (data-ph in design).
 class PhotoPlaceholder extends StatelessWidget {
   const PhotoPlaceholder({
     super.key,
@@ -487,7 +483,6 @@ class RoundIconButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: bg,
             shape: BoxShape.circle,
-            boxShadow: AppShadows.soft,
           ),
           child: Icon(icon, size: iconSize, color: iconColor),
         ),
@@ -532,17 +527,15 @@ class TagPill extends StatelessWidget {
   const TagPill(
     this.label, {
     super.key,
-    this.bg = AppColors.greenTint,
-    this.fg = AppColors.green,
+    this.bg = AppColors.creamTint,
+    this.fg = AppColors.cream,
     this.padding = const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-    this.shadow,
   });
 
   final String label;
   final Color bg;
   final Color fg;
   final EdgeInsetsGeometry padding;
-  final List<BoxShadow>? shadow;
 
   @override
   Widget build(BuildContext context) {
@@ -551,16 +544,16 @@ class TagPill extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(AppRadius.tag),
-        boxShadow: shadow,
       ),
       child: Text(label, style: AppText.tag.copyWith(color: fg)),
     );
   }
 }
 
-/// Lifecycle status pill (`Confirmed`, `In progress`). Positive states use the
-/// green tint with green text; neutral in-flight states use a hairline fill
-/// with ink-55 text. There is no red in this system (DESIGN.md §2).
+/// Lifecycle status pill (`Confirmed`, `In progress`). Positive states are a
+/// solid cream pill with green text — the brightest small object on a row,
+/// because trust cues are first-class. Neutral in-flight states use the cream
+/// tint with inkBody text. There is no red in this system (DESIGN.md §2).
 class StatusPill extends StatelessWidget {
   const StatusPill(this.label, {super.key, this.positive = true});
 
@@ -572,13 +565,13 @@ class StatusPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: positive ? AppColors.greenTint : AppColors.divider,
+        color: positive ? AppColors.cream : AppColors.creamTint,
         borderRadius: BorderRadius.circular(AppRadius.status),
       ),
       child: Text(
         label,
         style: AppText.status
-            .copyWith(color: positive ? AppColors.green : AppColors.ink55),
+            .copyWith(color: positive ? AppColors.green : AppColors.inkBody),
       ),
     );
   }

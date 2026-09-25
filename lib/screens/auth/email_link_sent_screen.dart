@@ -94,13 +94,18 @@ class _EmailLinkSentScreenState extends ConsumerState<EmailLinkSentScreen> {
             label: canResend
                 ? 'Send the link again'
                 : 'Send again in 0:${_secondsLeft.clamp(0, 59).toString().padLeft(2, '0')}',
-            color: canResend ? AppColors.green : AppColors.ink55,
+            color: canResend ? AppColors.cream : AppColors.inkMuted,
             onTap: canResend ? _resend : null,
           ),
           GwTextAction(
             label: 'Use a different email',
-            color: AppColors.ink55,
+            color: AppColors.inkMuted,
             onTap: () => context.pop(),
+          ),
+          GwTextAction(
+            label: 'New to Daala? Create an account',
+            color: AppColors.inkMuted,
+            onTap: () => context.go('/auth/phone'),
           ),
         ],
       ),
@@ -111,13 +116,13 @@ class _EmailLinkSentScreenState extends ConsumerState<EmailLinkSentScreen> {
             height: 84,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              color: AppColors.greenTint,
+              color: AppColors.creamTint,
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.mark_email_read_rounded,
               size: 36,
-              color: AppColors.green,
+              color: AppColors.cream,
             ),
           ),
         ),
@@ -139,8 +144,8 @@ class _EmailLinkSentScreenState extends ConsumerState<EmailLinkSentScreen> {
         ),
         const SizedBox(height: AppSpacing.xl4),
         Text(
-          'If a Daala account uses this address, a sign-in link is on its way. '
-          'Open it on this phone and you’ll be signed straight in.',
+          'If you have an account with us, we’ll send you a link. Open it on '
+          'this phone and you’ll be signed straight in.',
           style: AppText.body.copyWith(fontSize: 14, height: 1.55),
         ),
         const SizedBox(height: AppSpacing.xl2),

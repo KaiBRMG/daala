@@ -79,7 +79,7 @@ class _TermsUpdateScreenState extends ConsumerState<TermsUpdateScreen> {
           ],
           GwButton(
             label: 'I Agree',
-            tone: GwButtonTone.green,
+            tone: GwButtonTone.cream,
             loading: _saving,
             onTap: _agreed ? () => _accept(terms) : null,
           ),
@@ -97,13 +97,13 @@ class _TermsUpdateScreenState extends ConsumerState<TermsUpdateScreen> {
                     height: 34,
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
-                      color: AppColors.greenTint,
+                      color: AppColors.creamTint,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.article_rounded,
                       size: 16,
-                      color: AppColors.green,
+                      color: AppColors.cream,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.lg),
@@ -154,7 +154,6 @@ class _DocumentLink extends StatelessWidget {
         horizontal: AppSpacing.xl2,
         vertical: AppSpacing.xl,
       ),
-      shadow: AppShadows.soft,
       onTap: () async {
         try {
           await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
@@ -167,13 +166,13 @@ class _DocumentLink extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppText.value.copyWith(color: AppColors.green),
+              style: AppText.value.copyWith(color: AppColors.cream),
             ),
           ),
           const Icon(
             Icons.open_in_new_rounded,
             size: 17,
-            color: AppColors.green,
+            color: AppColors.cream,
           ),
         ],
       ),
@@ -182,7 +181,7 @@ class _DocumentLink extends StatelessWidget {
 }
 
 /// The mandatory tick. Built from tokens rather than a Material `Checkbox` so
-/// it matches the two-option selector's selected treatment — a green outline,
+/// it matches the two-option selector's selected treatment — a cream outline,
 /// not a platform control dropped into a bespoke system.
 class _AgreeCheck extends StatelessWidget {
   const _AgreeCheck({required this.checked, required this.onChanged});
@@ -200,10 +199,10 @@ class _AgreeCheck extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.xl2),
           decoration: BoxDecoration(
-            color: checked ? AppColors.greenTint : AppColors.trackFill,
+            color: checked ? AppColors.creamTint : AppColors.trackFill,
             borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(
-              color: checked ? AppColors.green : Colors.transparent,
+              color: checked ? AppColors.cream : Colors.transparent,
               width: 2,
             ),
           ),
@@ -215,15 +214,18 @@ class _AgreeCheck extends StatelessWidget {
                 height: 24,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: checked ? AppColors.green : AppColors.card,
+                  color: checked ? AppColors.cream : Colors.transparent,
                   borderRadius: BorderRadius.circular(AppSpacing.sm),
-                  boxShadow: checked ? null : AppShadows.soft,
+                  // Unchecked needs an edge: a fill alone vanishes on the tile.
+                  border: checked
+                      ? null
+                      : Border.all(color: AppColors.inkMuted, width: 2),
                 ),
                 child: checked
                     ? const Icon(
                         Icons.check_rounded,
                         size: 16,
-                        color: AppColors.white,
+                        color: AppColors.green,
                       )
                     : null,
               ),
@@ -233,7 +235,7 @@ class _AgreeCheck extends StatelessWidget {
                   'I’ve read and agree to the updated Terms and Privacy Notice.',
                   style: AppText.value.copyWith(
                     fontSize: 14,
-                    color: checked ? AppColors.green : AppColors.ink65,
+                    color: checked ? AppColors.cream : AppColors.inkBody,
                   ),
                 ),
               ),

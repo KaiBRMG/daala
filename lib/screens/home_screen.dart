@@ -52,12 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: const BoxDecoration(
             color: AppColors.card,
             shape: BoxShape.circle,
-            boxShadow: AppShadows.soft,
           ),
           child: const InitialsAvatar('JD', size: 22, fontSize: 10),
         ),
-        Image.asset('assets/images/daala-logo.png',
-            height: 26, fit: BoxFit.contain),
+        Image.asset(kLogoOnDark,
+            height: 26, fit: BoxFit.contain, semanticLabel: 'Daala'),
         RoundIconButton(
             icon: Icons.search,
             semanticLabel: 'Search gigs',
@@ -92,15 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
           alignment: Alignment.center,
           decoration: active
               ? BoxDecoration(
-                  color: AppColors.card,
+                  color: AppColors.cream,
                   borderRadius: BorderRadius.circular(AppRadius.segment),
-                  boxShadow: AppShadows.soft,
                 )
               : null,
           child: Text(
             label,
             style: AppText.label
-                .copyWith(color: active ? AppColors.green : AppColors.ink55),
+                .copyWith(color: active ? AppColors.green : AppColors.inkMuted),
           ),
         ),
       ),
@@ -128,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(width: 12),
           Expanded(
             child: _statCard('This Week', '${formatZar(41000)} earned',
-                AppColors.orange,
+                AppColors.cream,
                 onTap: () => context.push('/wallet')),
           ),
         ],
@@ -138,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => context.push('/booking/edit'),
         child: Row(
           children: [
-            _iconCircle(Icons.event, AppColors.orange, AppColors.orangeTint),
+            _iconCircle(Icons.event, AppColors.cream, AppColors.creamTint),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -284,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
             child: Text('See all',
-                style: AppText.tag.copyWith(color: AppColors.green)),
+                style: AppText.tag.copyWith(color: AppColors.cream)),
           ),
         ),
       ],
@@ -339,12 +337,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _categoryGrid() {
     const cats = [
-      ('Home & Garden', '38 gigs', AppColors.greenTintStrong),
-      ('Moving & Hauling', '21 gigs', AppColors.orangeTint),
-      ('Design & Creative', '17 gigs', AppColors.greenTintStrong),
-      ('Delivery & Errands', '54 gigs', AppColors.orangeTint),
-      ('Cleaning', '12 gigs', AppColors.greenTintStrong),
-      ('Handyman', '9 gigs', AppColors.orangeTint),
+      ('Home & Garden', '38 gigs', AppColors.creamTintStrong),
+      ('Moving & Hauling', '21 gigs', AppColors.creamTint),
+      ('Design & Creative', '17 gigs', AppColors.creamTintStrong),
+      ('Delivery & Errands', '54 gigs', AppColors.creamTint),
+      ('Cleaning', '12 gigs', AppColors.creamTintStrong),
+      ('Handyman', '9 gigs', AppColors.creamTint),
     ];
     return GridView.builder(
       shrinkWrap: true,
@@ -363,7 +361,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return GwCard(
           padding: EdgeInsets.zero,
           clip: true,
-          shadow: AppShadows.category,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

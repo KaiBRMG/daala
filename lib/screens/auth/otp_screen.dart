@@ -209,7 +209,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                   label: canResend
                       ? 'Resend code'
                       : 'Resend in 0:${_secondsLeft.clamp(0, 59).toString().padLeft(2, '0')}',
-                  color: canResend ? AppColors.green : AppColors.ink55,
+                  color: canResend ? AppColors.cream : AppColors.inkMuted,
                   onTap: canResend ? _resend : null,
                 ),
               ),
@@ -268,7 +268,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
   }
 }
 
-/// Six white cells rendering the contents of one hidden field.
+/// Six card-tone cells rendering the contents of one hidden field.
 ///
 /// The whole group is a single tap target that focuses that field, so tapping
 /// anywhere on the row does the obvious thing.
@@ -373,9 +373,8 @@ class _Cell extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.card,
         borderRadius: BorderRadius.circular(AppRadius.tag + 2),
-        boxShadow: AppShadows.card,
         border: Border.all(
-          color: outlined ? AppColors.green : Colors.transparent,
+          color: outlined ? AppColors.cream : Colors.transparent,
           width: 2,
         ),
       ),
@@ -385,7 +384,7 @@ class _Cell extends StatelessWidget {
               width: 8,
               height: 2,
               decoration: BoxDecoration(
-                color: active ? AppColors.green : AppColors.ink15,
+                color: active ? AppColors.cream : AppColors.inkHairline,
                 borderRadius: BorderRadius.circular(1),
               ),
             ),

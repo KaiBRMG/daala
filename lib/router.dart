@@ -86,9 +86,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       return switch (session.value) {
-        SignedOut() => _authRoutes.contains(location)
-            ? null
-            : (introSeen ? '/auth/phone' : '/welcome'),
+        SignedOut() =>
+          _authRoutes.contains(location)
+              ? null
+              : (introSeen ? '/auth/phone' : '/welcome'),
 
         // An email link signed them into an account with no phone number on it.
         // The number is the primary credential, so it comes before onboarding.
@@ -99,22 +100,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         // document cannot post, apply, or hold money. The conflict screen is
         // the one exception — it is reached *from* onboarding and its whole job
         // is to offer a way out of it.
-        NeedsOnboarding() => location == '/auth/profile' ||
-                location == '/auth/email-conflict'
-            ? null
-            : '/auth/profile',
+        NeedsOnboarding() =>
+          location == '/auth/profile' || location == '/auth/email-conflict'
+              ? null
+              : '/auth/profile',
 
         NeedsTermsUpdate() => location == '/auth/terms' ? null : '/auth/terms',
 
         // Fully signed in: bounce out of any auth screen, otherwise stay put.
-        Ready() => location == '/splash' ||
-                location == '/welcome' ||
-                location == '/auth/profile' ||
-                location == '/auth/terms' ||
-                _linkPhoneRoutes.contains(location) ||
-                _authRoutes.contains(location)
-            ? '/home'
-            : null,
+        Ready() =>
+          location == '/splash' ||
+                  location == '/welcome' ||
+                  location == '/auth/profile' ||
+                  location == '/auth/terms' ||
+                  _linkPhoneRoutes.contains(location) ||
+                  _authRoutes.contains(location)
+              ? '/home'
+              : null,
 
         null => '/splash',
       };
@@ -124,7 +126,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
       GoRoute(
         path: '/welcome',
-        builder: (_, _) => const WelcomeCarouselScreen(),
+        // A dissolve, not the platform push: splash and carousel share the
+        // green ground, so the wordmark fades out while the gig scene rises in
+        // on the same beat as the splash's shutters, one continuous moment.
+        pageBuilder: (_, state) => CustomTransitionPage(
+          key: state.pageKey,
+          transitionDuration: const Duration(milliseconds: 250),
+          child: const WelcomeCarouselScreen(),
+          transitionsBuilder: (_, animation, _, child) => FadeTransition(
+            opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+            child: child,
+          ),
+        ),
       ),
       GoRoute(path: '/auth/phone', builder: (_, _) => const PhoneLoginScreen()),
       GoRoute(path: '/auth/verify', builder: (_, _) => const OtpScreen()),
@@ -163,25 +176,42 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/auth/profile',
         builder: (_, _) => const ProfileSetupScreen(),
       ),
-      GoRoute(path: '/auth/terms', builder: (_, _) => const TermsUpdateScreen()),
+      GoRoute(
+        path: '/auth/terms',
+        builder: (_, _) => const TermsUpdateScreen(),
+      ),
 
       // ── The app proper ──
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             AppShell(navigationShell: navigationShell),
         branches: [
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/my-gigs', builder: (_, _) => const MyGigsScreen()),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/inbox', builder: (_, _) => const InboxScreen()),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen()),
-          ]),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/my-gigs',
+                builder: (_, _) => const MyGigsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/inbox', builder: (_, _) => const InboxScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                builder: (_, _) => const ProfileScreen(),
+              ),
+            ],
+          ),
         ],
       ),
 
@@ -201,11 +231,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           transitionDuration: const Duration(milliseconds: 220),
           child: const BookingEditScreen(),
           transitionsBuilder: (context, animation, _, child) => SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 1),
-              end: Offset.zero,
-            ).animate(
-                CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+            position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+                .animate(
+                  CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                  ),
+                ),
             child: child,
           ),
         ),
