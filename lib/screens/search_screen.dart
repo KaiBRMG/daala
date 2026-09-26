@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
@@ -9,13 +8,6 @@ class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   static const _chips = ['All', 'Moving', 'Design', 'Delivery', 'Garden'];
-  static const _gigs = <(String, String, int)>[
-    ('Assemble flatpack shelving', '1.2km · Moving', 6500),
-    ('Logo design for cafe', 'Remote · Design', 30000),
-    ('Grocery delivery run', '0.8km · Delivery', 2800),
-    ('Weekly hedge trim', '2.4km · Garden', 4500),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,20 +27,11 @@ class SearchScreen extends StatelessWidget {
               const SizedBox(height: 14),
               _chipRow(),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('142 gigs nearby',
-                      style: AppText.label.copyWith(color: AppColors.inkMuted)),
-                  Text('Sort: Closest',
-                      style: AppText.label.copyWith(color: AppColors.cream)),
-                ],
+              // TODO(phase4): query results replace this once gigs exist.
+              const EmptyState(
+                'No gigs near you yet',
+                body: 'New Tasks and Listings near you will show up here.',
               ),
-              const SizedBox(height: 12),
-              for (var i = 0; i < _gigs.length; i++) ...[
-                if (i > 0) const SizedBox(height: 10),
-                _gigRow(context, _gigs[i]),
-              ],
             ],
           ),
         ),
@@ -128,32 +111,6 @@ class SearchScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _gigRow(BuildContext context, (String, String, int) g) {
-    final (title, meta, priceMinor) = g;
-    final price = formatZar(priceMinor);
-    return GwCard(
-      onTap: () => context.push('/gig'),
-      child: Row(
-        children: [
-          const PhotoPlaceholder(width: 48, height: 48),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: AppText.rowTitle),
-                const SizedBox(height: 2),
-                Text(meta, style: AppText.meta),
-              ],
-            ),
-          ),
-          const SizedBox(width: 8),
-          Text(price, style: AppText.price),
-        ],
       ),
     );
   }

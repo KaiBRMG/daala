@@ -29,6 +29,7 @@ Daala is a two-sided gig marketplace: a unified, single-application ecosystem on
 - `sentry_flutter` and `firebase_crashlytics` are present in `pubspec.yaml` for **Phase 9**. They must not be imported or initialised before then.
 - `firebase_storage` is present for **Phase 5**; unused until profile photo upload.
 - `firebase_messaging` is **not yet a dependency** — it lands in Phase 5 with real push. The Phase 2 notifications prompt records the preference and leaves a `TODO(phase5)` where the OS request belongs.
+- **Shorebird** (`shorebird.yaml`) handles over-the-air updates, and only for Dart code. Before adding a package or native config, check whether it forces a new store release. See *Build / run → What a change needs*.
 - Avoid network image loading (defer `cached_network_image`); use `Image.asset` for real assets (e.g. the logo) or the token-coloured `PhotoPlaceholder` box for mock media.
 
 ---
@@ -61,7 +62,7 @@ lib/
 │   └── ui.dart               # Cross-screen primitives: GwCard, GwButton, GwTextAction,
 │                             #   TagPill, StatusPill, InlineNotice, ProgressRail,
 │                             #   TwoOptionSelector, RoundIconButton, InitialsAvatar,
-│                             #   PhotoPlaceholder, Pressable, StatusBar
+│                             #   PhotoPlaceholder, Pressable, StatusBar, EmptyState
 └── screens/
     ├── auth/                 # Phase 2 screens (see table below)
     └── *.dart                # Phase 1 screens
@@ -185,14 +186,16 @@ Full step-by-step in **[PHASE2-SETUP.md](PHASE2-SETUP.md)**.
 
 | # | Item | Status | Risk if it stays undone |
 |---|---|---|---|
-| 1 | **Generate the iOS Firebase config** (`flutterfire configure`) | **Blocks iOS entirely** | `ios/Runner/GoogleService-Info.plist` is missing and `firebase_options.dart` throws on iOS by design. The iOS app is registered in `firebase.json`; only the generated files are absent. |
-| 5.2 | **Run `tools/set-link-domain.mjs`**, then verify the link host (see below) | **Blocking — not yet run** | Email sign-in links are still generated on the old domain, so the app never receives them. There is **no console UI** for this; it is an Admin SDK call. |
+| 1 | ~~Add `GoogleService-Info.plist` to the Runner target~~ | ✅ Done 2026-09-26 | The plist is in the Runner group and the Resources build phase (`project.pbxproj`). Native change — ships with the next `shorebird release`. |
+| 5.2 | ~~Run `tools/set-link-domain.mjs`~~ — **done**: the live Auth config reads `mobileLinksConfig.domain: HOSTING_DOMAIN`. Still to do: send a real link and verify its host (see below) | Verification outstanding | Until the host in a real email is checked against the three hard-coded places, `login.daala.co.za` is still an assumption. |
+| 5.3 | **Set the iOS Team ID (`8V4J53F3BK`)** on the iOS app in Firebase → Project settings, then `firebase deploy --only hosting`. App Store ID can stay blank until there is a listing | **Blocking for iOS email links** | `https://login.daala.co.za/.well-known/apple-app-site-association` is served but empty (`"apps":[]`, `"details":[]`). Hosting's `appAssociation: AUTO` builds it from the Team ID + bundle ID, so iOS never claims the link and it opens in Safari. Android's `assetlinks.json` is correct for the one debug keystore registered. |
+| 5.4 | **One shared Android signing key for Shorebird builds** — create a release keystore, wire it into `android/app/build.gradle.kts` via an untracked `key.properties`, and add its SHA-1 + SHA-256 to the Android app in Firebase | **Blocking for Android email links on any machine but one** | Release builds currently sign with *the build machine's* debug key. Only one debug keystore's fingerprints are registered (and served in `assetlinks.json`), so a `shorebird release android` from any other machine produces an APK whose email links open the browser and whose phone auth loses Play Integrity. A fixed keystore makes every tester's build verify, and later becomes the Play **upload** key — at that point add the Play App Signing fingerprints too. |
 | 6 | **App Check** (Play Integrity / DeviceCheck) + enforcement on Auth | Deferred | 💰 **SMS toll fraud.** Unprotected phone auth gets drained by bots pumping premium-rate numbers and the bill lands on us. This is the single largest uncontrolled cost in the product. Do it before any public build. |
 | 8 | **Test phone number** in Auth console, and the number + code recorded in **App Store Connect and Play Console review notes** | Outstanding | 🚫 **Store rejection.** Reviewers cannot receive an SMS. Without a test number *and* review notes telling them what it is, the first submission is rejected for an untestable login. |
 | 9 | **Sign-in email template** — Daala voice, sender name, custom sender domain | Deferred | Default Firebase copy from a `firebaseapp.com` sender reads as phishing to a low-trust audience, which is exactly the wrong first impression for this product. |
 | 10 | **Only send email sign-in links to existing accounts.** Owner decision pending between two options. **(a) Recommended: a callable Cloud Function** that looks the address up with the Admin SDK, generates the link with `generateSignInWithEmailLink` only if an account exists, sends it through an email provider (SendGrid / Mailgun / Resend), and returns the same response either way. This needs the Blaze plan and an amendment to *"Phase 2 needs no Cloud Functions"*, and it also closes #9. **(b) An `emailIndex/{email}` lookup doc**, readable by exact address before sign-in. It is cheaper, but it accepts the enumeration oracle the Identity contract forbids. **Never** make `users` queryable by email before sign-in: that exposes every user's address and breaches POPIA. | **Open — awaiting decision** | Links still go to addresses with no account. No account gets created, because `completeEmailLink` deletes the uid and shows "New to Daala?", so the harm is limited to unwanted emails and extra send-quota use. Keep that at-open check as a backstop whichever option ships. |
-| — | **APNs key** — create the `.p8` at developer.apple.com → Keys, upload to Firebase → Cloud Messaging with Key ID + Team ID | **Deferred to Phase 5** | The Push Notifications *capability* is enabled on the App ID, but no key exists. Consequence today: **iOS phone sign-in falls back to a reCAPTCHA webview** instead of silent APNs verification. It works, but it's a worse first screen for a low-trust audience. Not blocking; close it with push in Phase 5. |
-| — | **Revert `?mode=developer`** in `ios/Runner/Runner.entitlements` | **Pre-release blocker** | 🚫 Shipping the developer-mode entitlement makes Universal Links **silently stop working in production** — no error, links just open the browser. Must read `applinks:<host>` with no query before any TestFlight or App Store build. |
+| — | **APNs key** — create the `.p8` at developer.apple.com → Keys, upload to Firebase → Cloud Messaging with Key ID + Team ID | **Deferred to Phase 5** | The Push Notifications *capability* is enabled on the App ID, but no key exists. Consequence today: **iOS phone sign-in falls back to a reCAPTCHA webview** instead of silent APNs verification. It works, but it's a worse first screen for a low-trust audience. Not blocking; close it with push in Phase 5. The fallback needs the `app-1-824314646136-ios-08cc4003c91110e8f4e78d` URL scheme in `ios/Runner/Info.plist` (`CFBundleURLTypes`) — **do not remove it**: without any URL types, `verifyPhoneNumber` crashes the app (`PhoneAuthProvider.swift:108`). If the iOS app is ever re-registered, update the scheme to match the new `GOOGLE_APP_ID`. |
+| — | **Revert `?mode=developer`** in `ios/Runner/Runner.entitlements` | **Pre-release blocker** | 🚫 Shipping the developer-mode entitlement makes Universal Links **silently stop working in production** — no error, links just open the browser. Must read `applinks:<host>` with no query before any TestFlight or App Store build. **It also breaks Shorebird testing builds exported ad-hoc:** developer mode only applies to apps signed with a *development* profile. Either export Shorebird iOS releases with `--export-method development` (testers' devices must be in the profile and have Developer → Associated Domains Development on), or remove `?mode=developer` now. |
 
 Also still open: **iOS provisioning profiles** must be regenerated after the capability changes — a profile created before Associated Domains / Push Notifications were ticked does not carry them. Xcode with automatic signing does this on first build; otherwise re-save each profile in the portal.
 
@@ -240,7 +243,7 @@ Recorded here so they aren't rediscovered late:
 - **Profile photo (Phase 5).** `UserProfile.photoPath` exists and is unused; onboarding deliberately does not ask for a photo, because adding an upload to signup costs completion. Prompt for it contextually later, as with notifications.
 - **Suburb / location (Phase 6).** `UserProfile.suburb` exists and is unused. It is collected with address autocomplete when Maps lands, not typed free-hand at signup.
 - **Terms content + versioning process.** `config/legal` must be seeded before launch, and someone must own bumping `termsVersion` and writing `changeSummary` in plain language when the Terms change.
-- **Phase 1 screen migration.** Currency and locations are done — every amount goes through `formatZar` and placeholders are South African. What remains: `home_screen`, `my_gigs_screen`, `inbox_screen`, `profile_screen`, `gig_detail_screen`, `wallet_screen`, `search_screen`, `post_gig_screen`, and `booking_edit_screen` still carry inline mock fixtures and inline spacing numbers rather than `AppSpacing`. Migrate as each phase reaches them.
+- **Phase 1 screen migration.** Currency and locations are done — every amount goes through `formatZar` and placeholders are South African. `home_screen`, `profile_screen`, `my_gigs_screen`, `inbox_screen`, `wallet_screen`, and `search_screen` now read the signed-in user from `currentProfileProvider` / `currentContactProvider` and show DESIGN.md §5 empty states (`EmptyState` in `ui.dart`) where their data has no collection yet, each marked `TODO(phaseN)`. What remains on fixtures: `gig_detail_screen`, `post_gig_screen`, and `booking_edit_screen`, which are no longer linked from any list and come alive with Phases 3–4. Inline spacing numbers remain in the untouched parts of these screens; migrate to `AppSpacing` as each phase reaches them.
 - **`test/widget_test.dart` is stale.** It is the Phase 1 "boots to Home" test and fails now that boot goes through Firebase and the session redirect. Replace it with tests that don't need a live Firebase (e.g. `phone_format`, `formatZar`, the age gate) rather than mocking the whole SDK.
 - **Rate-limiting the email-link send.** Currently only Firebase's own quota. If abuse appears, the fix is App Check plus a per-address cooldown, not a lookup function.
 
@@ -291,7 +294,38 @@ flutter pub get
 flutter analyze     # the verification step — must be clean
 ```
 
-Running the app is the human's job (Rule 1).
+Running the app is the human's job (Rule 1). The rest of this section is the owner's workflow, and the table below is what agents use to tell the owner what a change needs.
+
+### Day-to-day development (owner)
+
+- **Run from VS Code, not Xcode.** Plug in the iPhone, pick it in the status-bar device picker, press **F5**. Saving a Dart file hot-reloads it onto the phone. Xcode's ⌘R does *not* connect to hot reload, so every change there is a full rebuild.
+- **Use Xcode** (`open ios/Runner.xcworkspace` — the workspace, not the `.xcodeproj`) only for the first build after a native change, signing problems, and reading native crash logs. For a native change: Product → Clean Build Folder (⇧⌘K), then ⌘R.
+- Debug builds only launch while tethered to the Mac (iOS 14+). For untethered testing use a Shorebird release (below) or TestFlight.
+
+### Shipping (Shorebird OTA)
+
+**Distribution today (2026-09-26): Shorebird only.** Daala is not on the App Store or Play Store yet; testers install Shorebird releases directly. Store-only concerns (App Store ID, Play App Signing, review notes, Play Integrity verdicts) wait until a store listing exists.
+
+Shorebird (`shorebird.yaml`) ships **Dart-only** changes over the air. Anything native needs a new store build.
+
+- **Patch** (Dart only): `shorebird patch ios --track=staging` → check on device with `shorebird preview --track=staging` → promote to stable in the Shorebird console. Patches apply on the next launch, which may take two launches.
+- **Release** (anything native): `shorebird release ios` → upload to TestFlight / App Store. Only builds made this way receive patches; Xcode and `flutter run` builds never do.
+- Group native changes so there's **one release per phase**, not several. Pre-release native items waiting to go out together: the `?mode=developer` revert, adding `GoogleService-Info.plist` to the Runner target, and App Check native setup.
+
+### What a change needs
+
+| Change | While developing | To reach users |
+|---|---|---|
+| Widgets, styling, copy, most screen logic in `lib/` | Hot reload (just save) | `shorebird patch` |
+| `main()`, router setup, provider initial state, enums, static/global initial values | **Hot restart** (⇧⌘F5) | `shorebird patch` |
+| `Info.plist`, `*.entitlements`, anything in `ios/` or `android/`, app icon, launch screen | Stop + full rebuild (clean build in Xcode) | **`shorebird release`** + store upload |
+| Adding/upgrading a package with native code (any `firebase_*`, `url_launcher`, …) | `flutter pub get`, then full rebuild | **`shorebird release`** + store upload |
+| Pure-Dart package added/upgraded | Hot restart | `shorebird patch` |
+| `firestore.rules`, `config/legal`, console settings | Nothing in the app | Deploy to Firebase — no app update |
+
+If a save seems to do nothing, hot-restart before assuming it needs a rebuild — the auth screens especially, since the router and session are built at startup.
+
+**Agents: end every task that touches the app with one line naming the row above that applies** — e.g. *"Hot restart to see this; ships as a Shorebird patch."* or *"Native change: clean rebuild in Xcode; needs a new `shorebird release`."* If a change spans rows, name the heaviest.
 
 ---
 
@@ -303,7 +337,7 @@ Running the app is the human's job (Rule 1).
 ### Phase 2 — Auth & Onboarding ← current
 - Firebase Auth wired: phone SMS primary, **email link** secondary (not email OTP — Firebase has no such thing). Splash → carousel → phone → 6-digit OTP → profile setup, plus email login, the deep-link handler, deferred notifications, and the terms-update gate.
 - Session-driven routing, the two-document user model, append-only consent records, and `firestore.rules`.
-- ✅ Code complete, `flutter analyze` clean. Phone sign-in, onboarding, and the terms gate are ready to test **on Android**; iOS can't boot until its Firebase config is generated (Outstanding #1).
+- ✅ Code complete, `flutter analyze` clean. Phone sign-in, onboarding, and the terms gate are ready to test on Android and iOS. iOS first ran on device on 2026-09-26, and phone sign-in there uses the reCAPTCHA fallback until the APNs key lands.
 - ⏸️ **The email-link half is not verified working.** The backend link-domain config has not been run and the resulting link host has never been observed. See *Email-link host: unresolved and unverified* above before relying on it or building on top of it.
 
 ### Phase 3 — Gig Posting Wizards

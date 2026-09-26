@@ -1,8 +1,7 @@
 // File generated for the Daala Firebase project (daala-69a44).
 //
-// The Android values below are transcribed from `android/app/google-services.json`.
-// iOS has no `GoogleService-Info.plist` in the repo yet, so the iOS branch throws
-// with instructions rather than shipping fabricated keys.
+// The Android values are transcribed from `android/app/google-services.json`;
+// the iOS values from `ios/Runner/GoogleService-Info.plist`.
 //
 // To (re)generate this file properly for every platform — and to have the iOS
 // plist written for you — run:

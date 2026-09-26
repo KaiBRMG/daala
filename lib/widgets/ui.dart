@@ -576,3 +576,48 @@ class StatusPill extends StatelessWidget {
     );
   }
 }
+
+/// DESIGN.md §5's empty state: a plain Title line naming what will appear, and
+/// the screen's own CTA to start it. Shown wherever a list has no rows yet —
+/// never filler content standing in for data that doesn't exist.
+///
+/// The action is the quiet [GwTextAction], not the orange pill: an empty list
+/// is not the screen's one forward action (The One-Action Orange Rule).
+class EmptyState extends StatelessWidget {
+  const EmptyState(
+    this.title, {
+    super.key,
+    this.body,
+    this.actionLabel,
+    this.onAction,
+  });
+
+  final String title;
+  final String? body;
+  final String? actionLabel;
+  final VoidCallback? onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return GwCard(
+      padding: const EdgeInsets.all(AppSpacing.xl4),
+      child: Column(
+        children: [
+          Text(title, textAlign: TextAlign.center, style: AppText.cardTitle),
+          if (body != null) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              body!,
+              textAlign: TextAlign.center,
+              style: AppText.meta.copyWith(height: 1.45),
+            ),
+          ],
+          if (actionLabel != null) ...[
+            const SizedBox(height: AppSpacing.sm),
+            GwTextAction(label: actionLabel!, onTap: onAction),
+          ],
+        ],
+      ),
+    );
+  }
+}

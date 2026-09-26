@@ -8,14 +8,6 @@ import '../widgets/ui.dart';
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
 
-  // Signed minor units (cents); positive = money in (cream), negative = out.
-  static const _txns = <(String, int)>[
-    ('Grocery delivery run', 2800),
-    ('Logo design deposit', 15000),
-    ('Platform fee', -420),
-    ('Withdrawal to bank', -20000),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +23,7 @@ class WalletScreen extends StatelessWidget {
             const SizedBox(height: 8),
             _balanceCard(),
             const SizedBox(height: 22),
-            _overline('Recent Gigs'),
+            _overline('Recent Activity'),
             const SizedBox(height: 8),
             _txnCard(),
             const SizedBox(height: 14),
@@ -67,11 +59,13 @@ class WalletScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // TODO(phase7): balance and escrow come from TradeSafe. A new
+          // account truthfully holds nothing until then.
           Text('Available Balance',
               style: AppText.body.copyWith(
                   fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.greenMuted)),
           const SizedBox(height: 6),
-          Text(formatZar(197885, cents: true),
+          Text(formatZar(0, cents: true),
               style: AppText.money.copyWith(color: AppColors.green)),
           const SizedBox(height: 16),
           Container(
@@ -89,39 +83,9 @@ class WalletScreen extends StatelessWidget {
   }
 
   Widget _txnCard() {
-    return GwCard(
-      padding: EdgeInsets.zero,
-      clip: true,
-      child: Column(
-        children: [
-          for (var i = 0; i < _txns.length; i++)
-            Builder(builder: (context) {
-              final positive = _txns[i].$2 >= 0;
-              return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                decoration: BoxDecoration(
-                  border: i == _txns.length - 1
-                      ? null
-                      : const Border(bottom: BorderSide(color: AppColors.divider)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_txns[i].$1,
-                        style: AppText.metaStrong
-                            .copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
-                    Text(formatZar(_txns[i].$2, cents: true, signed: true),
-                        style: AppText.tag.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: positive ? AppColors.cream : AppColors.inkSoft,
-                        )),
-                  ],
-                ),
-              );
-            }),
-        ],
-      ),
+    return const EmptyState(
+      'No money in or out yet',
+      body: 'Payments for gigs you do, and gigs you hire for, show up here.',
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
@@ -29,37 +28,8 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
             const SizedBox(height: 18),
             _segmented(),
             const SizedBox(height: 22),
-            _sectionLabel('Tomorrow'),
-            const SizedBox(height: 10),
-            _bookingCard(
-              title: 'Garden cleanup',
-              status: 'Confirmed',
-              statusBg: AppColors.cream,
-              statusFg: AppColors.green,
-              avatarInitials: 'MT',
-              sub: 'Marlo T. · 9:00am',
-              price: '${formatZar(6500)} fixed',
-            ),
-            const SizedBox(height: 16),
-            _sectionLabel('This Week'),
-            const SizedBox(height: 10),
-            _bookingCard(
-              title: 'Logo design for cafe',
-              status: 'In progress',
-              statusBg: AppColors.trackFill,
-              statusFg: AppColors.inkMuted,
-              sub: 'Fri 12 Jul · Remote',
-              price: '${formatZar(30000)} fixed',
-            ),
-            const SizedBox(height: 12),
-            _bookingCard(
-              title: 'Grocery delivery run',
-              status: 'Confirmed',
-              statusBg: AppColors.cream,
-              statusFg: AppColors.green,
-              sub: 'Sat 13 Jul · 0.8km',
-              price: '${formatZar(2800)} fixed',
-            ),
+            // TODO(phase4): bookings and offers stream in here per tab.
+            _emptyForTab(),
           ],
         ),
       ),
@@ -104,58 +74,24 @@ class _MyGigsScreenState extends State<MyGigsScreen> {
     );
   }
 
-  Widget _sectionLabel(String text) {
-    return Text(text.toUpperCase(),
-        style: AppText.label.copyWith(color: AppColors.inkMuted, letterSpacing: 0.3));
-  }
-
-  Widget _bookingCard({
-    required String title,
-    required String status,
-    required Color statusBg,
-    required Color statusFg,
-    String? avatarInitials,
-    required String sub,
-    required String price,
-  }) {
-    return GwCard(
-      onTap: () => context.push('/booking/edit'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: Text(title, style: AppText.cardTitle)),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: statusBg,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(status,
-                    style: AppText.tag.copyWith(fontSize: 11, color: statusFg)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              if (avatarInitials != null)
-                InitialsAvatar(avatarInitials, size: 28, fontSize: 11)
-              else
-                const PhotoPlaceholder(width: 28, height: 28, radius: 14),
-              const SizedBox(width: 10),
-              Text(sub,
-                  style: AppText.body
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.inkSoft)),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(price, style: AppText.price),
-        ],
-      ),
-    );
+  Widget _emptyForTab() {
+    return switch (_tab) {
+      0 => EmptyState(
+          'No upcoming gigs',
+          body: 'Booked work — yours or someone you hired — shows up here.',
+          actionLabel: 'Post a Task',
+          onAction: () => context.push('/post/task'),
+        ),
+      1 => EmptyState(
+          'No applications yet',
+          body: 'Tasks you offer to do show up here while you wait to hear back.',
+          actionLabel: 'Browse Gigs',
+          onAction: () => context.go('/home'),
+        ),
+      _ => const EmptyState(
+          'No completed gigs yet',
+          body: 'Finished work and its payouts show up here.',
+        ),
+    };
   }
 }

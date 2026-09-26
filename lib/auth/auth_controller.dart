@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'auth_repository.dart';
 import 'legal.dart';
 import 'pending_email_store.dart';
+import 'signup_flow.dart';
 import 'user_profile.dart';
 
 final authRepositoryProvider =
@@ -33,6 +34,28 @@ final authUserProvider = StreamProvider<User?>(
 final legalTermsProvider = FutureProvider<LegalTerms>(
   (ref) => ref.watch(authRepositoryProvider).loadLegalTerms(),
 );
+
+/// The signed-in person's public card, or `null` before onboarding finishes.
+///
+/// Read from the session rather than fetched again: the session already holds
+/// the `users/{uid}` document it resolved at boot, so every screen that shows
+/// the user's name or trust signals costs no extra read.
+final currentProfileProvider = Provider<UserProfile?>((ref) {
+  return switch (ref.watch(sessionProvider).value) {
+    Ready(:final profile) || NeedsTermsUpdate(:final profile) => profile,
+    _ => null,
+  };
+});
+
+/// The signed-in person's private contact record — owner-only PII.
+///
+/// Keyed on the auth uid, so signing out tears the listener down before the
+/// rules would start refusing it.
+final currentContactProvider = StreamProvider<UserContact?>((ref) {
+  final uid = ref.watch(authUserProvider).value?.uid;
+  if (uid == null) return Stream.value(null);
+  return ref.watch(authRepositoryProvider).watchContact(uid);
+});
 
 /// Whether the email-link handler has finished with the link it was given.
 ///
@@ -164,6 +187,9 @@ class SessionController extends AsyncNotifier<Session> {
   Future<void> signOut() async {
     await ref.read(authRepositoryProvider).signOut();
     await ref.read(pendingEmailStoreProvider).clearPendingEmail();
+    // Shared handsets are common in this market: the next person to sign up
+    // must not inherit the last one's number or consent timestamp.
+    ref.read(signupDraftProvider.notifier).reset();
   }
 }
 

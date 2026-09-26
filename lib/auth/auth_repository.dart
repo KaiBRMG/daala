@@ -21,7 +21,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:flutter/foundation.dart' show debugPrint, kDebugMode;
 
 import 'legal.dart';
 import 'user_profile.dart';
@@ -45,6 +45,9 @@ class AuthFailure implements Exception {
 /// Translates a [FirebaseAuthException] into something a person can act on.
 AuthFailure describeAuthError(Object error) {
   if (error is AuthFailure) return error;
+  // The friendly sentences below hide the Firebase code; the debug console
+  // keeps it, so a first-time failure on device names itself.
+  if (kDebugMode) debugPrint('describeAuthError: $error');
   if (error is! FirebaseException) {
     return const AuthFailure(
       "Something went wrong on our side. Please try again.",
@@ -512,6 +515,17 @@ class AuthRepository {
       throw describeAuthError(error);
     }
   }
+
+  /// Live `users/{uid}/private/contact`, or `null` before onboarding writes it.
+  ///
+  /// A stream rather than a read so the account screen flips to "confirmed"
+  /// the moment the email link is opened and [_markEmailVerified] lands,
+  /// without the user having to leave and come back.
+  Stream<UserContact?> watchContact(String uid) =>
+      _contactDoc(uid).snapshots().map(
+            (snapshot) =>
+                snapshot.exists ? UserContact.fromDoc(snapshot) : null,
+          );
 
   /// Writes the whole signup record in one atomic batch: public card, private
   /// contact details, and the consent evidence captured back on the phone

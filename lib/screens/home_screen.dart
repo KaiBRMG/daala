@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../auth/auth_controller.dart';
+import '../auth/user_profile.dart';
 import '../money.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  bool _earn = true;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  /// Seeded from the goal picked at signup — "Make Money" opens on Earn,
+  /// "Get Things Done" on Browse. Only the starting side; both stay one tap away.
+  late bool _earn =
+      ref.read(currentProfileProvider)?.goal != UserGoal.getThingsDone;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColors.card,
             shape: BoxShape.circle,
           ),
-          child: const InitialsAvatar('JD', size: 22, fontSize: 10),
+          child: InitialsAvatar(
+            ref.watch(currentProfileProvider)?.initials ?? '',
+            size: 22,
+            fontSize: 10,
+          ),
         ),
         Image.asset(kLogoOnDark,
             height: 26, fit: BoxFit.contain, semanticLabel: 'Daala'),
@@ -106,74 +116,48 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // ── Earn view ──────────────────────────────────────────────
+  // TODO(phase4): the nearby count, offers, earnings, and Gigs For You all come
+  // from the gigs/offers/bookings collections. Until those exist, every figure
+  // here is a true zero rather than a fixture.
   List<Widget> _earnView() {
+    final suburb = ref.watch(currentProfileProvider)?.suburb;
     return [
       Column(
         children: [
           Text('Available Nearby', style: AppText.caption),
-          const SizedBox(height: 6),
-          Text('24 Gigs', style: AppText.hero),
-          const SizedBox(height: 6),
-          Text('within 5km of Melville', style: AppText.meta),
+          const SizedBox(height: AppSpacing.xs),
+          Text('0 Gigs', style: AppText.hero),
+          const SizedBox(height: AppSpacing.xs),
+          Text(suburb == null ? 'near you' : 'near $suburb',
+              style: AppText.meta),
         ],
       ),
-      const SizedBox(height: 22),
+      const SizedBox(height: AppSpacing.xl4),
       Row(
         children: [
           Expanded(
-            child: _statCard('My Offers', '3 pending replies', AppColors.ink),
+            child: _statCard('My Offers', 'None yet', AppColors.ink),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.lg),
           Expanded(
-            child: _statCard('This Week', '${formatZar(41000)} earned',
+            child: _statCard('This Week', '${formatZar(0)} earned',
                 AppColors.cream,
                 onTap: () => context.push('/wallet')),
           ),
         ],
       ),
-      const SizedBox(height: 14),
-      GwCard(
-        onTap: () => context.push('/booking/edit'),
-        child: Row(
-          children: [
-            _iconCircle(Icons.event, AppColors.cream, AppColors.creamTint),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Garden cleanup — tomorrow 9am',
-                      style: AppText.rowTitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 2),
-                  Text('Booked with Marlo T.', style: AppText.meta),
-                ],
-              ),
-            ),
-            const SizedBox(width: 10),
-            const StatusPill('Confirmed'),
-          ],
-        ),
-      ),
-      const SizedBox(height: 22),
+      const SizedBox(height: AppSpacing.xl4),
       Text('Gigs For You', style: AppText.section),
-      const SizedBox(height: 12),
-      for (final gig in _gigsForYou) ...[
-        _gigRow(gig),
-        if (gig != _gigsForYou.last) const SizedBox(height: 10),
-      ],
+      const SizedBox(height: AppSpacing.lg),
+      EmptyState(
+        'No Tasks near you yet',
+        body: 'Tasks Buyers post near you will show up here. '
+            'You can offer your own service in the meantime.',
+        actionLabel: 'Post a Listing',
+        onAction: () => context.push('/post/listing'),
+      ),
     ];
   }
-
-  static const List<_Gig> _gigsForYou = [
-    _Gig('Assemble flatpack shelving', '1.2km · posted 2h ago', 6500,
-        'Thabo M.', 'TM', '4.9'),
-    _Gig('Logo design for cafe', 'Remote · posted 5h ago', 30000, 'Naledi K.',
-        'NK', '5.0'),
-    _Gig('Grocery delivery run', '0.8km · posted 20m ago', 2800, 'Sipho D.',
-        'SD', '4.8'),
-  ];
 
   Widget _statCard(String label, String value, Color valueColor,
       {VoidCallback? onTap}) {
@@ -191,158 +175,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _iconCircle(IconData icon, Color fg, Color bg) {
-    return Container(
-      width: 38,
-      height: 38,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
-      child: Icon(icon, size: 20, color: fg),
-    );
-  }
-
-  Widget _gigRow(_Gig gig) {
-    return GwCard(
-      onTap: () => context.push('/gig'),
-      child: Row(
-        children: [
-          const PhotoPlaceholder(width: 52, height: 52),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(gig.title,
-                    style: AppText.rowTitle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    InitialsAvatar(gig.initials, size: 20, fontSize: 9),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(gig.poster,
-                          style: AppText.caption.copyWith(color: AppColors.ink),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                    const SizedBox(width: 8),
-                    const Icon(Icons.star_rounded,
-                        size: 14, color: AppColors.orange),
-                    const SizedBox(width: 2),
-                    Text(gig.rating,
-                        style: AppText.caption.copyWith(color: AppColors.ink)),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(gig.meta, style: AppText.meta),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          Text(formatZar(gig.priceMinor), style: AppText.price),
-        ],
-      ),
-    );
-  }
-
   // ── Browse view ────────────────────────────────────────────
   List<Widget> _browseView() {
     return [
-      _sectionHeader('Home & Garden'),
-      const SizedBox(height: 12),
-      _horizontalRow([
-        ('Weekly hedge trim', '2.4km', formatZar(4500)),
-        ('Garden bed weeding', '1.6km', formatZar(3800)),
-        ('Lawn mowing', '0.9km', formatZar(5500)),
-      ]),
-      const SizedBox(height: 24),
-      _sectionHeader('Delivery & Errands'),
-      const SizedBox(height: 12),
-      _horizontalRow([
-        ('Grocery delivery run', '0.8km', formatZar(2800)),
-        ('Pharmacy pickup', '1.1km', formatZar(1800)),
-        ('Post office run', '2.0km', formatZar(2200)),
-      ]),
-      const SizedBox(height: 24),
+      // TODO(phase4): per-category rows of real Listings replace this.
+      EmptyState(
+        'No Listings to browse yet',
+        body: 'Services Merchants offer near you will show up here. '
+            'Post a Task and Merchants can apply to it.',
+        actionLabel: 'Post a Task',
+        onAction: () => context.push('/post/task'),
+      ),
+      const SizedBox(height: AppSpacing.xl4),
       Text('Categories', style: AppText.section),
-      const SizedBox(height: 12),
+      const SizedBox(height: AppSpacing.lg),
       _categoryGrid(),
     ];
   }
 
-  Widget _sectionHeader(String title) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title, style: AppText.section),
-        Pressable(
-          onTap: () => context.push('/search'),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-            child: Text('See all',
-                style: AppText.tag.copyWith(color: AppColors.cream)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _horizontalRow(List<(String, String, String)> items) {
-    return SizedBox(
-      height: 170,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: items.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 10),
-        itemBuilder: (context, i) {
-          final (title, dist, price) = items[i];
-          return GwCard(
-            padding: EdgeInsets.zero,
-            clip: true,
-            onTap: () => context.push('/gig'),
-            child: SizedBox(
-              width: 140,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const PhotoPlaceholder(height: 88, radius: 0),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.rowTitle.copyWith(fontSize: 12)),
-                        const SizedBox(height: 2),
-                        Text(dist,
-                            style: AppText.meta.copyWith(fontSize: 11)),
-                        const SizedBox(height: 6),
-                        Text(price,
-                            style: AppText.price.copyWith(fontSize: 14)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   Widget _categoryGrid() {
+    // Per-category gig counts return with real gigs (Phase 4).
     const cats = [
-      ('Home & Garden', '38 gigs', AppColors.creamTintStrong),
-      ('Moving & Hauling', '21 gigs', AppColors.creamTint),
-      ('Design & Creative', '17 gigs', AppColors.creamTintStrong),
-      ('Delivery & Errands', '54 gigs', AppColors.creamTint),
-      ('Cleaning', '12 gigs', AppColors.creamTintStrong),
-      ('Handyman', '9 gigs', AppColors.creamTint),
+      ('Home & Garden', AppColors.creamTintStrong),
+      ('Moving & Hauling', AppColors.creamTint),
+      ('Design & Creative', AppColors.creamTintStrong),
+      ('Delivery & Errands', AppColors.creamTint),
+      ('Cleaning', AppColors.creamTintStrong),
+      ('Handyman', AppColors.creamTint),
     ];
     return GridView.builder(
       shrinkWrap: true,
@@ -354,10 +213,10 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSpacing: 10,
         // Fixed extent, not an aspect ratio: deriving tile height from the
         // device width overflows the text on narrow screens.
-        mainAxisExtent: 134,
+        mainAxisExtent: 118,
       ),
       itemBuilder: (context, i) {
-        final (name, count, tint) = cats[i];
+        final (name, tint) = cats[i];
         return GwCard(
           padding: EdgeInsets.zero,
           clip: true,
@@ -369,15 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(child: Container(color: tint)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(name,
-                        style: AppText.rowTitle.copyWith(fontSize: 13)),
-                    const SizedBox(height: 2),
-                    Text(count, style: AppText.meta.copyWith(fontSize: 11)),
-                  ],
-                ),
+                child: Text(name,
+                    style: AppText.rowTitle.copyWith(fontSize: 13)),
               ),
             ],
           ),
@@ -385,19 +237,4 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-}
-
-/// Mock gig fixture for the "Gigs For You" list. Every gig carries a named
-/// human and rating so the list reads as people, not a classifieds wall
-/// (DESIGN.md: "Trust is the interface").
-class _Gig {
-  const _Gig(this.title, this.meta, this.priceMinor, this.poster, this.initials,
-      this.rating);
-
-  final String title;
-  final String meta;
-  final int priceMinor;
-  final String poster;
-  final String initials;
-  final String rating;
 }
